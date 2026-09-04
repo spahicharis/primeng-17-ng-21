@@ -291,12 +291,9 @@ import {
                 </div>
                 @if (fileTemplate) {
                   <div>
-                    @for (of files; track) {
                       <ng-template
-                        [ngForOf]="files"
-                        [ngForTemplate]="fileTemplate"
+                        *ngTemplateOutlet="fileTemplate; context: { $implicit: files, uploadedFiles: uploadedFiles, removeFileCallback: remove.bind(this) }"
                       ></ng-template>
-                    }
                   </div>
                 }
               }

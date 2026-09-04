@@ -1,7 +1,7 @@
 {
   "name": "primeng",
   "version": "17.20.0",
-  "description": "PrimeNG v17 extended support for Angular v20",
+  "description": "PrimeNG v17 extended support for Angular v21",
   "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "ng": "ng",
