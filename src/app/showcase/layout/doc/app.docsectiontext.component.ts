@@ -1,0 +1,57 @@
+import { Location } from '@angular/common';
+import { Component, ElementRef, Input, numberAttribute, inject } from '@angular/core';
+
+@Component({
+    selector: 'app-docsectiontext',
+    template: `
+        @if (level === 2) {
+          <h2 class="doc-section-label">
+            {{ title }}
+            <a (click)="navigate($event)" class="cursor-pointer" [id]="id">#</a>
+          </h2>
+        }
+        @if (description) {
+          <div class="doc-section-description">
+            <p class="mt-3">{{ description || null }}</p>
+          </div>
+        }
+        @if (level === 3) {
+          <h3 class="doc-section-label mt-4">
+            {{ title }}
+            <a (click)="navigate($event)" class="cursor-pointer" [id]="id">#</a>
+          </h3>
+        }
+        <div class="doc-section-description">
+          <ng-content></ng-content>
+        </div>
+        `,
+    standalone: false
+})
+export class AppDocSectionTextComponent {
+    location = inject(Location);
+    el = inject(ElementRef);
+
+    @Input() title!: string;
+
+    @Input() id!: string;
+
+    @Input({ transform: numberAttribute }) level!: number;
+
+    @Input() label!: string;
+
+    @Input() description: string;
+
+    navigate(event) {
+        if (typeof window !== undefined) {
+            const hash = window.location.hash.substring(1);
+            const parentElement = event.currentTarget.parentElement;
+            this.location.go(this.location.path().split('#')[0] + '#' + this.id);
+
+            setTimeout(() => {
+                parentElement.scrollIntoView({ block: 'start', behavior: 'smooth' });
+            }, 1);
+
+            hash === this.id && event.preventDefault();
+        }
+    }
+}

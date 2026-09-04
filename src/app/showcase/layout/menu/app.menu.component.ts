@@ -1,0 +1,85 @@
+
+import { Component, ElementRef, OnDestroy, afterNextRender, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { DomHandler } from 'primeng/dom';
+import { StyleClassModule } from 'primeng/styleclass';
+import { Subscription } from 'rxjs';
+import { default as MenuData } from 'src/assets/showcase/data/menu.json';
+import { AppConfigService } from '@service/appconfigservice';
+import { AppMenuItemComponent } from './app.menuitem.component';
+
+export interface MenuItem {
+    name?: string;
+    icon?: string;
+    children?: MenuItem[];
+    routerLink?: string;
+    href?: string;
+}
+
+@Component({
+    selector: 'app-menu',
+    template: ` <aside>
+          <nav>
+            <ol class="layout-menu">
+              @for (item of menu; track item; let i = $index) {
+                <li app-menuitem [item]="item" [root]="true"></li>
+              }
+            </ol>
+          </nav>
+        </aside>`,
+    host: {
+        class: 'layout-sidebar',
+        '[class.active]': 'isActive'
+    },
+    imports: [StyleClassModule, RouterModule, AutoCompleteModule, AppMenuItemComponent]
+})
+export class AppMenuComponent implements OnDestroy {
+    private configService = inject(AppConfigService);
+    private el = inject(ElementRef);
+    private router = inject(Router);
+
+    menu!: MenuItem[];
+
+    private routerSubscription: Subscription;
+
+    constructor() {
+        this.menu = MenuData.data;
+
+        afterNextRender(() => {
+            setTimeout(() => {
+                this.scrollToActiveItem();
+            }, 1);
+
+            this.routerSubscription = this.router.events.subscribe((event) => {
+                if (event instanceof NavigationEnd && this.configService.state.menuActive) {
+                    this.configService.hideMenu();
+                    DomHandler.unblockBodyScroll('blocked-scroll');
+                }
+            });
+        });
+    }
+
+    get isActive(): boolean {
+        return this.configService.state.menuActive;
+    }
+
+    scrollToActiveItem() {
+        let activeItem = DomHandler.findSingle(this.el.nativeElement, '.router-link-active');
+        if (activeItem && !this.isInViewport(activeItem)) {
+            activeItem.scrollIntoView({ block: 'center' });
+        }
+    }
+
+    isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || (document.documentElement.clientHeight && rect.right <= (window.innerWidth || document.documentElement.clientWidth)));
+    }
+
+    ngOnDestroy() {
+        if (this.routerSubscription) {
+            this.routerSubscription.unsubscribe();
+            this.routerSubscription = null;
+        }
+    }
+}

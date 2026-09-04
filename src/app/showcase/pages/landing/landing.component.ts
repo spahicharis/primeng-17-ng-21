@@ -1,0 +1,58 @@
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Component, OnInit, afterNextRender, inject } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
+import { AppNewsComponent } from '../../layout/news/app.news.component';
+import { AppTopBarComponent } from '../../layout/topbar/app.topbar.component';
+import { AppConfigService } from '@service/appconfigservice';
+import { BlockSectionComponent } from './blocksection.component';
+import { FeaturesSectionComponent } from './featuressection.component';
+import { FooterSectionComponent } from './footersection.component';
+import { HeroSectionComponent } from './herosection.component';
+import { TemplateSectionComponent } from './templatesection.component';
+import { ThemeSectionComponent } from './themesection.component';
+import { UsersSectionComponent } from './userssection.component';
+import { Subscription } from 'rxjs';
+
+@Component({
+    selector: 'landing',
+    templateUrl: './landing.component.html',
+    imports: [CommonModule, AppNewsComponent, AppTopBarComponent, HeroSectionComponent, UsersSectionComponent, ThemeSectionComponent, BlockSectionComponent, TemplateSectionComponent, FooterSectionComponent]
+})
+export class LandingComponent implements OnInit {
+    private configService = inject(AppConfigService);
+    private metaService = inject(Meta);
+    private titleService = inject(Title);
+
+    get tableTheme() {
+        return this.configService.config().tableTheme;
+    }
+
+    subscription!: Subscription;
+
+    get landingClass() {
+        return {
+            'layout-dark': this.isDarkMode,
+            'layout-light': !this.isDarkMode,
+            'layout-news-active': this.isNewsActive
+        };
+    }
+
+    get isDarkMode() {
+        return this.configService.config().darkMode;
+    }
+
+    get isNewsActive() {
+        return this.configService.state.newsActive;
+    }
+
+    ngOnInit() {
+        this.titleService.setTitle('PrimeNG - Angular UI Component Library');
+        this.metaService.updateTag({ name: 'description', content: 'The ultimate collection of design-agnostic, flexible and accessible Angular UI Components.' });
+    }
+
+    toggleDarkMode() {
+        const dark = !this.isDarkMode;
+        const newTableTheme = !dark ? this.tableTheme.replace('dark', 'light') : this.tableTheme.replace('light', 'dark');
+        this.configService.config.update((config) => ({ ...config, darkMode: dark, theme: dark ? 'lara-dark-blue' : 'lara-light-blue', tableTheme: newTableTheme }));
+    }
+}

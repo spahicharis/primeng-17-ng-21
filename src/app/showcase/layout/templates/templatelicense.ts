@@ -1,0 +1,53 @@
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, NgModule, ViewEncapsulation } from '@angular/core';
+import { SharedModule } from 'primeng/api';
+
+@Component({
+    selector: 'template-license',
+    template: `
+        <div class="template-license-wrapper">
+          <div class="template-license">
+            <div class="template-license-cards">
+              @for (licenseData of license?.licenseDetails; track licenseData) {
+                <div class="template-license-card">
+                  <span>{{ licenseData?.title }}</span>
+                  <div class="template-license-price flex gap-3">
+                    <h2 [ngClass]="{ discount: license?.showDiscount }">{{ licenseData?.price }}</h2>
+                    @if (license?.showDiscount) {
+                      <h2>{{ licenseData?.discount }}</h2>
+                    }
+                  </div>
+                  <div class="template-license-card-included">
+                    @for (txt of licenseData?.included; track txt; let j = $index) {
+                      <p>{{ txt }}</p>
+                    }
+                  </div>
+                  <a href="https://www.primefaces.org/layouts/licenses" target="_blank">
+                    <button>License Details</button>
+                  </a>
+                </div>
+              }
+            </div>
+            <p class="template-license-description">{{ license?.description }}</p>
+            <p class="template-license-visit">
+              Visit the
+              <a [href]="license?.documentLink" target="_blank"> official documentation </a>
+              for more information.
+            </p>
+          </div>
+        </div>
+        `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
+})
+export class TemplateLicense {
+    @Input() license;
+}
+
+@NgModule({
+    imports: [CommonModule, SharedModule],
+    exports: [TemplateLicense, SharedModule],
+    declarations: [TemplateLicense]
+})
+export class TemplateLicenseModule {}
