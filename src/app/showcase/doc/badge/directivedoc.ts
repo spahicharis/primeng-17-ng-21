@@ -1,26 +1,27 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'badge-directive-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Content of the badge is specified using the <i>value</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <i class="pi pi-bell text-3xl" pBadge value="2"></i>
-        </div>
-        <app-code [code]="code" selector="badge-directive-demo" />
-    `,
-    standalone: false
+  selector: "badge-directive-demo",
+  template: `
+    <app-docsectiontext>
+      <p>Content of the badge is specified using the <i>value</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <i class="pi pi-bell text-3xl" pBadge value="2"></i>
+    </div>
+    <app-code [code]="code" selector="badge-directive-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DirectiveDoc {
-    code: Code = {
-        basic: `<i class="pi pi-bell text-3xl" pBadge value="2"></i>`,
-        html: `<div class="card flex justify-content-center">
+  code: Code = {
+    basic: `<i class="pi pi-bell text-3xl" pBadge value="2"></i>`,
+    html: `<div class="card flex justify-content-center">
     <i class="pi pi-bell text-3xl" pBadge value="2"></i>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { BadgeModule } from 'primeng/badge';
 
 @Component({
@@ -29,6 +30,6 @@ import { BadgeModule } from 'primeng/badge';
     standalone: true,
     imports: [BadgeModule]
 })
-export class BadgeDirectiveDemo {}`
-    };
+export class BadgeDirectiveDemo {}`,
+  };
 }

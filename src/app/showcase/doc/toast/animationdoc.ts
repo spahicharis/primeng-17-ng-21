@@ -1,38 +1,51 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'animation-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Transition of the animations can be customized using the <i>showTransitionOptions</i>, <i>hideTransitionOptions</i>, <i>showTransformOptions</i> and <i>hideTransformOptions</i> properties.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-toast [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'1000ms'" [hideTransitionOptions]="'1000ms'" [showTransformOptions]="'translateX(100%)'" />
-            <p-button (onClick)="show()" label="Show" />
-        </div>
-        <app-code [code]="code" selector="toast-animation-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "animation-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Transition of the animations can be customized using the
+        <i>showTransitionOptions</i>, <i>hideTransitionOptions</i>,
+        <i>showTransformOptions</i> and <i>hideTransformOptions</i> properties.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-toast
+        [showTransformOptions]="'translateY(100%)'"
+        [showTransitionOptions]="'1000ms'"
+        [hideTransitionOptions]="'1000ms'"
+        [showTransformOptions]="'translateX(100%)'"
+      />
+      <p-button (onClick)="show()" label="Show" />
+    </div>
+    <app-code [code]="code" selector="toast-animation-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AnimationDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  show() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Message Content",
+    });
+  }
 
-    show() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-    }
-
-    code: Code = {
-        basic: `<p-toast 
+  code: Code = {
+    basic: `<p-toast 
     [showTransformOptions]="'translateY(100%)'" 
     [showTransitionOptions]="'1000ms'" 
     [hideTransitionOptions]="'1000ms'" 
     [showTransformOptions]="'translateX(100%)'" />
 <p-button (onClick)="show()" label="Show" />`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast 
         [showTransformOptions]="'translateY(100%)'" 
         [showTransitionOptions]="'1000ms'" 
@@ -40,7 +53,7 @@ export class AnimationDoc {
         [showTransformOptions]="'translateX(100%)'" />
     <p-button (onClick)="show()" label="Show" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -59,6 +72,6 @@ export class ToastAnimationDemo {
     show() {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
     }
-}`
-    };
+}`,
+  };
 }

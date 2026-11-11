@@ -1,50 +1,59 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-minmax-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Boundaries for the permitted dates that can be entered are defined with <i>minDate</i> and <i>maxDate</i> properties.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-calendar [(ngModel)]="date" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true" />
-        </div>
-        <app-code [code]="code" selector="calendar-minmax-demo" />
-    `,
-    standalone: false
+  selector: "calendar-minmax-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Boundaries for the permitted dates that can be entered are defined with
+        <i>minDate</i> and <i>maxDate</i> properties.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-calendar
+        [(ngModel)]="date"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        [readonlyInput]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="calendar-minmax-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MinMaxDoc {
-    date: Date | undefined;
+  date: Date | undefined;
 
-    minDate: Date | undefined;
+  minDate: Date | undefined;
 
-    maxDate: Date | undefined;
+  maxDate: Date | undefined;
 
-    ngOnInit() {
-        let today = new Date();
-        let month = today.getMonth();
-        let year = today.getFullYear();
-        let prevMonth = month === 0 ? 11 : month - 1;
-        let prevYear = prevMonth === 11 ? year - 1 : year;
-        let nextMonth = month === 11 ? 0 : month + 1;
-        let nextYear = nextMonth === 0 ? year + 1 : year;
-        this.minDate = new Date();
-        this.minDate.setMonth(prevMonth);
-        this.minDate.setFullYear(prevYear);
-        this.maxDate = new Date();
-        this.maxDate.setMonth(nextMonth);
-        this.maxDate.setFullYear(nextYear);
-    }
+  ngOnInit() {
+    let today = new Date();
+    let month = today.getMonth();
+    let year = today.getFullYear();
+    let prevMonth = month === 0 ? 11 : month - 1;
+    let prevYear = prevMonth === 11 ? year - 1 : year;
+    let nextMonth = month === 11 ? 0 : month + 1;
+    let nextYear = nextMonth === 0 ? year + 1 : year;
+    this.minDate = new Date();
+    this.minDate.setMonth(prevMonth);
+    this.minDate.setFullYear(prevYear);
+    this.maxDate = new Date();
+    this.maxDate.setMonth(nextMonth);
+    this.maxDate.setFullYear(nextYear);
+  }
 
-    code: Code = {
-        basic: `<p-calendar 
+  code: Code = {
+    basic: `<p-calendar 
     [(ngModel)]="date" 
     [minDate]="minDate" 
     [maxDate]="maxDate" 
     [readonlyInput]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-calendar 
         [(ngModel)]="date" 
         [minDate]="minDate" 
@@ -52,7 +61,7 @@ export class MinMaxDoc {
         [readonlyInput]="true" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -84,6 +93,6 @@ export class CalendarMinmaxDemo implements OnInit {
         this.maxDate.setMonth(nextMonth);
         this.maxDate.setFullYear(nextYear);
     }
-}`
-    };
+}`,
+  };
 }

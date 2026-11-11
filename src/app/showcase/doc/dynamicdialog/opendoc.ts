@@ -1,31 +1,37 @@
-import { Component, inject } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Code } from '@domain/code';
-import { ProductListDemo } from './productlistdemo';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { Code } from "@domain/code";
+import { ProductListDemo } from "./productlistdemo";
 
 @Component({
-    selector: 'open-doc',
-    template: `
-        <app-docsectiontext>
-            <p>The <i>open</i> method of the <i>DialogService</i> is used to open a Dialog. First parameter is the component to load and second one is the configuration object to customize the Dialog.</p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    providers: [DialogService],
-    standalone: false
+  selector: "open-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        The <i>open</i> method of the <i>DialogService</i> is used to open a
+        Dialog. First parameter is the component to load and second one is the
+        configuration object to customize the Dialog.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  providers: [DialogService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class OpenDoc {
-    dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
+  ref: DynamicDialogRef | undefined;
 
-    ref: DynamicDialogRef | undefined;
+  show() {
+    this.ref = this.dialogService.open(ProductListDemo, {
+      header: "Select a Product",
+    });
+  }
 
-    show() {
-        this.ref = this.dialogService.open(ProductListDemo, { header: 'Select a Product' });
-    }
-
-    code: Code = {
-        typescript: `
+  code: Code = {
+    typescript: `
 import { Component } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProductListDemo } from './productlistdemo';
@@ -43,6 +49,6 @@ export class DynamicDialogDemo {
     show() {
         this.ref = this.dialogService.open(ProductListDemo, { header: 'Select a Product'});
     }
-}`
-    };
+}`,
+  };
 }

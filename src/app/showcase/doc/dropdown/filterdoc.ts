@@ -1,52 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'dropdown-filter-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Dropdown provides built-in filtering that is enabled by adding the <i>filter</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-dropdown [options]="countries" [(ngModel)]="selectedCountry" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Country">
-                <ng-template pTemplate="selectedItem" let-selectedOption>
-                    <div class="flex align-items-center gap-2">
-                        <div>{{ selectedOption.name }}</div>
-                    </div>
-                </ng-template>
-                <ng-template let-country pTemplate="item">
-                    <div class="flex align-items-center gap-2">
-                        <div>{{ country.name }}</div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
-        </div>
-        <app-code [code]="code" selector="dropdown-filter-demo" />
-    `,
-    standalone: false
+  selector: "dropdown-filter-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Dropdown provides built-in filtering that is enabled by adding the
+        <i>filter</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-dropdown
+        [options]="countries"
+        [(ngModel)]="selectedCountry"
+        optionLabel="name"
+        [filter]="true"
+        filterBy="name"
+        [showClear]="true"
+        placeholder="Select a Country"
+      >
+        <ng-template pTemplate="selectedItem" let-selectedOption>
+          <div class="flex align-items-center gap-2">
+            <div>{{ selectedOption.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-country pTemplate="item">
+          <div class="flex align-items-center gap-2">
+            <div>{{ country.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <app-code [code]="code" selector="dropdown-filter-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilterDoc implements OnInit {
-    countries: any[] | undefined;
+  countries: any[] | undefined;
 
-    selectedCountry: string | undefined;
+  selectedCountry: string | undefined;
 
-    ngOnInit() {
-        this.countries = [
-            { name: 'Australia', code: 'AU' },
-            { name: 'Brazil', code: 'BR' },
-            { name: 'China', code: 'CN' },
-            { name: 'Egypt', code: 'EG' },
-            { name: 'France', code: 'FR' },
-            { name: 'Germany', code: 'DE' },
-            { name: 'India', code: 'IN' },
-            { name: 'Japan', code: 'JP' },
-            { name: 'Spain', code: 'ES' },
-            { name: 'United States', code: 'US' }
-        ];
-    }
+  ngOnInit() {
+    this.countries = [
+      { name: "Australia", code: "AU" },
+      { name: "Brazil", code: "BR" },
+      { name: "China", code: "CN" },
+      { name: "Egypt", code: "EG" },
+      { name: "France", code: "FR" },
+      { name: "Germany", code: "DE" },
+      { name: "India", code: "IN" },
+      { name: "Japan", code: "JP" },
+      { name: "Spain", code: "ES" },
+      { name: "United States", code: "US" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-dropdown 
+  code: Code = {
+    basic: `<p-dropdown 
     [options]="countries"
     [(ngModel)]="selectedCountry"
     optionLabel="name"
@@ -74,7 +86,7 @@ export class FilterDoc implements OnInit {
         </ng-template>
 </p-dropdown>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-dropdown 
         [options]="countries"
         [(ngModel)]="selectedCountry"
@@ -104,7 +116,7 @@ export class FilterDoc implements OnInit {
     </p-dropdown>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -133,6 +145,6 @@ export class DropdownFilterDemo implements OnInit {
             { name: 'United States', code: 'US' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

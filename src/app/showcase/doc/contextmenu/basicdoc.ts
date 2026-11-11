@@ -1,33 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'context-menu-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>ContextMenu can be attached to a particular element whose local template variable name is defined using the <i>target</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <img #img src="https://primefaces.org/cdn/primeng/images/demo/nature/nature2.jpg" alt="Logo" aria-haspopup="true" class="max-w-full" />
-            <p-contextMenu [target]="img" [model]="items" />
-        </div>
-        <app-code [code]="code" selector="context-menu-basic-demo" />
-    `,
-    standalone: false
+  selector: "context-menu-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        ContextMenu can be attached to a particular element whose local template
+        variable name is defined using the <i>target</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <img
+        #img
+        src="https://primefaces.org/cdn/primeng/images/demo/nature/nature2.jpg"
+        alt="Logo"
+        aria-haspopup="true"
+        class="max-w-full"
+      />
+      <p-contextMenu [target]="img" [model]="items" />
+    </div>
+    <app-code [code]="code" selector="context-menu-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc implements OnInit {
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            { label: 'Copy', icon: 'pi pi-copy' },
-            { label: 'Rename', icon: 'pi pi-file-edit' }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      { label: "Copy", icon: "pi pi-copy" },
+      { label: "Rename", icon: "pi pi-file-edit" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<img 
+  code: Code = {
+    basic: `<img 
     #img 
     src="https://primefaces.org/cdn/primeng/images/demo/nature/nature2.jpg" 
     alt="Logo" 
@@ -35,7 +45,7 @@ export class BasicDoc implements OnInit {
     class="max-w-full" />
 <p-contextMenu [target]="img" [model]="items" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <img 
         #img 
         src="https://primefaces.org/cdn/primeng/images/demo/nature/nature2.jpg" 
@@ -45,7 +55,7 @@ export class BasicDoc implements OnInit {
     <p-contextMenu [target]="img" [model]="items" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ContextMenuModule } from 'primeng/contextmenu';
 
@@ -64,6 +74,6 @@ export class ContextMenuBasicDemo implements OnInit {
             { label: 'Rename', icon: 'pi pi-file-edit' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

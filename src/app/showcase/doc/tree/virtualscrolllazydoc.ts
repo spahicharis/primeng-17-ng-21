@@ -1,64 +1,90 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'lazy-virtual-scroll-doc',
-    template: `
-        <app-docsectiontext>
-            <p>VirtualScroller is a performance-approach to handle huge data efficiently. Setting <i>virtualScroll</i> property as true and providing a <i>virtualScrollItemSize</i> in pixels would be enough to enable this functionality.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-tree class="w-full md:w-30rem" scrollHeight="250px" [virtualScroll]="true" [lazy]="true" [virtualScrollItemSize]="46" [value]="files" (onNodeExpand)="nodeExpand($event)" [loading]="loading" />
-        </div>
-        <app-code [code]="code" selector="tree-virtual-scroll-lazy-demo" />
-    `,
-    standalone: false
+  selector: "lazy-virtual-scroll-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        VirtualScroller is a performance-approach to handle huge data
+        efficiently. Setting <i>virtualScroll</i> property as true and providing
+        a <i>virtualScrollItemSize</i> in pixels would be enough to enable this
+        functionality.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-tree
+        class="w-full md:w-30rem"
+        scrollHeight="250px"
+        [virtualScroll]="true"
+        [lazy]="true"
+        [virtualScrollItemSize]="46"
+        [value]="files"
+        (onNodeExpand)="nodeExpand($event)"
+        [loading]="loading"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-virtual-scroll-lazy-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LazyVirtualScrollDoc implements OnInit {
-    private nodeService = inject(NodeService);
-    private cd = inject(ChangeDetectorRef);
+  private nodeService = inject(NodeService);
+  private cd = inject(ChangeDetectorRef);
 
-    loading: boolean = false;
+  loading: boolean = false;
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    virtualFiles!: TreeNode[];
+  virtualFiles!: TreeNode[];
 
-    ngOnInit() {
-        this.loading = true;
-        setTimeout(() => {
-            this.nodeService.getLazyFiles().then((files) => (this.files = this.duplicateData(files, 50)));
-            this.loading = false;
-            this.cd.markForCheck();
-        }, 1000);
+  ngOnInit() {
+    this.loading = true;
+    setTimeout(() => {
+      this.nodeService
+        .getLazyFiles()
+        .then((files) => (this.files = this.duplicateData(files, 50)));
+      this.loading = false;
+      this.cd.markForCheck();
+    }, 1000);
+  }
+
+  duplicateData(data: TreeNode[], count: number): TreeNode[] {
+    let duplicatedData: TreeNode[] = [];
+    for (let i = 0; i < count; i++) {
+      duplicatedData = [
+        ...duplicatedData,
+        ...data.map((item) => ({ ...item })),
+      ];
     }
+    return duplicatedData;
+  }
 
-    duplicateData(data: TreeNode[], count: number): TreeNode[] {
-        let duplicatedData: TreeNode[] = [];
-        for (let i = 0; i < count; i++) {
-            duplicatedData = [...duplicatedData, ...data.map((item) => ({ ...item }))];
-        }
-        return duplicatedData;
+  nodeExpand(event: any) {
+    if (event.node) {
+      this.loading = true;
+      setTimeout(() => {
+        this.nodeService.getLazyFiles().then((nodes) => {
+          event.node.children = nodes;
+          this.files = [...this.files, event.node.children];
+        });
+        this.loading = false;
+        this.cd.markForCheck();
+      }, 200);
     }
+  }
 
-    nodeExpand(event: any) {
-        if (event.node) {
-            this.loading = true;
-            setTimeout(() => {
-                this.nodeService.getLazyFiles().then((nodes) => {
-                    event.node.children = nodes;
-                    this.files = [...this.files, event.node.children];
-                });
-                this.loading = false;
-                this.cd.markForCheck();
-            }, 200);
-        }
-    }
-
-    code: Code = {
-        basic: `<p-tree 
+  code: Code = {
+    basic: `<p-tree 
     class="w-full md:w-30rem" 
     scrollHeight="250px" 
     [virtualScroll]="true" 
@@ -68,7 +94,7 @@ export class LazyVirtualScrollDoc implements OnInit {
     (onNodeExpand)="nodeExpand($event)" 
     [loading]="loading" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-tree 
         class="w-full md:w-30rem" 
         scrollHeight="250px" 
@@ -80,7 +106,7 @@ export class LazyVirtualScrollDoc implements OnInit {
         [loading]="loading" />
 </div>`,
 
-        typescript: `import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+    typescript: `import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -132,9 +158,9 @@ export class TreeVirtualScrollLazyDemo implements OnInit {
         }
     }
 }`,
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -161,6 +187,6 @@ export class TreeVirtualScrollLazyDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

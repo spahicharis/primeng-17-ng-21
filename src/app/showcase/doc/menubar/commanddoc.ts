@@ -1,92 +1,126 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'command-doc',
-    template: `
-        <app-docsectiontext>
-            <p>The <i>command</i> property defines the callback to run when an item is activated by click or a key event.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-toast />
-            <p-menubar [model]="items" />
-        </div>
-        <app-code [code]="code" selector="menubar-command-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "command-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        The <i>command</i> property defines the callback to run when an item is
+        activated by click or a key event.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-toast />
+      <p-menubar [model]="items" />
+    </div>
+    <app-code [code]="code" selector="menubar-command-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CommandDoc implements OnInit {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'File',
-                icon: 'pi pi-file',
-                items: [
-                    {
-                        label: 'New',
-                        icon: 'pi pi-plus',
-                        command: () => {
-                            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'File created', life: 3000 });
-                        }
-                    },
-                    {
-                        label: 'Print',
-                        icon: 'pi pi-print',
-                        command: () => {
-                            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No printer connected', life: 3000 });
-                        }
-                    }
-                ]
+  ngOnInit() {
+    this.items = [
+      {
+        label: "File",
+        icon: "pi pi-file",
+        items: [
+          {
+            label: "New",
+            icon: "pi pi-plus",
+            command: () => {
+              this.messageService.add({
+                severity: "success",
+                summary: "Success",
+                detail: "File created",
+                life: 3000,
+              });
             },
-            {
-                label: 'Search',
-                icon: 'pi pi-search',
-                command: () => {
-                    this.messageService.add({ severity: 'warn', summary: 'Search Results', detail: 'No results found', life: 3000 });
-                }
+          },
+          {
+            label: "Print",
+            icon: "pi pi-print",
+            command: () => {
+              this.messageService.add({
+                severity: "error",
+                summary: "Error",
+                detail: "No printer connected",
+                life: 3000,
+              });
             },
-            {
-                separator: true
+          },
+        ],
+      },
+      {
+        label: "Search",
+        icon: "pi pi-search",
+        command: () => {
+          this.messageService.add({
+            severity: "warn",
+            summary: "Search Results",
+            detail: "No results found",
+            life: 3000,
+          });
+        },
+      },
+      {
+        separator: true,
+      },
+      {
+        label: "Sync",
+        icon: "pi pi-cloud",
+        items: [
+          {
+            label: "Import",
+            icon: "pi pi-cloud-download",
+            command: () => {
+              this.messageService.add({
+                severity: "info",
+                summary: "Downloads",
+                detail: "Downloaded from cloud",
+                life: 3000,
+              });
             },
-            {
-                label: 'Sync',
-                icon: 'pi pi-cloud',
-                items: [
-                    {
-                        label: 'Import',
-                        icon: 'pi pi-cloud-download',
-                        command: () => {
-                            this.messageService.add({ severity: 'info', summary: 'Downloads', detail: 'Downloaded from cloud', life: 3000 });
-                        }
-                    },
-                    {
-                        label: 'Export',
-                        icon: 'pi pi-cloud-upload',
-                        command: () => {
-                            this.messageService.add({ severity: 'info', summary: 'Shared', detail: 'Exported to cloud', life: 3000 });
-                        }
-                    }
-                ]
-            }
-        ];
-    }
+          },
+          {
+            label: "Export",
+            icon: "pi pi-cloud-upload",
+            command: () => {
+              this.messageService.add({
+                severity: "info",
+                summary: "Shared",
+                detail: "Exported to cloud",
+                life: 3000,
+              });
+            },
+          },
+        ],
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-toast />
+  code: Code = {
+    basic: `<p-toast />
 <p-menubar [model]="items" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-toast />
     <p-menubar [model]="items" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
@@ -157,6 +191,6 @@ export class MenubarCommandDemo implements OnInit {
             }
         ];
     }
-}`
-    };
+}`,
+  };
 }

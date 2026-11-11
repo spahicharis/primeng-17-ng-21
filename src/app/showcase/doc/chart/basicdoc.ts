@@ -1,108 +1,134 @@
-import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { AppConfigService } from '@service/appconfigservice';
-import { Subscription, debounceTime } from 'rxjs';
+import { isPlatformBrowser } from "@angular/common";
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  PLATFORM_ID,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { AppConfigService } from "@service/appconfigservice";
+import { Subscription, debounceTime } from "rxjs";
 
 @Component({
-    selector: 'chart-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>
-                A chart is configured with 3 properties; <i>type</i>, <i>data</i> and <i>options</i>. Chart type is defined using the <i>type</i> property that accepts <i>pie</i>, <i>doughtnut</i>, <i>line</i>, <i>bar</i>, <i>radar</i> and
-                <i>polarArea</i> as a value. The <i>data</i> defines datasets represented with the chart and the <i>options</i> provide numerous customization options to customize the presentation.
-            </p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-chart type="bar" [data]="basicData" [options]="basicOptions" />
-        </div>
-        <app-code [code]="code" selector="chart-basic-demo" />
-    `,
-    standalone: false
+  selector: "chart-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A chart is configured with 3 properties; <i>type</i>, <i>data</i> and
+        <i>options</i>. Chart type is defined using the <i>type</i> property
+        that accepts <i>pie</i>, <i>doughtnut</i>, <i>line</i>, <i>bar</i>,
+        <i>radar</i> and <i>polarArea</i> as a value. The <i>data</i> defines
+        datasets represented with the chart and the <i>options</i> provide
+        numerous customization options to customize the presentation.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-chart type="bar" [data]="basicData" [options]="basicOptions" />
+    </div>
+    <app-code [code]="code" selector="chart-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc implements OnInit {
-    private platformId = inject(PLATFORM_ID);
-    private configService = inject(AppConfigService);
-    private cd = inject(ChangeDetectorRef);
+  private platformId = inject(PLATFORM_ID);
+  private configService = inject(AppConfigService);
+  private cd = inject(ChangeDetectorRef);
 
-    basicData: any;
+  basicData: any;
 
-    basicOptions: any;
+  basicOptions: any;
 
-    subscription!: Subscription;
+  subscription!: Subscription;
 
-    constructor() {
-        this.subscription = this.configService.configUpdate$.pipe(debounceTime(25)).subscribe((config) => {
-            this.initChart();
-            this.cd.markForCheck();
-        });
-    }
-
-    ngOnInit() {
+  constructor() {
+    this.subscription = this.configService.configUpdate$
+      .pipe(debounceTime(25))
+      .subscribe((config) => {
         this.initChart();
+        this.cd.markForCheck();
+      });
+  }
+
+  ngOnInit() {
+    this.initChart();
+  }
+
+  initChart() {
+    if (isPlatformBrowser(this.platformId)) {
+      const documentStyle = getComputedStyle(document.documentElement);
+      const textColor = documentStyle.getPropertyValue("--text-color");
+      const textColorSecondary = documentStyle.getPropertyValue(
+        "--text-color-secondary",
+      );
+      const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
+
+      this.basicData = {
+        labels: ["Q1", "Q2", "Q3", "Q4"],
+        datasets: [
+          {
+            label: "Sales",
+            data: [540, 325, 702, 620],
+            backgroundColor: [
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+            ],
+            borderColor: [
+              "rgb(255, 159, 64)",
+              "rgb(75, 192, 192)",
+              "rgb(54, 162, 235)",
+              "rgb(153, 102, 255)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      this.basicOptions = {
+        plugins: {
+          legend: {
+            labels: {
+              fontColor: textColor,
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: textColorSecondary,
+              font: {
+                weight: 500,
+              },
+            },
+            grid: {
+              display: false,
+              drawBorder: false,
+            },
+          },
+          y: {
+            ticks: {
+              color: textColorSecondary,
+            },
+            grid: {
+              color: surfaceBorder,
+              drawBorder: false,
+            },
+          },
+        },
+      };
     }
+  }
 
-    initChart() {
-        if (isPlatformBrowser(this.platformId)) {
-            const documentStyle = getComputedStyle(document.documentElement);
-            const textColor = documentStyle.getPropertyValue('--text-color');
-            const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-            const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-            this.basicData = {
-                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-                datasets: [
-                    {
-                        label: 'Sales',
-                        data: [540, 325, 702, 620],
-                        backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-                        borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                        borderWidth: 1
-                    }
-                ]
-            };
-
-            this.basicOptions = {
-                plugins: {
-                    legend: {
-                        labels: {
-                            fontColor: textColor
-                        }
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: textColorSecondary,
-                            font: {
-                                weight: 500
-                            }
-                        },
-                        grid: {
-                            display: false,
-                            drawBorder: false
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: textColorSecondary
-                        },
-                        grid: {
-                            color: surfaceBorder,
-                            drawBorder: false
-                        }
-                    }
-                }
-            };
-        }
-    }
-
-    code: Code = {
-        basic: `<p-chart type="bar" [data]="basicData" [options]="basicOptions" />`,
-        html: `<div class="card">
+  code: Code = {
+    basic: `<p-chart type="bar" [data]="basicData" [options]="basicOptions" />`,
+    html: `<div class="card">
     <p-chart type="bar" [data]="basicData" [options]="basicOptions" />
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 
 @Component({
@@ -166,6 +192,6 @@ export class ChartBasicDemo implements OnInit {
             }
         };
     }
-}`
-    };
+}`,
+  };
 }

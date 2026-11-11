@@ -1,33 +1,45 @@
-import { Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'filled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Specify the <i>variant</i> property as <i>filled</i> to display the component with a higher visual emphasis than the default <i>outlined</i> style.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-treeSelect class="md:w-20rem w-full" containerStyleClass="w-full" [(ngModel)]="selectedNodes" variant="filled" [options]="nodes" placeholder="Select Item" />
-        </div>
-        <app-code [code]="code" selector="tree-select-filled-demo" />
-    `,
-    standalone: false
+  selector: "filled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Specify the <i>variant</i> property as <i>filled</i> to display the
+        component with a higher visual emphasis than the default
+        <i>outlined</i> style.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-treeSelect
+        class="md:w-20rem w-full"
+        containerStyleClass="w-full"
+        [(ngModel)]="selectedNodes"
+        variant="filled"
+        [options]="nodes"
+        placeholder="Select Item"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-select-filled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilledDoc {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    nodes!: any[];
+  nodes!: any[];
 
-    selectedNodes: any;
+  selectedNodes: any;
 
-    constructor() {
-        this.nodeService.getFiles().then((files) => (this.nodes = files));
-    }
+  constructor() {
+    this.nodeService.getFiles().then((files) => (this.nodes = files));
+  }
 
-    code: Code = {
-        basic: `<p-treeSelect 
+  code: Code = {
+    basic: `<p-treeSelect 
     class="md:w-20rem w-full" 
     containerStyleClass="w-full" 
     [(ngModel)]="selectedNodes" 
@@ -35,7 +47,7 @@ export class FilledDoc {
     [options]="nodes" 
     placeholder="Select Item" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-treeSelect 
         class="md:w-20rem w-full" 
         containerStyleClass="w-full" 
@@ -45,7 +57,7 @@ export class FilledDoc {
         placeholder="Select Item" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { NodeService } from '@service/nodeservice';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -67,9 +79,9 @@ export class TreeSelectFilledDemo {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -96,6 +108,6 @@ export class TreeSelectFilledDemo {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

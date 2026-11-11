@@ -1,40 +1,49 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'block-ui-document-demo',
-    template: `
-        <app-docsectiontext>
-            <p>If the target element is not specified, BlockUI blocks the document by default.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-blockUI [blocked]="blockedDocument" />
-            <p-button label="Block" (onClick)="blockDocument()" />
-        </div>
-        <app-code [code]="code" selector="block-ui-document-demo" />
-    `,
-    standalone: false
+  selector: "block-ui-document-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        If the target element is not specified, BlockUI blocks the document by
+        default.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-blockUI [blocked]="blockedDocument" />
+      <p-button label="Block" (onClick)="blockDocument()" />
+    </div>
+    <app-code [code]="code" selector="block-ui-document-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DocumentDoc {
-    private cd = inject(ChangeDetectorRef);
+  private cd = inject(ChangeDetectorRef);
 
-    blockedDocument: boolean = false;
+  blockedDocument: boolean = false;
 
-    blockDocument() {
-        this.blockedDocument = true;
-        setTimeout(() => {
-            this.blockedDocument = false;
-            this.cd.markForCheck();
-        }, 3000);
-    }
+  blockDocument() {
+    this.blockedDocument = true;
+    setTimeout(() => {
+      this.blockedDocument = false;
+      this.cd.markForCheck();
+    }, 3000);
+  }
 
-    code: Code = {
-        basic: `<p-blockUI [blocked]="blockedDocument" />`,
-        html: `<div class="card">
+  code: Code = {
+    basic: `<p-blockUI [blocked]="blockedDocument" />`,
+    html: `<div class="card">
     <p-blockUI [blocked]="blockedDocument" />
     <p-button label="Block" (onClick)="blockDocument()" />
 </div>`,
-        typescript: `import { Component, ChangeDetectorRef } from '@angular/core';
+    typescript: `import { Component, ChangeDetectorRef } from '@angular/core';
 import { BlockUIModule } from 'primeng/blockui';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -58,6 +67,6 @@ export class BlockUiDocumentDemo {
         }, 3000);
     }
 
-}`
-    };
+}`,
+  };
 }

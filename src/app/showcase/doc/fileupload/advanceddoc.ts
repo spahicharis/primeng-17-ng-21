@@ -1,53 +1,71 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 interface UploadEvent {
-    originalEvent: Event;
-    files: File[];
+  originalEvent: Event;
+  files: File[];
 }
 
 @Component({
-    selector: 'file-upload-advanced-demo',
-    template: `
-        <app-docsectiontext> <p>FileUpload is an advanced uploader with dragdrop support, multi file uploads, auto uploading, progress tracking and validations.</p></app-docsectiontext>
-        <div class="card flex justify-content-center">
-          <p-toast />
-          <p-fileUpload name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" (onUpload)="onUpload($event)" [multiple]="true" accept="image/*" maxFileSize="1000000" mode="advanced">
-            <ng-template pTemplate="toolbar">
-              <div class="py-3">Drag and drop files here to upload.</div>
-            </ng-template>
-            <ng-template pTemplate="content">
-              @if (uploadedFiles.length) {
-                <ul>
-                  @for (file of uploadedFiles; track file) {
-                    <li>{{ file.name }} - {{ file.size }} bytes</li>
-                  }
-                </ul>
+  selector: "file-upload-advanced-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        FileUpload is an advanced uploader with dragdrop support, multi file
+        uploads, auto uploading, progress tracking and validations.
+      </p></app-docsectiontext
+    >
+    <div class="card flex justify-content-center">
+      <p-toast />
+      <p-fileUpload
+        name="demo[]"
+        url="https://www.primefaces.org/cdn/api/upload.php"
+        (onUpload)="onUpload($event)"
+        [multiple]="true"
+        accept="image/*"
+        maxFileSize="1000000"
+        mode="advanced"
+      >
+        <ng-template pTemplate="toolbar">
+          <div class="py-3">Drag and drop files here to upload.</div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          @if (uploadedFiles.length) {
+            <ul>
+              @for (file of uploadedFiles; track file) {
+                <li>{{ file.name }} - {{ file.size }} bytes</li>
               }
-            </ng-template>
-          </p-fileUpload>
-        </div>
-        <app-code [code]="code" selector="file-upload-advanced-demo" />
-        `,
-    providers: [MessageService],
-    standalone: false
+            </ul>
+          }
+        </ng-template>
+      </p-fileUpload>
+    </div>
+    <app-code [code]="code" selector="file-upload-advanced-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AdvancedDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    uploadedFiles: any[] = [];
+  uploadedFiles: any[] = [];
 
-    onUpload(event: UploadEvent) {
-        for (let file of event.files) {
-            this.uploadedFiles.push(file);
-        }
-
-        this.messageService.add({ severity: 'info', summary: 'File Uploaded', detail: '' });
+  onUpload(event: UploadEvent) {
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
     }
 
-    code: Code = {
-        basic: `<p-fileUpload 
+    this.messageService.add({
+      severity: "info",
+      summary: "File Uploaded",
+      detail: "",
+    });
+  }
+
+  code: Code = {
+    basic: `<p-fileUpload 
     name="demo[]" 
     url="https://www.primefaces.org/cdn/api/upload.php" 
     (onUpload)="onUpload($event)" 
@@ -62,7 +80,7 @@ export class AdvancedDoc {
             </ul>
         </ng-template>
 </p-fileUpload>`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast />
     <p-fileUpload 
         name="demo[]" 
@@ -80,7 +98,7 @@ export class AdvancedDoc {
             </ng-template>
     </p-fileUpload>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
@@ -110,6 +128,6 @@ export class FileUploadAdvancedDemo {
 
         this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: ''});
     }
-}`
-    };
+}`,
+  };
 }

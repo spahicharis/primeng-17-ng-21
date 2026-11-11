@@ -1,61 +1,77 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Code } from '@domain/code';
-import { CountryService } from '@service/countryservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { Code } from "@domain/code";
+import { CountryService } from "@service/countryservice";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'reactive-forms-doc',
-    template: ` <app-docsectiontext>
-            <p>AutoComplete can also be used with reactive forms. In this case, the <i>formControlName</i> property is used to bind the component to a form control.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <form [formGroup]="formGroup">
-                <p-autoComplete formControlName="selectedCountry" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" optionLabel="name" placeholder="Search" />
-            </form>
-        </div>
-        <app-code [code]="code" selector="autocomplete-reactive-forms-demo" />`,
-    standalone: false
+  selector: "reactive-forms-doc",
+  template: ` <app-docsectiontext>
+      <p>
+        AutoComplete can also be used with reactive forms. In this case, the
+        <i>formControlName</i> property is used to bind the component to a form
+        control.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <form [formGroup]="formGroup">
+        <p-autoComplete
+          formControlName="selectedCountry"
+          [suggestions]="filteredCountries"
+          (completeMethod)="filterCountry($event)"
+          optionLabel="name"
+          placeholder="Search"
+        />
+      </form>
+    </div>
+    <app-code [code]="code" selector="autocomplete-reactive-forms-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ReactiveFormsDoc implements OnInit {
-    private countryService = inject(CountryService);
+  private countryService = inject(CountryService);
 
-    countries: any[] | undefined;
+  countries: any[] | undefined;
 
-    formGroup: FormGroup | undefined;
+  formGroup: FormGroup | undefined;
 
-    filteredCountries: any[] | undefined;
+  filteredCountries: any[] | undefined;
 
-    ngOnInit() {
-        this.countryService.getCountries().then((countries) => {
-            this.countries = countries;
-        });
+  ngOnInit() {
+    this.countryService.getCountries().then((countries) => {
+      this.countries = countries;
+    });
 
-        this.formGroup = new FormGroup({
-            selectedCountry: new FormControl<object | null>(null)
-        });
+    this.formGroup = new FormGroup({
+      selectedCountry: new FormControl<object | null>(null),
+    });
+  }
+
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.countries as any[]).length; i++) {
+      let country = (this.countries as any[])[i];
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
     }
 
-    filterCountry(event: AutoCompleteCompleteEvent) {
-        let filtered: any[] = [];
-        let query = event.query;
+    this.filteredCountries = filtered;
+  }
 
-        for (let i = 0; i < (this.countries as any[]).length; i++) {
-            let country = (this.countries as any[])[i];
-            if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push(country);
-            }
-        }
-
-        this.filteredCountries = filtered;
-    }
-
-    code: Code = {
-        basic: `<form [formGroup]="formGroup">
+  code: Code = {
+    basic: `<form [formGroup]="formGroup">
     <p-autoComplete
         formControlName="selectedCountry"
         [suggestions]="filteredCountries"
@@ -63,7 +79,7 @@ export class ReactiveFormsDoc implements OnInit {
         optionLabel="name" />
 </form>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <form [formGroup]="formGroup">
         <p-autoComplete
             formControlName="selectedCountry"
@@ -73,7 +89,7 @@ export class ReactiveFormsDoc implements OnInit {
     </form>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { CountryService } from '@service/countryservice';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -123,14 +139,14 @@ export class AutocompleteReactiveFormsDemo implements OnInit {
         this.filteredCountries = filtered;
     }
 }`,
-        service: ['CountryService'],
+    service: ["CountryService"],
 
-        data: `
+    data: `
 //CountryService
 {
     "name": "Afghanistan",
     "code": "AF"
 }
-...`
-    };
+...`,
+  };
 }

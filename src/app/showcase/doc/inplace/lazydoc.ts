@@ -1,56 +1,62 @@
-import { Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { Product } from '@domain/product';
-import { ProductService } from '@service/productservice';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
+import { Product } from "@domain/product";
+import { ProductService } from "@service/productservice";
 
 @Component({
-    selector: 'lazy-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Using the <i>onActivate</i> event, data can be loaded in a lazy manner before displaying it in a table.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-inplace (onActivate)="loadData()">
-                <ng-template pTemplate="display">
-                    <span>View Data</span>
-                </ng-template>
-                <ng-template pTemplate="content">
-                    <p-table [value]="products" responsiveLayout="scroll">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Code</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-product>
-                            <tr>
-                                <td>{{ product.code }}</td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.category }}</td>
-                                <td>{{ product.quantity }}</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </ng-template>
-            </p-inplace>
-        </div>
-        <app-code [code]="code" selector="inplace-lazy-demo" />
-    `,
-    standalone: false
+  selector: "lazy-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Using the <i>onActivate</i> event, data can be loaded in a lazy manner
+        before displaying it in a table.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-inplace (onActivate)="loadData()">
+        <ng-template pTemplate="display">
+          <span>View Data</span>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <p-table [value]="products" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr>
+                <td>{{ product.code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.quantity }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-template>
+      </p-inplace>
+    </div>
+    <app-code [code]="code" selector="inplace-lazy-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LazyDoc {
-    private productService = inject(ProductService);
+  private productService = inject(ProductService);
 
-    products: Product[] | undefined;
+  products: Product[] | undefined;
 
-    loadData() {
-        this.productService.getProductsSmall().then((products) => (this.products = products));
-    }
+  loadData() {
+    this.productService
+      .getProductsSmall()
+      .then((products) => (this.products = products));
+  }
 
-    code: Code = {
-        basic: `<p-inplace (onActivate)="loadData()">
+  code: Code = {
+    basic: `<p-inplace (onActivate)="loadData()">
     <ng-template pTemplate="display">
         <span>View Data</span>
     </ng-template>
@@ -75,7 +81,7 @@ export class LazyDoc {
         </p-table>
     </ng-template>
 </p-inplace>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <p-inplace (onActivate)="loadData()">
         <ng-template pTemplate="display">
             <span>View Data</span>
@@ -102,7 +108,7 @@ export class LazyDoc {
         </ng-template>
     </p-inplace>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { Product } from '@domain/product';
 import { ProductService } from '@service/productservice';
 import { InplaceModule } from 'primeng/inplace';
@@ -124,7 +130,7 @@ export class InplaceLazyDemo {
         this.productService.getProductsSmall().then((products) => (this.products = products));
     }
 }`,
-        data: `
+    data: `
 /* ProductService */        
 {
 id: '1000',
@@ -139,13 +145,13 @@ inventoryStatus: 'INSTOCK',
 rating: 5
 },
 ...`,
-        service: ['ProductService']
-    };
+    service: ["ProductService"],
+  };
 
-    extFiles = [
-        {
-            path: 'src/domain/product.ts',
-            content: `
+  extFiles = [
+    {
+      path: "src/domain/product.ts",
+      content: `
 export interface Product {
 id?: string;
 code?: string;
@@ -157,7 +163,7 @@ inventoryStatus?: string;
 category?: string;
 image?: string;
 rating?: number;
-}`
-        }
-    ];
+}`,
+    },
+  ];
 }

@@ -1,30 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'number-of-stars-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Number of stars to display is defined with <i>stars</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-rating [(ngModel)]="value" [stars]="10" />
-        </div>
-        <app-code [code]="code" selector="rating-number-of-stars-demo" />
-    `,
-    standalone: false
+  selector: "number-of-stars-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Number of stars to display is defined with <i>stars</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-rating [(ngModel)]="value" [stars]="10" />
+    </div>
+    <app-code [code]="code" selector="rating-number-of-stars-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class NumberOfStarsDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-rating [(ngModel)]="value" [stars]="10" />`,
+  code: Code = {
+    basic: `<p-rating [(ngModel)]="value" [stars]="10" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-rating [(ngModel)]="value" [stars]="10" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 
@@ -36,6 +37,6 @@ import { RatingModule } from 'primeng/rating';
 })
 export class RatingNumberOfStarsDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

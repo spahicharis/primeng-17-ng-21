@@ -1,32 +1,36 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'avatar-template-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Content can easily be customized with the dynamic content instead of using the built-in modes.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-avatar size="xlarge">
-                <span class="text-base">Content</span>
-            </p-avatar>
-        </div>
-        <app-code [code]="code" selector="avatar-template-demo" />
-    `,
-    standalone: false
+  selector: "avatar-template-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Content can easily be customized with the dynamic content instead of
+        using the built-in modes.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-avatar size="xlarge">
+        <span class="text-base">Content</span>
+      </p-avatar>
+    </div>
+    <app-code [code]="code" selector="avatar-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc {
-    code: Code = {
-        basic: `<p-avatar size="xlarge">
+  code: Code = {
+    basic: `<p-avatar size="xlarge">
     <span class="text-base">Content</span>
 </p-avatar>`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-avatar size="xlarge">
         <span class="text-base">Content</span>
     </p-avatar>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 
 @Component({
@@ -35,6 +39,6 @@ import { AvatarModule } from 'primeng/avatar';
     standalone: true,
     imports: [AvatarModule]
 })
-export class AvatarTemplateDemo {}`
-    };
+export class AvatarTemplateDemo {}`,
+  };
 }

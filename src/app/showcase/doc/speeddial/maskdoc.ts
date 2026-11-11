@@ -1,68 +1,92 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'mask-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Adding <i>mask</i> property displays a modal layer behind the popup items.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <div style="height: 350px; position: relative;" class="speeddial-mask-demo">
-                <p-toast />
-                <p-speedDial [model]="items" direction="up" [mask]="true" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="speed-dial-mask-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "mask-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Adding <i>mask</i> property displays a modal layer behind the popup
+        items.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div
+        style="height: 350px; position: relative;"
+        class="speeddial-mask-demo"
+      >
+        <p-toast />
+        <p-speedDial [model]="items" direction="up" [mask]="true" />
+      </div>
+    </div>
+    <app-code [code]="code" selector="speed-dial-mask-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MaskDoc implements OnInit {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            {
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
-                }
-            },
-            {
-                icon: 'pi pi-refresh',
-                command: () => {
-                    this.messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
-                }
-            },
-            {
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
-                }
-            },
-            {
-                icon: 'pi pi-upload',
-                routerLink: ['/fileupload']
-            },
-            {
-                icon: 'pi pi-external-link',
-                target: '_blank',
-                url: 'http://angular.io'
-            }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      {
+        icon: "pi pi-pencil",
+        command: () => {
+          this.messageService.add({
+            severity: "info",
+            summary: "Add",
+            detail: "Data Added",
+          });
+        },
+      },
+      {
+        icon: "pi pi-refresh",
+        command: () => {
+          this.messageService.add({
+            severity: "success",
+            summary: "Update",
+            detail: "Data Updated",
+          });
+        },
+      },
+      {
+        icon: "pi pi-trash",
+        command: () => {
+          this.messageService.add({
+            severity: "error",
+            summary: "Delete",
+            detail: "Data Deleted",
+          });
+        },
+      },
+      {
+        icon: "pi pi-upload",
+        routerLink: ["/fileupload"],
+      },
+      {
+        icon: "pi pi-external-link",
+        target: "_blank",
+        url: "http://angular.io",
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-speedDial 
+  code: Code = {
+    basic: `<p-speedDial 
     [model]="items" 
     direction="up" 
     [mask]="true" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <div style="height: 350px; position: relative;" class="speeddial-mask-demo">
         <p-toast />
         <p-speedDial 
@@ -72,7 +96,7 @@ export class MaskDoc implements OnInit {
     </div>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
@@ -132,13 +156,13 @@ export class SpeedDialMaskDemo implements OnInit {
     }
 }`,
 
-        scss: `:host ::ng-deep {
+    scss: `:host ::ng-deep {
     .speeddial-mask-demo {
         .p-speeddial-direction-up {
             right: 0;
             bottom: 0;
         }
     }
-}`
-    };
+}`,
+  };
 }

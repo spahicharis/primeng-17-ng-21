@@ -1,39 +1,40 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'floatlabel-doc',
-    template: `
-        <app-docsectiontext>
-            <p>A floating label appears on top of the input field when focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-floatLabel>
-                <input pInputText id="username" [(ngModel)]="value" />
-                <label for="username">Username</label>
-            </p-floatLabel>
-        </div>
-        <app-code [code]="code" selector="input-text-floatlabel-demo" />
-    `,
-    standalone: false
+  selector: "floatlabel-doc",
+  template: `
+    <app-docsectiontext>
+      <p>A floating label appears on top of the input field when focused.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-floatLabel>
+        <input pInputText id="username" [(ngModel)]="value" />
+        <label for="username">Username</label>
+      </p-floatLabel>
+    </div>
+    <app-code [code]="code" selector="input-text-floatlabel-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FloatLabelDoc {
-    value: string | undefined;
+  value: string | undefined;
 
-    code: Code = {
-        basic: `<p-floatLabel>
+  code: Code = {
+    basic: `<p-floatLabel>
     <input pInputText id="username" [(ngModel)]="value" />
     <label for="username">Username</label>
 </p-floatLabel>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-floatLabel>
         <input pInputText id="username" [(ngModel)]="value" />
         <label for="username">Username</label>
     </p-floatLabel>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -46,6 +47,6 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 })
 export class InputTextFloatlabelDemo {
     value: string | undefined;
-}`
-    };
+}`,
+  };
 }

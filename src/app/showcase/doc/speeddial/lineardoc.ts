@@ -1,71 +1,97 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'linear-doc',
-    template: `
-        <app-docsectiontext>
-            <p>SpeedDial items are defined with the <i>model</i> property based on MenuModel API. Default orientation of the items is linear and <i>direction</i> property is used to define the position of the items related to the button.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <div style="height: 500px; position: relative;" class="speeddial-linear-demo">
-                <p-toast />
-                <p-speedDial [model]="items" direction="up" />
-                <p-speedDial [model]="items" direction="down" />
-                <p-speedDial [model]="items" direction="left" />
-                <p-speedDial [model]="items" direction="right" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="speed-dial-linear-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "linear-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        SpeedDial items are defined with the <i>model</i> property based on
+        MenuModel API. Default orientation of the items is linear and
+        <i>direction</i> property is used to define the position of the items
+        related to the button.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div
+        style="height: 500px; position: relative;"
+        class="speeddial-linear-demo"
+      >
+        <p-toast />
+        <p-speedDial [model]="items" direction="up" />
+        <p-speedDial [model]="items" direction="down" />
+        <p-speedDial [model]="items" direction="left" />
+        <p-speedDial [model]="items" direction="right" />
+      </div>
+    </div>
+    <app-code [code]="code" selector="speed-dial-linear-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LinearDoc implements OnInit {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            {
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
-                }
-            },
-            {
-                icon: 'pi pi-refresh',
-                command: () => {
-                    this.messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
-                }
-            },
-            {
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
-                }
-            },
-            {
-                icon: 'pi pi-upload',
-                routerLink: ['/fileupload']
-            },
-            {
-                icon: 'pi pi-external-link',
-                target: '_blank',
-                url: 'http://angular.io'
-            }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      {
+        icon: "pi pi-pencil",
+        command: () => {
+          this.messageService.add({
+            severity: "info",
+            summary: "Add",
+            detail: "Data Added",
+          });
+        },
+      },
+      {
+        icon: "pi pi-refresh",
+        command: () => {
+          this.messageService.add({
+            severity: "success",
+            summary: "Update",
+            detail: "Data Updated",
+          });
+        },
+      },
+      {
+        icon: "pi pi-trash",
+        command: () => {
+          this.messageService.add({
+            severity: "error",
+            summary: "Delete",
+            detail: "Data Deleted",
+          });
+        },
+      },
+      {
+        icon: "pi pi-upload",
+        routerLink: ["/fileupload"],
+      },
+      {
+        icon: "pi pi-external-link",
+        target: "_blank",
+        url: "http://angular.io",
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-speedDial [model]="items" direction="up" />
+  code: Code = {
+    basic: `<p-speedDial [model]="items" direction="up" />
 <p-speedDial [model]="items" direction="down" />
 <p-speedDial [model]="items" direction="left" />
 <p-speedDial [model]="items" direction="right" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <div style="height: 500px; position: relative;" class="speeddial-linear-demo">
         <p-toast />
         <p-speedDial [model]="items" direction="up" />
@@ -75,7 +101,7 @@ export class LinearDoc implements OnInit {
     </div>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
@@ -150,7 +176,7 @@ export class SpeedDialLinearDemo implements OnInit {
     }
 }`,
 
-        scss: `:host ::ng-deep {
+    scss: `:host ::ng-deep {
     .speeddial-linear-demo {
         .p-speeddial-direction-up {
             left: calc(50% - 2rem);
@@ -172,6 +198,6 @@ export class SpeedDialLinearDemo implements OnInit {
             top: calc(50% - 2rem);
         }
     }
-}`
-    };
+}`,
+  };
 }

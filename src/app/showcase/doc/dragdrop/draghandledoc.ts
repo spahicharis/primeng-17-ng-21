@@ -1,36 +1,45 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'drag-drop-drag-handle-demo',
-    template: `
-        <app-docsectiontext>
-            <p><i>dragHandle</i> is used to restrict dragging unless mousedown occurs on the specified element. Panel below can only be dragged using its header.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <div pDraggable dragHandle=".p-panel-header" class="w-15rem">
-                <p-panel header="Drag Header"> Content </p-panel>
-            </div>
-        </div>
-        <app-code [code]="code" selector="drag-drop-drag-handle-demo" [extFiles]="extFiles" />
-    `,
-    standalone: false
+  selector: "drag-drop-drag-handle-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        <i>dragHandle</i> is used to restrict dragging unless mousedown occurs
+        on the specified element. Panel below can only be dragged using its
+        header.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div pDraggable dragHandle=".p-panel-header" class="w-15rem">
+        <p-panel header="Drag Header"> Content </p-panel>
+      </div>
+    </div>
+    <app-code
+      [code]="code"
+      selector="drag-drop-drag-handle-demo"
+      [extFiles]="extFiles"
+    />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DragHandleDoc {
-    code: Code = {
-        basic: `<div pDraggable dragHandle=".p-panel-header" class="w-15rem">
+  code: Code = {
+    basic: `<div pDraggable dragHandle=".p-panel-header" class="w-15rem">
     <p-panel header="Drag Header">
         Content
     </p-panel>
 </div>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <div pDraggable dragHandle=".p-panel-header" class="w-15rem">
         <p-panel header="Drag Header">
             Content
         </p-panel>
     </div>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { DragDropModule } from 'primeng/dragdrop';
 import { PanelModule } from 'primeng/panel';
 
@@ -49,13 +58,13 @@ import { PanelModule } from 'primeng/panel';
 })
 export class DragDropDragHandleDemo {}`,
 
-        service: ['ProductService']
-    };
+    service: ["ProductService"],
+  };
 
-    extFiles = [
-        {
-            path: 'src/domain/product.ts',
-            content: `
+  extFiles = [
+    {
+      path: "src/domain/product.ts",
+      content: `
 export interface Product {
     id?: string;
     code?: string;
@@ -67,7 +76,7 @@ export interface Product {
     category?: string;
     image?: string;
     rating?: number;
-}`
-        }
-    ];
+}`,
+    },
+  ];
 }

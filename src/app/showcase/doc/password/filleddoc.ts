@@ -1,36 +1,41 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'filled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Specify the <i>variant</i> property as <i>filled</i> to display the component with a higher visual emphasis than the default <i>outlined</i> style.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-password [(ngModel)]="value" [feedback]="false" variant="filled" />
-        </div>
-        <app-code [code]="code" selector="password-filled-demo" />
-    `,
-    standalone: false
+  selector: "filled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Specify the <i>variant</i> property as <i>filled</i> to display the
+        component with a higher visual emphasis than the default
+        <i>outlined</i> style.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-password [(ngModel)]="value" [feedback]="false" variant="filled" />
+    </div>
+    <app-code [code]="code" selector="password-filled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilledDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<p-password 
+  code: Code = {
+    basic: `<p-password 
     [(ngModel)]="value" 
     [feedback]="false" 
     variant="filled" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-password 
         [(ngModel)]="value" 
         [feedback]="false" 
         variant="filled" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 
@@ -42,6 +47,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class PasswordFilledDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

@@ -1,30 +1,39 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-inline-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Calendar is displayed as a popup by default, add <i>inline</i> property to customize this behavior.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true" />
-        </div>
-        <app-code [code]="code" selector="calendar-inline-demo" />
-    `,
-    standalone: false
+  selector: "calendar-inline-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Calendar is displayed as a popup by default, add <i>inline</i> property
+        to customize this behavior.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-calendar
+        class="max-w-full"
+        [(ngModel)]="date"
+        [inline]="true"
+        [showWeek]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="calendar-inline-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InlineDoc {
-    date: Date[] | undefined;
+  date: Date[] | undefined;
 
-    code: Code = {
-        basic: `<p-calendar 
+  code: Code = {
+    basic: `<p-calendar 
     class="max-w-full" 
     [(ngModel)]="date" 
     [inline]="true" 
     [showWeek]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-calendar 
         class="max-w-full" 
         [(ngModel)]="date" 
@@ -32,7 +41,7 @@ export class InlineDoc {
         [showWeek]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -44,6 +53,6 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class CalendarInlineDemo {
     date: Date[] | undefined;
-}`
-    };
+}`,
+  };
 }

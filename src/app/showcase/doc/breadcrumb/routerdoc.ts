@@ -1,44 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'breadcrumb-router-demo',
-    template: `
-        <app-docsectiontext>
-          <p>Items with navigation are defined with templating to be able to use a routerLink directive, an external link or programmatic navigation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-          <p-breadcrumb class="max-w-full" [model]="items">
-            <ng-template pTemplate="item" let-item>
-              @if (item.route) {
-                <a [routerLink]="item.route" class="p-menuitem-link">
-                  <span [ngClass]="[item.icon ? item.icon : '', 'text-color']"></span>
-                  <span class="text-primary font-semibold">{{ item.label }}</span>
-                </a>
-              } @else {
-                <a [href]="item.url">
-                  <span class="text-color">{{ item.label }}</span>
-                </a>
-              }
-            </ng-template>
-          </p-breadcrumb>
-        </div>
-        <app-code [code]="code" selector="breadcrumb-router-demo" />
-        `,
-    standalone: false
+  selector: "breadcrumb-router-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Items with navigation are defined with templating to be able to use a
+        routerLink directive, an external link or programmatic navigation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-breadcrumb class="max-w-full" [model]="items">
+        <ng-template pTemplate="item" let-item>
+          @if (item.route) {
+            <a [routerLink]="item.route" class="p-menuitem-link">
+              <span
+                [ngClass]="[item.icon ? item.icon : '', 'text-color']"
+              ></span>
+              <span class="text-primary font-semibold">{{ item.label }}</span>
+            </a>
+          } @else {
+            <a [href]="item.url">
+              <span class="text-color">{{ item.label }}</span>
+            </a>
+          }
+        </ng-template>
+      </p-breadcrumb>
+    </div>
+    <app-code [code]="code" selector="breadcrumb-router-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RouterDoc implements OnInit {
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    home: MenuItem | undefined;
+  home: MenuItem | undefined;
 
-    ngOnInit() {
-        this.items = [{ icon: 'pi pi-home', route: '/installation' }, { label: 'Components' }, { label: 'Form' }, { label: 'InputText', route: '/inputtext' }];
-    }
+  ngOnInit() {
+    this.items = [
+      { icon: "pi pi-home", route: "/installation" },
+      { label: "Components" },
+      { label: "Form" },
+      { label: "InputText", route: "/inputtext" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-breadcrumb class="max-w-full" [model]="items">
+  code: Code = {
+    basic: `<p-breadcrumb class="max-w-full" [model]="items">
     <ng-template pTemplate="item" let-item>
         <ng-container *ngIf="item.route; else elseBlock">
             <a [routerLink]="item.route" class="p-menuitem-link">
@@ -54,7 +65,7 @@ export class RouterDoc implements OnInit {
     </ng-template>
 </p-breadcrumb>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-breadcrumb class="max-w-full" [model]="items">
         <ng-template pTemplate="item" let-item>
             <ng-container *ngIf="item.route; else elseBlock">
@@ -72,7 +83,7 @@ export class RouterDoc implements OnInit {
     </p-breadcrumb>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { RouterModule } from '@angular/router';
@@ -91,6 +102,6 @@ export class BreadcrumbRouterDemo implements OnInit {
     ngOnInit() {
         this.items = [{ icon: 'pi pi-home', route: '/installation' }, { label: 'Components' }, { label: 'Form' }, { label: 'InputText', route: '/inputtext' }];
     }
-}`
-    };
+}`,
+  };
 }

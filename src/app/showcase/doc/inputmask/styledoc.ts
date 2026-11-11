@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
-    selector: 'style-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Styling is same as <a href="#" [routerLink]="['/inputtext']">inputtext component</a>, for theming classes visit <a href="#" [routerLink]="['/theming']">theming page</a>.</p>
-        </app-docsectiontext>
-    `,
-    standalone: false
+  selector: "style-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Styling is same as
+        <a href="#" [routerLink]="['/inputtext']">inputtext component</a>, for
+        theming classes visit
+        <a href="#" [routerLink]="['/theming']">theming page</a>.
+      </p>
+    </app-docsectiontext>
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class StyleDoc {}

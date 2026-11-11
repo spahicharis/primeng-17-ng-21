@@ -1,36 +1,46 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'invalid-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value" class="ng-invalid ng-dirty" />
-        </div>
-        <app-code [code]="code" selector="select-button-invalid-demo" />
-    `,
-    standalone: false
+  selector: "invalid-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-selectButton
+        [options]="stateOptions"
+        [(ngModel)]="value"
+        optionLabel="label"
+        optionValue="value"
+        class="ng-invalid ng-dirty"
+      />
+    </div>
+    <app-code [code]="code" selector="select-button-invalid-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    stateOptions: any[] = [
-        { label: 'Off', value: 'off' },
-        { label: 'On', value: 'on' }
-    ];
+  stateOptions: any[] = [
+    { label: "Off", value: "off" },
+    { label: "On", value: "on" },
+  ];
 
-    value: string = 'off';
+  value: string = "off";
 
-    code: Code = {
-        basic: `<p-selectButton 
+  code: Code = {
+    basic: `<p-selectButton 
     [options]="stateOptions" 
     [(ngModel)]="value" 
     optionLabel="label" 
     optionValue="value" 
     class="ng-invalid ng-dirty" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-selectButton 
         [options]="stateOptions" 
         [(ngModel)]="value" 
@@ -39,7 +49,7 @@ export class InvalidDoc {
         class="ng-invalid ng-dirty" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
         
@@ -53,6 +63,6 @@ export class SelectButtonInvalidDemo {
     stateOptions: any[] = [{label: 'Off', value: 'off'}, {label: 'On', value: 'on'}];
 
     value: string = 'off';
-}`
-    };
+}`,
+  };
 }

@@ -1,36 +1,40 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'invalid-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <input pInputText class="ng-invalid ng-dirty" [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="input-text-invalid-demo" />
-    `,
-    standalone: false
+  selector: "invalid-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <input pInputText class="ng-invalid ng-dirty" [(ngModel)]="value" />
+    </div>
+    <app-code [code]="code" selector="input-text-invalid-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    value: string | undefined;
+  value: string | undefined;
 
-    code: Code = {
-        basic: `<input 
+  code: Code = {
+    basic: `<input 
     pInputText 
     class="ng-invalid ng-dirty"
     [(ngModel)]="value" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <input 
         pInputText 
         class="ng-invalid ng-dirty" 
         [(ngModel)]="value" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 
@@ -42,6 +46,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputTextInvalidDemo {
     value: string | undefined;
-}`
-    };
+}`,
+  };
 }

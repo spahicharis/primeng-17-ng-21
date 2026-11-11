@@ -1,36 +1,45 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'options-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Tooltip is also configurable by using <i>tooltipOptions</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <input type="text" pInputText pTooltip="Enter your username" [tooltipOptions]="tooltipOptions" placeholder="hover to display tooltip" />
-        </div>
-        <app-code [code]="code" selector="tooltip-options-demo" />
-    `,
-    standalone: false
+  selector: "options-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Tooltip is also configurable by using <i>tooltipOptions</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <input
+        type="text"
+        pInputText
+        pTooltip="Enter your username"
+        [tooltipOptions]="tooltipOptions"
+        placeholder="hover to display tooltip"
+      />
+    </div>
+    <app-code [code]="code" selector="tooltip-options-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class OptionsDoc {
-    tooltipOptions = {
-        showDelay: 150,
-        autoHide: false,
-        tooltipEvent: 'hover',
-        tooltipPosition: 'left'
-    };
+  tooltipOptions = {
+    showDelay: 150,
+    autoHide: false,
+    tooltipEvent: "hover",
+    tooltipPosition: "left",
+  };
 
-    code: Code = {
-        basic: `<input 
+  code: Code = {
+    basic: `<input 
     type="text" 
     pInputText 
     pTooltip="Enter your username" 
     [tooltipOptions]="tooltipOptions" 
     placeholder="hover to display tooltip" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <input 
         type="text" 
         pInputText 
@@ -39,7 +48,7 @@ export class OptionsDoc {
         placeholder="hover to display tooltip" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -56,6 +65,6 @@ export class TooltipOptionsDemo {
         tooltipEvent: 'hover',
         tooltipPosition: 'left'
     };
-}`
-    };
+}`,
+  };
 }

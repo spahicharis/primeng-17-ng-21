@@ -1,46 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'controlled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Steps can be controlled programmatically using <i>activeIndex</i> property.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <div class="flex mb-5 gap-2 justify-content-end">
-                <p-button (onClick)="active = 0" [rounded]="true" label="1" styleClass="w-2rem h-2rem p-0" [outlined]="active !== 0" />
-                <p-button (onClick)="active = 1" [rounded]="true" label="2" styleClass="w-2rem h-2rem p-0" [outlined]="active !== 1" />
-                <p-button (onClick)="active = 2" [rounded]="true" label="3" styleClass="w-2rem h-2rem p-0" [outlined]="active !== 2" />
-            </div>
-            <p-steps [activeIndex]="active" [model]="items" />
-        </div>
-        <app-code [code]="code" selector="steps-controlled-demo" />
-    `,
-    standalone: false
+  selector: "controlled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Steps can be controlled programmatically using
+        <i>activeIndex</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div class="flex mb-5 gap-2 justify-content-end">
+        <p-button
+          (onClick)="active = 0"
+          [rounded]="true"
+          label="1"
+          styleClass="w-2rem h-2rem p-0"
+          [outlined]="active !== 0"
+        />
+        <p-button
+          (onClick)="active = 1"
+          [rounded]="true"
+          label="2"
+          styleClass="w-2rem h-2rem p-0"
+          [outlined]="active !== 1"
+        />
+        <p-button
+          (onClick)="active = 2"
+          [rounded]="true"
+          label="3"
+          styleClass="w-2rem h-2rem p-0"
+          [outlined]="active !== 2"
+        />
+      </div>
+      <p-steps [activeIndex]="active" [model]="items" />
+    </div>
+    <app-code [code]="code" selector="steps-controlled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ControlledDoc implements OnInit {
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    active: number = 0;
+  active: number = 0;
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'Personal Info'
-            },
-            {
-                label: 'Reservation'
-            },
-            {
-                label: 'Review'
-            }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      {
+        label: "Personal Info",
+      },
+      {
+        label: "Reservation",
+      },
+      {
+        label: "Review",
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<div class="flex mb-5 gap-2 justify-content-end">
+  code: Code = {
+    basic: `<div class="flex mb-5 gap-2 justify-content-end">
     <p-button 
         (onClick)="active = 0" 
         [rounded]="true" 
@@ -62,7 +84,7 @@ export class ControlledDoc implements OnInit {
 </div>
 <p-steps [activeIndex]="active" [model]="items" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <div class="flex mb-5 gap-2 justify-content-end">
         <p-button 
             (onClick)="active = 0" 
@@ -86,7 +108,7 @@ export class ControlledDoc implements OnInit {
     <p-steps [activeIndex]="active" [model]="items" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { StepsModule } from 'primeng/steps';
 import { ButtonModule } from 'primeng/button';
@@ -115,6 +137,6 @@ export class StepsControlledDemo implements OnInit {
             }
         ];
     }
-}`
-    };
+}`,
+  };
 }

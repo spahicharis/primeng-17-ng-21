@@ -1,29 +1,41 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'vertical-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Panels are displayed as stacked by setting the <i>layout</i> to <i>vertical</i>.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-splitter [style]="{ height: '300px' }" styleClass="mb-5" layout="vertical">
-                <ng-template pTemplate>
-                    <div class="col flex align-items-center justify-content-center">Panel 1</div>
-                </ng-template>
-                <ng-template pTemplate>
-                    <div class="col flex align-items-center justify-content-center">Panel 2</div>
-                </ng-template>
-            </p-splitter>
-        </div>
-        <app-code [code]="code" selector="splitter-vertical-demo" />
-    `,
-    standalone: false
+  selector: "vertical-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Panels are displayed as stacked by setting the <i>layout</i> to
+        <i>vertical</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-splitter
+        [style]="{ height: '300px' }"
+        styleClass="mb-5"
+        layout="vertical"
+      >
+        <ng-template pTemplate>
+          <div class="col flex align-items-center justify-content-center">
+            Panel 1
+          </div>
+        </ng-template>
+        <ng-template pTemplate>
+          <div class="col flex align-items-center justify-content-center">
+            Panel 2
+          </div>
+        </ng-template>
+      </p-splitter>
+    </div>
+    <app-code [code]="code" selector="splitter-vertical-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class VerticalDoc {
-    code: Code = {
-        basic: `<p-splitter 
+  code: Code = {
+    basic: `<p-splitter 
     [style]="{ height: '300px' }" 
     styleClass="mb-5" 
     layout="vertical">
@@ -39,7 +51,7 @@ export class VerticalDoc {
         </ng-template>
 </p-splitter>`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-splitter 
         [style]="{ height: '300px' }" 
         styleClass="mb-5" 
@@ -57,7 +69,7 @@ export class VerticalDoc {
     </p-splitter>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { SplitterModule } from 'primeng/splitter';   
 
 @Component({
@@ -66,6 +78,6 @@ import { SplitterModule } from 'primeng/splitter';
     standalone: true,
     imports: [SplitterModule]
 })
-export class SplitterVerticalDemo {}`
-    };
+export class SplitterVerticalDemo {}`,
+  };
 }

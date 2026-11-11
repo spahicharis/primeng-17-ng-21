@@ -1,30 +1,33 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'meter-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Strength meter is displayed as a popup while a value is being entered.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-password [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="password-meter-demo" />
-    `,
-    standalone: false
+  selector: "meter-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Strength meter is displayed as a popup while a value is being entered.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-password [(ngModel)]="value" />
+    </div>
+    <app-code [code]="code" selector="password-meter-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MeterDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<p-password [(ngModel)]="value" />`,
+  code: Code = {
+    basic: `<p-password [(ngModel)]="value" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-password [(ngModel)]="value" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +39,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class PasswordMeterDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

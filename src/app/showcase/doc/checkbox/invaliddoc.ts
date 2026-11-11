@@ -1,30 +1,39 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'checkbox-invalid-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" class="ng-invalid ng-dirty" />
-        </div>
-        <app-code [code]="code" selector="checkbox-invalid-demo" />
-    `,
-    standalone: false
+  selector: "checkbox-invalid-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-checkbox
+        [(ngModel)]="checked"
+        [binary]="true"
+        inputId="binary"
+        class="ng-invalid ng-dirty"
+      />
+    </div>
+    <app-code [code]="code" selector="checkbox-invalid-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    checked: boolean = false;
+  checked: boolean = false;
 
-    code: Code = {
-        basic: `<p-checkbox 
+  code: Code = {
+    basic: `<p-checkbox 
     [(ngModel)]="checked"
     [binary]="true"
     inputId="binary"
     class="ng-invalid ng-dirty" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-checkbox 
         [(ngModel)]="checked"
         [binary]="true"
@@ -32,7 +41,7 @@ export class InvalidDoc {
         class="ng-invalid ng-dirty" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 
@@ -44,6 +53,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 })
 export class CheckboxInvalidDemo {
     checked: boolean = false;
-}`
-    };
+}`,
+  };
 }

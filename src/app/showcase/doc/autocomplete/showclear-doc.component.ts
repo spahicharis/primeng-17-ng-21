@@ -1,61 +1,83 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { CountryService } from '@service/countryservice';
-import { PlatformService } from '@service/platformservice';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { CountryService } from "@service/countryservice";
+import { PlatformService } from "@service/platformservice";
+import { FormControl, FormGroup } from "@angular/forms";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'autocomplete-show-clear-demo',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>showClear</i> is enabled, a clear icon is added to reset the Autocomplete.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center" [formGroup]="countryFormGroup">
-            <p-autoComplete formControlName="country" [dropdown]="true" [showClear]="true" placeholder="Search" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" optionLabel="name" />
-        </div>
-        <app-code [code]="code" selector="autocomplete-show-clear-demo" />
-    `,
-    standalone: false
+  selector: "autocomplete-show-clear-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>showClear</i> is enabled, a clear icon is added to reset the
+        Autocomplete.
+      </p>
+    </app-docsectiontext>
+    <div
+      class="card flex justify-content-center"
+      [formGroup]="countryFormGroup"
+    >
+      <p-autoComplete
+        formControlName="country"
+        [dropdown]="true"
+        [showClear]="true"
+        placeholder="Search"
+        [suggestions]="filteredCountries"
+        (completeMethod)="filterCountry($event)"
+        optionLabel="name"
+      />
+    </div>
+    <app-code [code]="code" selector="autocomplete-show-clear-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ShowClearDoc implements OnInit {
-    private countryService = inject(CountryService);
-    private PlatformService = inject(PlatformService);
+  private countryService = inject(CountryService);
+  private PlatformService = inject(PlatformService);
 
-    countries: any[] | undefined;
+  countries: any[] | undefined;
 
-    countryFormGroup: FormGroup = new FormGroup({ country: new FormControl({ name: 'Switzerland', code: 'CH' }) });
+  countryFormGroup: FormGroup = new FormGroup({
+    country: new FormControl({ name: "Switzerland", code: "CH" }),
+  });
 
-    filteredCountries: any[] | undefined;
+  filteredCountries: any[] | undefined;
 
-    ngOnInit() {
-        if (this.PlatformService.isBrowser()) {
-            this.countryService.getCountries().then((countries) => {
-                this.countries = countries;
-            });
-        }
+  ngOnInit() {
+    if (this.PlatformService.isBrowser()) {
+      this.countryService.getCountries().then((countries) => {
+        this.countries = countries;
+      });
+    }
+  }
+
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.countries as any[]).length; i++) {
+      let country = (this.countries as any[])[i];
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
     }
 
-    filterCountry(event: AutoCompleteCompleteEvent) {
-        let filtered: any[] = [];
-        let query = event.query;
+    this.filteredCountries = filtered;
+  }
 
-        for (let i = 0; i < (this.countries as any[]).length; i++) {
-            let country = (this.countries as any[])[i];
-            if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push(country);
-            }
-        }
-
-        this.filteredCountries = filtered;
-    }
-
-    code: Code = {
-        basic: `<p-autoComplete
+  code: Code = {
+    basic: `<p-autoComplete
     formControlName="country"
     [dropdown]="true"
     [showClear]="true"
@@ -63,7 +85,7 @@ export class ShowClearDoc implements OnInit {
     (completeMethod)="filterCountry($event)"
     optionLabel="name" />`,
 
-        html: `<div class="card flex justify-content-center" [formGroup]="countryFormGroup">
+    html: `<div class="card flex justify-content-center" [formGroup]="countryFormGroup">
     <p-autoComplete
         formControlName="country"
         [dropdown]="true"
@@ -73,7 +95,7 @@ export class ShowClearDoc implements OnInit {
         optionLabel="name" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { CountryService } from '@service/countryservice';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -120,14 +142,14 @@ export class AutocompleteShowClearDemo implements OnInit {
         this.filteredCountries = filtered;
     }
 }`,
-        service: ['CountryService'],
+    service: ["CountryService"],
 
-        data: `
+    data: `
 //CountryService
 {
     "name": "Afghanistan",
     "code": "AF"
 }
-...`
-    };
+...`,
+  };
 }

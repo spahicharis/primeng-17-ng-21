@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'custom-constraints-doc',
-    template: `
-        <app-docsectiontext>
-            <p>FilterService can be extended by adding new constraints using the <span>register</span> function.</p></app-docsectiontext
-        >
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    standalone: false
+  selector: "custom-constraints-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        FilterService can be extended by adding new constraints using the
+        <span>register</span> function.
+      </p></app-docsectiontext
+    >
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CustomConstraintsDoc {
-    code: Code = {
-        typescript: `this.filterService.register('isPrimeNumber', (value, filter): boolean => {
+  code: Code = {
+    typescript: `this.filterService.register('isPrimeNumber', (value, filter): boolean => {
     if (filter === undefined || filter === null || filter.trim() === '') {
         return true;
     }
@@ -27,6 +31,6 @@ export class CustomConstraintsDoc {
 
 this.filterService.filters['isPrimeNumber'](3);                      //true
 this.filterService.filters['isPrimeNumber'](5);                      //true
-this.filterService.filters['isPrimeNumber'](568985673);              //false`
-    };
+this.filterService.filters['isPrimeNumber'](568985673);              //false`,
+  };
 }

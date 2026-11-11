@@ -1,31 +1,40 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'key-filter-doc',
-    template: `
-        <app-docsectiontext>
-            <p>InputText has built-in key filtering support to block certain keys, refer to <a href="/keyfilter">keyfilter</a> page for more information.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="inputtext-key-filter-demo" />
-    `,
-    standalone: false
+  selector: "key-filter-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        InputText has built-in key filtering support to block certain keys,
+        refer to <a href="/keyfilter">keyfilter</a> page for more information.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <input
+        pInputText
+        pKeyFilter="int"
+        placeholder="Integers"
+        [(ngModel)]="value"
+      />
+    </div>
+    <app-code [code]="code" selector="inputtext-key-filter-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class KeyFilterDoc {
-    value: number | undefined;
+  value: number | undefined;
 
-    code: Code = {
-        basic: `<input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="value" />`,
+  code: Code = {
+    basic: `<input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="value" />`,
 
-        html: `
+    html: `
 <div class="card flex justify-content-center">
     <input pInputText pKeyFilter="int" placeholder="Integers" [(ngModel)]="value" />
 </div>`,
 
-        typescript: `
+    typescript: `
 import { Component } from '@angular/core';
 
 @Component({
@@ -34,6 +43,6 @@ import { Component } from '@angular/core';
 })
 export class InputTextKeyFilterDemo {
     value: number | undefined;
-}`
-    };
+}`,
+  };
 }

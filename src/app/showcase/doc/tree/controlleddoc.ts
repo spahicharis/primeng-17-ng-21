@@ -1,57 +1,77 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'controlled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Tree requires a collection of <i>TreeNode</i> instances as a <i>value</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column align-items-center justify-content-center">
-            <div class="mb-3">
-                <p-button icon="pi pi-plus" label="Expand all" (onClick)="expandAll()" class="mr-2" />
-                <p-button icon="pi pi-minus" label="Collapse all" (onClick)="collapseAll()" />
-            </div>
-            <p-tree [value]="files" class="w-full md:w-30rem" />
-        </div>
-        <app-code [code]="code" selector="tree-controlled-demo" />
-    `,
-    standalone: false
+  selector: "controlled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Tree requires a collection of <i>TreeNode</i> instances as a
+        <i>value</i>.
+      </p>
+    </app-docsectiontext>
+    <div
+      class="card flex flex-column align-items-center justify-content-center"
+    >
+      <div class="mb-3">
+        <p-button
+          icon="pi pi-plus"
+          label="Expand all"
+          (onClick)="expandAll()"
+          class="mr-2"
+        />
+        <p-button
+          icon="pi pi-minus"
+          label="Collapse all"
+          (onClick)="collapseAll()"
+        />
+      </div>
+      <p-tree [value]="files" class="w-full md:w-30rem" />
+    </div>
+    <app-code [code]="code" selector="tree-controlled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ControlledDoc implements OnInit {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((data) => (this.files = data));
+  ngOnInit() {
+    this.nodeService.getFiles().then((data) => (this.files = data));
+  }
+
+  expandAll() {
+    this.files.forEach((node) => {
+      this.expandRecursive(node, true);
+    });
+  }
+
+  collapseAll() {
+    this.files.forEach((node) => {
+      this.expandRecursive(node, false);
+    });
+  }
+
+  private expandRecursive(node: TreeNode, isExpand: boolean) {
+    node.expanded = isExpand;
+    if (node.children) {
+      node.children.forEach((childNode) => {
+        this.expandRecursive(childNode, isExpand);
+      });
     }
+  }
 
-    expandAll() {
-        this.files.forEach((node) => {
-            this.expandRecursive(node, true);
-        });
-    }
-
-    collapseAll() {
-        this.files.forEach((node) => {
-            this.expandRecursive(node, false);
-        });
-    }
-
-    private expandRecursive(node: TreeNode, isExpand: boolean) {
-        node.expanded = isExpand;
-        if (node.children) {
-            node.children.forEach((childNode) => {
-                this.expandRecursive(childNode, isExpand);
-            });
-        }
-    }
-
-    code: Code = {
-        basic: `<div class="mb-3">
+  code: Code = {
+    basic: `<div class="mb-3">
     <p-button 
         icon="pi pi-plus" 
         label="Expand all" 
@@ -64,7 +84,7 @@ export class ControlledDoc implements OnInit {
 </div>
 <p-tree [value]="files" class="w-full md:w-30rem" />`,
 
-        html: `<div class="card flex flex-column align-items-center justify-content-center">
+    html: `<div class="card flex flex-column align-items-center justify-content-center">
     <div class="mb-3">
         <p-button 
             icon="pi pi-plus" 
@@ -79,7 +99,7 @@ export class ControlledDoc implements OnInit {
     <p-tree [value]="files" class="w-full md:w-30rem" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { ButtonModule } from 'primeng/button';
@@ -122,9 +142,9 @@ export class TreeControlledDemo implements OnInit {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -151,6 +171,6 @@ export class TreeControlledDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

@@ -1,43 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'tab-menu-template-demo',
-    template: `
-        <app-docsectiontext>
-            <p>TabMenu supports templating via the <i>item</i> template which gets the menuitem instance and the index.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-tabMenu [model]="items" [activeItem]="activeItem">
-                <ng-template pTemplate="item" let-item>
-                    <a pRipple class="flex align-items-center gap-2 p-menuitem-link">
-                        <img [alt]="item.name" [src]="'https://primefaces.org/cdn/primeng/images/demo/avatar/' + item.image" style="width: 32px" />
-                        <span class="font-bold">{{ item.name }}</span>
-                    </a>
-                </ng-template>
-            </p-tabMenu>
-        </div>
-        <app-code [code]="code" selector="tab-menu-template-demo" />
-    `,
-    standalone: false
+  selector: "tab-menu-template-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        TabMenu supports templating via the <i>item</i> template which gets the
+        menuitem instance and the index.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-tabMenu [model]="items" [activeItem]="activeItem">
+        <ng-template pTemplate="item" let-item>
+          <a pRipple class="flex align-items-center gap-2 p-menuitem-link">
+            <img
+              [alt]="item.name"
+              [src]="
+                'https://primefaces.org/cdn/primeng/images/demo/avatar/' +
+                item.image
+              "
+              style="width: 32px"
+            />
+            <span class="font-bold">{{ item.name }}</span>
+          </a>
+        </ng-template>
+      </p-tabMenu>
+    </div>
+    <app-code [code]="code" selector="tab-menu-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc implements OnInit {
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    activeItem: MenuItem | undefined;
+  activeItem: MenuItem | undefined;
 
-    ngOnInit() {
-        (this.items = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' }
-        ]),
-            (this.activeItem = this.items[0]);
-    }
+  ngOnInit() {
+    ((this.items = [
+      { name: "Amy Elsner", image: "amyelsner.png" },
+      { name: "Anna Fali", image: "annafali.png" },
+      { name: "Asiya Javayant", image: "asiyajavayant.png" },
+    ]),
+      (this.activeItem = this.items[0]));
+  }
 
-    code: Code = {
-        basic: `<p-tabMenu [model]="items" [activeItem]="activeItem">
+  code: Code = {
+    basic: `<p-tabMenu [model]="items" [activeItem]="activeItem">
     <ng-template pTemplate="item" let-item>
         <a pRipple class="flex align-items-center gap-2 p-menuitem-link">
             <img 
@@ -51,7 +62,7 @@ export class TemplateDoc implements OnInit {
     </ng-template>
 </p-tabMenu>`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-tabMenu [model]="items" [activeItem]="activeItem">
         <ng-template pTemplate="item" let-item>
             <a pRipple class="flex align-items-center gap-2 p-menuitem-link">
@@ -67,7 +78,7 @@ export class TemplateDoc implements OnInit {
     </p-tabMenu>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { RippleModule } from 'primeng/ripple';
 
@@ -95,7 +106,7 @@ export class TabMenuTemplateDemo implements OnInit {
     }
 }`,
 
-        module: `
+    module: `
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -105,6 +116,6 @@ import { TabMenuDemo } from './tabmenudemo';
     imports: [CommonModule, TabMenuModule],
     declarations: [TabMenuDemo]
 })
-export class TabMenuDemoModule {}`
-    };
+export class TabMenuDemoModule {}`,
+  };
 }

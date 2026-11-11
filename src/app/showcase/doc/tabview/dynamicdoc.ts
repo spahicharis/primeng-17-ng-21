@@ -1,40 +1,44 @@
-import { Component, OnInit } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'dynamic-doc',
-    template: `
-        <app-docsectiontext>
-          <p>Tabs can be generated dynamically using the standard <i>ngFor</i> directive.</p>
-        </app-docsectiontext>
-        <div class="card">
-          <p-tabView>
-            @for (tab of tabs; track tab) {
-              <p-tabPanel [header]="tab.title">
-                <p>
-                  {{ tab.content }}
-                </p>
-              </p-tabPanel>
-            }
-          </p-tabView>
-        </div>
-        <app-code [code]="code" selector="tab-view-dynamic-demo" />
-        `,
-    standalone: false
+  selector: "dynamic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Tabs can be generated dynamically using the standard
+        <i>ngFor</i> directive.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-tabView>
+        @for (tab of tabs; track tab) {
+          <p-tabPanel [header]="tab.title">
+            <p>
+              {{ tab.content }}
+            </p>
+          </p-tabPanel>
+        }
+      </p-tabView>
+    </div>
+    <app-code [code]="code" selector="tab-view-dynamic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DynamicDoc implements OnInit {
-    tabs: { title: string; content: string }[] = [];
+  tabs: { title: string; content: string }[] = [];
 
-    ngOnInit() {
-        this.tabs = [
-            { title: 'Tab 1', content: 'Tab 1 Content' },
-            { title: 'Tab 2', content: 'Tab 2 Content' },
-            { title: 'Tab 3', content: 'Tab 3 Content' }
-        ];
-    }
+  ngOnInit() {
+    this.tabs = [
+      { title: "Tab 1", content: "Tab 1 Content" },
+      { title: "Tab 2", content: "Tab 2 Content" },
+      { title: "Tab 3", content: "Tab 3 Content" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-tabView>
+  code: Code = {
+    basic: `<p-tabView>
     <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
         <p>
             {{ tab.content }}
@@ -42,7 +46,7 @@ export class DynamicDoc implements OnInit {
     </p-tabPanel>
 </p-tabView>`,
 
-        html: `<div class="card">
+    html: `<div class="card">
 <p-tabView>
 <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
     <p>
@@ -52,7 +56,7 @@ export class DynamicDoc implements OnInit {
 </p-tabView>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TabViewModule } from 'primeng/tabview';
 import { CommonModule } from '@angular/common';
 
@@ -73,6 +77,6 @@ export class TabViewDynamicDemo implements OnInit {
         ];
     }
 
-}`
-    };
+}`,
+  };
 }

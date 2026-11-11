@@ -1,62 +1,87 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MessageService, TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MessageService, TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'event-doc',
-    template: `
-        <app-docsectiontext>
-            <p>An event is provided for each type of user interaction such as expand, collapse and selection.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-toast />
-            <p-tree
-                [value]="files"
-                class="w-full md:w-30rem"
-                selectionMode="single"
-                [(selection)]="selectedFile"
-                (onNodeExpand)="nodeExpand($event)"
-                (onNodeCollapse)="nodeCollapse($event)"
-                (onNodeSelect)="nodeSelect($event)"
-                (onNodeUnselect)="nodeUnselect($event)"
-            />
-        </div>
-        <app-code [code]="code" selector="tree-events-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "event-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        An event is provided for each type of user interaction such as expand,
+        collapse and selection.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-toast />
+      <p-tree
+        [value]="files"
+        class="w-full md:w-30rem"
+        selectionMode="single"
+        [(selection)]="selectedFile"
+        (onNodeExpand)="nodeExpand($event)"
+        (onNodeCollapse)="nodeCollapse($event)"
+        (onNodeSelect)="nodeSelect($event)"
+        (onNodeUnselect)="nodeUnselect($event)"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-events-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class EventDoc implements OnInit {
-    private nodeService = inject(NodeService);
-    private messageService = inject(MessageService);
+  private nodeService = inject(NodeService);
+  private messageService = inject(MessageService);
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    selectedFile!: TreeNode;
+  selectedFile!: TreeNode;
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((data) => (this.files = data));
-    }
+  ngOnInit() {
+    this.nodeService.getFiles().then((data) => (this.files = data));
+  }
 
-    nodeExpand(event: any) {
-        this.messageService.add({ severity: 'success', summary: 'Node Expanded', detail: event.node.label });
-    }
+  nodeExpand(event: any) {
+    this.messageService.add({
+      severity: "success",
+      summary: "Node Expanded",
+      detail: event.node.label,
+    });
+  }
 
-    nodeCollapse(event: any) {
-        this.messageService.add({ severity: 'warn', summary: 'Node Collapsed', detail: event.node.label });
-    }
+  nodeCollapse(event: any) {
+    this.messageService.add({
+      severity: "warn",
+      summary: "Node Collapsed",
+      detail: event.node.label,
+    });
+  }
 
-    nodeSelect(event: any) {
-        this.messageService.add({ severity: 'info', summary: 'Node Selected', detail: event.node.label });
-    }
+  nodeSelect(event: any) {
+    this.messageService.add({
+      severity: "info",
+      summary: "Node Selected",
+      detail: event.node.label,
+    });
+  }
 
-    nodeUnselect(event: any) {
-        this.messageService.add({ severity: 'info', summary: 'Node Unselected', detail: event.node.label });
-    }
+  nodeUnselect(event: any) {
+    this.messageService.add({
+      severity: "info",
+      summary: "Node Unselected",
+      detail: event.node.label,
+    });
+  }
 
-    code: Code = {
-        basic: `<p-tree 
+  code: Code = {
+    basic: `<p-tree 
     [value]="files" 
     class="w-full md:w-30rem" 
     selectionMode="single" 
@@ -66,7 +91,7 @@ export class EventDoc implements OnInit {
     (onNodeSelect)="nodeSelect($event)"
     (onNodeUnselect)="nodeUnselect($event)" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast />
     <p-tree 
         [value]="files" 
@@ -79,7 +104,7 @@ export class EventDoc implements OnInit {
         (onNodeUnselect)="nodeUnselect($event)" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MessageService, TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -120,9 +145,9 @@ export class TreeEventsDemo implements OnInit {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -149,6 +174,6 @@ export class TreeEventsDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

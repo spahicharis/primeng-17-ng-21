@@ -1,44 +1,56 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'life-doc',
-    template: `
-        <app-docsectiontext>
-            <p>A toast disappears after 3000ms by default, set the <i>life</i> option on either the message or toast to override this.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center gap-2">
-            <p-toast [life]="10000" />
-            <p-button (onClick)="showLife()" label="Show Life" />
-            <p-button (onClick)="showLifeLong()" label="Show Life Long" />
-        </div>
-        <app-code [code]="code" selector="toast-life-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "life-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A toast disappears after 3000ms by default, set the <i>life</i> option
+        on either the message or toast to override this.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center gap-2">
+      <p-toast [life]="10000" />
+      <p-button (onClick)="showLife()" label="Show Life" />
+      <p-button (onClick)="showLifeLong()" label="Show Life Long" />
+    </div>
+    <app-code [code]="code" selector="toast-life-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LifeDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  showLife() {
+    this.messageService.add({
+      severity: "info",
+      summary: "Life",
+      detail: "I show for 10000ms",
+    });
+  }
 
-    showLife() {
-        this.messageService.add({ severity: 'info', summary: 'Life', detail: 'I show for 10000ms' });
-    }
+  showLifeLong() {
+    this.messageService.add({
+      severity: "info",
+      summary: "Life",
+      detail: "I show for 20000ms",
+      life: 20000,
+    });
+  }
 
-    showLifeLong() {
-        this.messageService.add({ severity: 'info', summary: 'Life', detail: 'I show for 20000ms', life: 20000 });
-    }
-
-    code: Code = {
-        basic: `<p-toast [life]="10000" />
+  code: Code = {
+    basic: `<p-toast [life]="10000" />
 <p-button 
     (onClick)="showLife()" 
     label="Show Life" />
 <p-button 
     (onClick)="showLifeLong()" 
     label="Show Life Long" />`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast [life]="10000" />
     <p-button 
         (onClick)="showLife()" 
@@ -47,7 +59,7 @@ export class LifeDoc {
         (onClick)="showLifeLong()" 
         label="Show Life Long" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -70,6 +82,6 @@ export class ToastLifeDemo {
     showLifeLong() {
         this.messageService.add({ severity: 'info', summary: 'Life', detail: 'I show for 20000ms', life: 20000 });
     }
-}`
-    };
+}`,
+  };
 }

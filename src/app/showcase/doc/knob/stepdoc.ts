@@ -1,30 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'step-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Size of each movement is defined with the <i>step</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-knob [(ngModel)]="value" [step]="10" />
-        </div>
-        <app-code [code]="code" selector="knob-step-demo" />
-    `,
-    standalone: false
+  selector: "step-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Size of each movement is defined with the <i>step</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-knob [(ngModel)]="value" [step]="10" />
+    </div>
+    <app-code [code]="code" selector="knob-step-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class StepDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-knob [(ngModel)]="value" [step]="10" />`,
+  code: Code = {
+    basic: `<p-knob [(ngModel)]="value" [step]="10" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-knob [(ngModel)]="value" [step]="10" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { KnobModule } from 'primeng/knob';
 
@@ -36,6 +37,6 @@ import { KnobModule } from 'primeng/knob';
 })
 export class KnobStepDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

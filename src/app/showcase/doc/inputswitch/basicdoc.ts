@@ -1,30 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Two-way value binding is defined using <i>ngModel</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-inputSwitch [(ngModel)]="checked" />
-        </div>
-        <app-code [code]="code" selector="input-switch-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Two-way value binding is defined using <i>ngModel</i>.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-inputSwitch [(ngModel)]="checked" />
+    </div>
+    <app-code [code]="code" selector="input-switch-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    checked: boolean = false;
+  checked: boolean = false;
 
-    code: Code = {
-        basic: `<p-inputSwitch [(ngModel)]="checked" />`,
+  code: Code = {
+    basic: `<p-inputSwitch [(ngModel)]="checked" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-inputSwitch [(ngModel)]="checked" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +37,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputSwitchBasicDemo {
     checked: boolean = false;
-}`
-    };
+}`,
+  };
 }

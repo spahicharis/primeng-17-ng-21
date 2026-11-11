@@ -1,41 +1,42 @@
-import { Component } from '@angular/core';
-import { ImportDoc } from '@doc/scrolltop/importdoc';
-import { BasicDoc } from '@doc/scrolltop/basicdoc';
-import { StyleDoc } from '@doc/scrolltop/styledoc';
-import { ElementDoc } from '@doc/scrolltop/elementdoc';
-import { AccessibilityDoc } from '@doc/scrolltop/accessibilitydoc';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { ImportDoc } from "@doc/scrolltop/importdoc";
+import { BasicDoc } from "@doc/scrolltop/basicdoc";
+import { StyleDoc } from "@doc/scrolltop/styledoc";
+import { ElementDoc } from "@doc/scrolltop/elementdoc";
+import { AccessibilityDoc } from "@doc/scrolltop/accessibilitydoc";
 
 @Component({
-    templateUrl: './scrolltopdemo.html',
-    styleUrls: ['./scrolltopdemo.scss'],
-    standalone: false
+  templateUrl: "./scrolltopdemo.html",
+  styleUrls: ["./scrolltopdemo.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ScrollTopDemo {
-    docs = [
-        {
-            id: 'import',
-            label: 'Import',
-            component: ImportDoc
-        },
-        {
-            id: 'basic',
-            label: 'Basic',
-            component: BasicDoc
-        },
-        {
-            id: 'element',
-            label: 'Target Element',
-            component: ElementDoc
-        },
-        {
-            id: 'style',
-            label: 'Style',
-            component: StyleDoc
-        },
-        {
-            id: 'accessibility',
-            label: 'Accessibility',
-            component: AccessibilityDoc
-        }
-    ];
+  docs = [
+    {
+      id: "import",
+      label: "Import",
+      component: ImportDoc,
+    },
+    {
+      id: "basic",
+      label: "Basic",
+      component: BasicDoc,
+    },
+    {
+      id: "element",
+      label: "Target Element",
+      component: ElementDoc,
+    },
+    {
+      id: "style",
+      label: "Style",
+      component: StyleDoc,
+    },
+    {
+      id: "accessibility",
+      label: "Accessibility",
+      component: AccessibilityDoc,
+    },
+  ];
 }

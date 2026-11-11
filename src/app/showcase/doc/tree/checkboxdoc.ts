@@ -1,40 +1,56 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'checkbox-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Selection of multiple nodes via checkboxes is enabled by configuring <i>selectionMode</i> as <i>checkbox</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column align-items-center justify-content-center">
-            <p-tree [value]="files" selectionMode="checkbox" class="w-full md:w-30rem" [(selection)]="selectedFiles" />
-        </div>
-        <app-code [code]="code" selector="tree-checkbox-demo" />
-    `,
-    standalone: false
+  selector: "checkbox-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Selection of multiple nodes via checkboxes is enabled by configuring
+        <i>selectionMode</i> as <i>checkbox</i>.
+      </p>
+    </app-docsectiontext>
+    <div
+      class="card flex flex-column align-items-center justify-content-center"
+    >
+      <p-tree
+        [value]="files"
+        selectionMode="checkbox"
+        class="w-full md:w-30rem"
+        [(selection)]="selectedFiles"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-checkbox-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CheckboxDoc implements OnInit {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    selectedFiles!: TreeNode[];
+  selectedFiles!: TreeNode[];
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((data) => (this.files = data));
-    }
+  ngOnInit() {
+    this.nodeService.getFiles().then((data) => (this.files = data));
+  }
 
-    code: Code = {
-        basic: `<p-tree 
+  code: Code = {
+    basic: `<p-tree 
     [value]="files" 
     selectionMode="checkbox" 
     class="w-full md:w-30rem" 
     [(selection)]="selectedFiles" />`,
 
-        html: `<div class="card flex flex-column align-items-center justify-content-center">
+    html: `<div class="card flex flex-column align-items-center justify-content-center">
     <p-tree 
         [value]="files" 
         selectionMode="checkbox" 
@@ -42,7 +58,7 @@ export class CheckboxDoc implements OnInit {
         [(selection)]="selectedFiles" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -66,9 +82,9 @@ export class TreeCheckboxDemo implements OnInit {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -95,6 +111,6 @@ export class TreeCheckboxDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

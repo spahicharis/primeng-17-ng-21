@@ -1,28 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'button-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Text to display on a button is defined with the <i>label</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-button label="Submit" />
-        </div>
-        <app-code [code]="code" selector="button-basic-demo" />
-    `,
-    standalone: false
+  selector: "button-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Text to display on a button is defined with the <i>label</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-button label="Submit" />
+    </div>
+    <app-code [code]="code" selector="button-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    code: Code = {
-        basic: `<p-button label="Submit" />`,
+  code: Code = {
+    basic: `<p-button label="Submit" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-button label="Submit" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -31,6 +34,6 @@ import { ButtonModule } from 'primeng/button';
     standalone: true,
     imports: [ButtonModule]
 })
-export class ButtonBasicDemo { }`
-    };
+export class ButtonBasicDemo { }`,
+  };
 }

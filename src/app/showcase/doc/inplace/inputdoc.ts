@@ -1,29 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'input-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Inplace can be used within a form to display a value as read only before making it editable. The <i>closable</i> property adds a close button next to the content to switch back to read only mode.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-inplace closable="closable">
-                <ng-template pTemplate="display">
-                    <span>Click to Edit</span>
-                </ng-template>
-                <ng-template pTemplate="content">
-                    <input type="text" value="PrimeNG" pInputText />
-                </ng-template>
-            </p-inplace>
-        </div>
-        <app-code [code]="code" selector="inplace-input-demo" />
-    `,
-    standalone: false
+  selector: "input-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Inplace can be used within a form to display a value as read only before
+        making it editable. The <i>closable</i> property adds a close button
+        next to the content to switch back to read only mode.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-inplace closable="closable">
+        <ng-template pTemplate="display">
+          <span>Click to Edit</span>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <input type="text" value="PrimeNG" pInputText />
+        </ng-template>
+      </p-inplace>
+    </div>
+    <app-code [code]="code" selector="inplace-input-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InputDoc {
-    code: Code = {
-        basic: `<p-inplace closable="closable">
+  code: Code = {
+    basic: `<p-inplace closable="closable">
     <ng-template pTemplate="display">
         <span>Click to Edit</span>
     </ng-template>
@@ -31,7 +36,7 @@ export class InputDoc {
         <input type="text" value="PrimeNG" pInputText />
     </ng-template>
 </p-inplace>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <p-inplace closable="closable">
         <ng-template pTemplate="display">
             <span>Click to Edit</span>
@@ -41,7 +46,7 @@ export class InputDoc {
         </ng-template>
     </p-inplace>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InplaceModule } from 'primeng/inplace';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -51,6 +56,6 @@ import { InputTextModule } from 'primeng/inputtext';
     standalone: true,
     imports: [InplaceModule, InputTextModule]
 })
-export class InplaceInputDemo {}`
-    };
+export class InplaceInputDemo {}`,
+  };
 }

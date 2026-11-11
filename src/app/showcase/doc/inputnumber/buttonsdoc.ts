@@ -1,55 +1,76 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'buttons-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Spinner buttons are enabled using the <i>showButtons</i> options and layout is defined with the <i>buttonLayout</i>. Default value is "stacked" whereas "horizontal" and "stacked" are alternatives. Note that even there are no buttons,
-                up and down arrow keys can be used to spin the values with keyboard.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap gap-3 p-fluid">
-            <div class="flex-auto">
-                <label class="mb-2 block font-bold" for="stacked">Stacked</label>
-                <p-inputNumber [(ngModel)]="value1" [showButtons]="true" inputId="stacked" mode="currency" currency="USD" />
-            </div>
-            <div class="flex-auto">
-                <label class="mb-2 block font-bold" for="minmax-buttons">Min-Max Boundaries</label>
-                <p-inputNumber [(ngModel)]="value2" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100" />
-            </div>
-            <div class="flex-auto">
-                <label class="mb-2 block font-bold" for="horizontal">Horizontal with Step</label>
-                <p-inputNumber
-                    [(ngModel)]="value3"
-                    [showButtons]="true"
-                    buttonLayout="horizontal"
-                    inputId="horizontal"
-                    spinnerMode="horizontal"
-                    [step]="0.25"
-                    decrementButtonClass="p-button-danger"
-                    incrementButtonClass="p-button-success"
-                    incrementButtonIcon="pi pi-plus"
-                    decrementButtonIcon="pi pi-minus"
-                    mode="currency"
-                    currency="EUR"
-                />
-            </div>
-        </div>
-        <app-code [code]="code" selector="input-number-buttons-demo" />
-    `,
-    standalone: false
+  selector: "buttons-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Spinner buttons are enabled using the <i>showButtons</i> options and
+        layout is defined with the <i>buttonLayout</i>. Default value is
+        "stacked" whereas "horizontal" and "stacked" are alternatives. Note that
+        even there are no buttons, up and down arrow keys can be used to spin
+        the values with keyboard.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap gap-3 p-fluid">
+      <div class="flex-auto">
+        <label class="mb-2 block font-bold" for="stacked">Stacked</label>
+        <p-inputNumber
+          [(ngModel)]="value1"
+          [showButtons]="true"
+          inputId="stacked"
+          mode="currency"
+          currency="USD"
+        />
+      </div>
+      <div class="flex-auto">
+        <label class="mb-2 block font-bold" for="minmax-buttons"
+          >Min-Max Boundaries</label
+        >
+        <p-inputNumber
+          [(ngModel)]="value2"
+          mode="decimal"
+          [showButtons]="true"
+          inputId="minmax-buttons"
+          [min]="0"
+          [max]="100"
+        />
+      </div>
+      <div class="flex-auto">
+        <label class="mb-2 block font-bold" for="horizontal"
+          >Horizontal with Step</label
+        >
+        <p-inputNumber
+          [(ngModel)]="value3"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          inputId="horizontal"
+          spinnerMode="horizontal"
+          [step]="0.25"
+          decrementButtonClass="p-button-danger"
+          incrementButtonClass="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          mode="currency"
+          currency="EUR"
+        />
+      </div>
+    </div>
+    <app-code [code]="code" selector="input-number-buttons-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ButtonsDoc {
-    value1: number = 20;
+  value1: number = 20;
 
-    value2: number = 10.5;
+  value2: number = 10.5;
 
-    value3: number = 25;
+  value3: number = 25;
 
-    code: Code = {
-        basic: `<p-inputNumber 
+  code: Code = {
+    basic: `<p-inputNumber 
     [(ngModel)]="value1" 
     [showButtons]="true" 
     inputId="stacked" 
@@ -78,7 +99,7 @@ export class ButtonsDoc {
     mode="currency" 
     currency="EUR" />`,
 
-        html: `<div class="card flex flex-wrap gap-3 p-fluid">
+    html: `<div class="card flex flex-wrap gap-3 p-fluid">
     <div class="flex-auto">
         <label class="mb-2 block font-bold" for="stacked">
             Stacked
@@ -122,7 +143,7 @@ export class ButtonsDoc {
     </div>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
 
@@ -138,6 +159,6 @@ export class InputNumberButtonsDemo {
     value2: number = 10.5;
 
     value3: number = 25;
-}`
-    };
+}`,
+  };
 }

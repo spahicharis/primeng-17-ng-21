@@ -1,24 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'builtin-themes-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                PrimeNG ships with various free themes to choose from. The list below states all the available themes in the npm distribution with import paths. For a live preview, use the configurator
-                <span class="border-round inline-flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center bg-primary"><span class="pi pi-palette"></span></span> at the topbar to switch themes.
-            </p>
-        </app-docsectiontext>
-        <div class="h-20rem overflow-auto">
-            <app-code [code]="code" [hideToggleCode]="true"></app-code>
-        </div>
-    `,
-    standalone: false
+  selector: "builtin-themes-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        PrimeNG ships with various free themes to choose from. The list below
+        states all the available themes in the npm distribution with import
+        paths. For a live preview, use the configurator
+        <span
+          class="border-round inline-flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center bg-primary"
+          ><span class="pi pi-palette"></span
+        ></span>
+        at the topbar to switch themes.
+      </p>
+    </app-docsectiontext>
+    <div class="h-20rem overflow-auto">
+      <app-code [code]="code" [hideToggleCode]="true"></app-code>
+    </div>
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BuiltInThemesDoc {
-    code: Code = {
-        basic: `primeng/resources/themes/bootstrap4-light-blue/theme.css
+  code: Code = {
+    basic: `primeng/resources/themes/bootstrap4-light-blue/theme.css
 primeng/resources/themes/bootstrap4-light-purple/theme.css
 primeng/resources/themes/bootstrap4-dark-blue/theme.css
 primeng/resources/themes/bootstrap4-dark-purple/theme.css
@@ -64,6 +71,6 @@ primeng/resources/themes/luna-amber/theme.css
 primeng/resources/themes/luna-blue/theme.css
 primeng/resources/themes/luna-green/theme.css
 primeng/resources/themes/luna-pink/theme.css
-primeng/resources/themes/rhea/theme.css`
-    };
+primeng/resources/themes/rhea/theme.css`,
+  };
 }

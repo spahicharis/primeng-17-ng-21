@@ -1,30 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Two-way value binding is defined using <i>ngModel</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-password [(ngModel)]="value" [feedback]="false" />
-        </div>
-        <app-code [code]="code" selector="password-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Two-way value binding is defined using <i>ngModel</i>.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-password [(ngModel)]="value" [feedback]="false" />
+    </div>
+    <app-code [code]="code" selector="password-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<p-password [(ngModel)]="value" [feedback]="false" />`,
+  code: Code = {
+    basic: `<p-password [(ngModel)]="value" [feedback]="false" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-password [(ngModel)]="value" [feedback]="false" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +37,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class PasswordBasicDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

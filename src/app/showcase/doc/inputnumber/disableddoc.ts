@@ -1,30 +1,39 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-inputNumber inputId="integeronly" [disabled]="true" prefix="%" [(ngModel)]="value1" />
-        </div>
-        <app-code [code]="code" selector="input-number-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-inputNumber
+        inputId="integeronly"
+        [disabled]="true"
+        prefix="%"
+        [(ngModel)]="value1"
+      />
+    </div>
+    <app-code [code]="code" selector="input-number-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    value1: number = 50;
+  value1: number = 50;
 
-    code: Code = {
-        basic: `<p-inputNumber 
+  code: Code = {
+    basic: `<p-inputNumber 
     inputId="integeronly" 
     [disabled]="true" 
     prefix="%" 
     [(ngModel)]="value1" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-inputNumber 
         inputId="integeronly" 
         [disabled]="true" 
@@ -32,7 +41,7 @@ export class DisabledDoc {
         [(ngModel)]="value1" /> 
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
 
@@ -44,6 +53,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputNumberDisabledDemo {
     value1: number = 50;
-}`
-    };
+}`,
+  };
 }

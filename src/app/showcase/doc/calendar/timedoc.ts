@@ -1,39 +1,64 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-time-demo',
-    template: `
-        <app-docsectiontext>
-            <p>A time picker is displayed when <i>showTime</i> is enabled where 12/24 hour format is configured with <i>hourFormat</i> property. In case, only time needs to be selected, add <i>timeOnly</i> to hide the date section.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap gap-3 p-fluid">
-            <div class="flex-auto">
-                <label for="calendar-12h" class="font-bold block mb-2"> 12h Format </label>
-                <p-calendar inputId="calendar-12h" [(ngModel)]="datetime12h" [showTime]="true" [hourFormat]="12" />
-            </div>
-            <div class="flex-auto">
-                <label for="calendar-24h" class="font-bold block mb-2"> 24h Format </label>
-                <p-calendar inputId="calendar-24h" [(ngModel)]="datetime24h" [showTime]="true" [hourFormat]="24" />
-            </div>
-            <div class="flex-auto">
-                <label for="calendar-timeonly" class="font-bold block mb-2"> Time Only </label>
-                <p-calendar inputId="calendar-timeonly" [(ngModel)]="time" [timeOnly]="true" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="calendar-time-demo" />
-    `,
-    standalone: false
+  selector: "calendar-time-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A time picker is displayed when <i>showTime</i> is enabled where 12/24
+        hour format is configured with <i>hourFormat</i> property. In case, only
+        time needs to be selected, add <i>timeOnly</i> to hide the date section.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap gap-3 p-fluid">
+      <div class="flex-auto">
+        <label for="calendar-12h" class="font-bold block mb-2">
+          12h Format
+        </label>
+        <p-calendar
+          inputId="calendar-12h"
+          [(ngModel)]="datetime12h"
+          [showTime]="true"
+          [hourFormat]="12"
+        />
+      </div>
+      <div class="flex-auto">
+        <label for="calendar-24h" class="font-bold block mb-2">
+          24h Format
+        </label>
+        <p-calendar
+          inputId="calendar-24h"
+          [(ngModel)]="datetime24h"
+          [showTime]="true"
+          [hourFormat]="24"
+        />
+      </div>
+      <div class="flex-auto">
+        <label for="calendar-timeonly" class="font-bold block mb-2">
+          Time Only
+        </label>
+        <p-calendar
+          inputId="calendar-timeonly"
+          [(ngModel)]="time"
+          [timeOnly]="true"
+        />
+      </div>
+    </div>
+    <app-code [code]="code" selector="calendar-time-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TimeDoc {
-    datetime12h: Date[] | undefined;
+  datetime12h: Date[] | undefined;
 
-    datetime24h: Date[] | undefined;
+  datetime24h: Date[] | undefined;
 
-    time: Date[] | undefined;
+  time: Date[] | undefined;
 
-    code: Code = {
-        basic: `<p-calendar 
+  code: Code = {
+    basic: `<p-calendar 
     inputId="calendar-12h" 
     [(ngModel)]="datetime12h" 
     [showTime]="true" 
@@ -50,7 +75,7 @@ export class TimeDoc {
     [(ngModel)]="time" 
     [timeOnly]="true" />`,
 
-        html: `<div class="card flex flex-wrap gap-3 p-fluid">
+    html: `<div class="card flex flex-wrap gap-3 p-fluid">
     <div class="flex-auto">
         <label for="calendar-12h" class="font-bold block mb-2"> 12h Format </label>
         <p-calendar 
@@ -76,7 +101,7 @@ export class TimeDoc {
     </div>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -93,6 +118,6 @@ export class CalendarTimeDemo {
     datetime24h: Date[] | undefined;
 
     time: Date[] | undefined;
-}`
-    };
+}`,
+  };
 }

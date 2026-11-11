@@ -1,97 +1,114 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
+import { Router } from "@angular/router";
 
 @Component({
-    selector: 'router-doc',
-    template: `
-        <app-docsectiontext>
-          <p>Items with navigation are defined with templating to be able to use a routerLink directive, an external link or programmatic navigation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-          <p-panelMenu [model]="items" styleClass="w-full md:w-20rem">
-            <ng-template pTemplate="item" let-item>
-              @if (item.route) {
-                <a [routerLink]="item.route" class="flex align-items-center cursor-pointer text-color px-3 py-2">
-                  <span [class]="item.icon"></span>
-                  <span class="ml-2 text-color">{{ item.label }}</span>
-                </a>
-              } @else {
-                @if (item.url) {
-                  <a [href]="item.url" class="flex align-items-center cursor-pointer text-color px-3 py-2">
-                    <span [class]="item.icon"></span>
-                    <span class="ml-2">{{ item.label }}</span>
-                  </a>
-                } @else {
-                  <span class="flex align-items-center cursor-pointer text-color px-3 py-2">
-                    <span [class]="item.icon"></span>
-                    <span class="ml-2">{{ item.label }}</span>
-                    @if (item.items) {
-                      <i class="pi pi-angle-down text-primary ml-auto"></i>
-                    }
-                  </span>
+  selector: "router-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Items with navigation are defined with templating to be able to use a
+        routerLink directive, an external link or programmatic navigation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-panelMenu [model]="items" styleClass="w-full md:w-20rem">
+        <ng-template pTemplate="item" let-item>
+          @if (item.route) {
+            <a
+              [routerLink]="item.route"
+              class="flex align-items-center cursor-pointer text-color px-3 py-2"
+            >
+              <span [class]="item.icon"></span>
+              <span class="ml-2 text-color">{{ item.label }}</span>
+            </a>
+          } @else {
+            @if (item.url) {
+              <a
+                [href]="item.url"
+                class="flex align-items-center cursor-pointer text-color px-3 py-2"
+              >
+                <span [class]="item.icon"></span>
+                <span class="ml-2">{{ item.label }}</span>
+              </a>
+            } @else {
+              <span
+                class="flex align-items-center cursor-pointer text-color px-3 py-2"
+              >
+                <span [class]="item.icon"></span>
+                <span class="ml-2">{{ item.label }}</span>
+                @if (item.items) {
+                  <i class="pi pi-angle-down text-primary ml-auto"></i>
                 }
-              }
-            </ng-template>
-          </p-panelMenu>
-        </div>
-        <app-code [code]="code" selector="panel-menu-router-demo" />
-        `,
-    providers: [MessageService],
-    standalone: false
+              </span>
+            }
+          }
+        </ng-template>
+      </p-panelMenu>
+    </div>
+    <app-code [code]="code" selector="panel-menu-router-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RouterDoc implements OnInit {
-    private router = inject(Router);
+  private router = inject(Router);
 
-    items: MenuItem[];
+  items: MenuItem[];
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'Router',
-                icon: 'pi pi-palette',
-                items: [
-                    {
-                        label: 'Installation',
-                        icon: 'pi pi-eraser',
-                        route: '/installation'
-                    },
-                    {
-                        label: 'Configuration',
-                        icon: 'pi pi-heart',
-                        route: '/configuration'
-                    }
-                ]
-            },
-            {
-                label: 'Programmatic',
-                icon: 'pi pi-link',
-                command: () => {
-                    this.router.navigate(['/installation']);
-                }
-            },
-            {
-                label: 'External',
-                icon: 'pi pi-home',
-                items: [
-                    {
-                        label: 'Angular',
-                        icon: 'pi pi-star',
-                        url: 'https://angular.io/'
-                    },
-                    {
-                        label: 'Vite.js',
-                        icon: 'pi pi-bookmark',
-                        url: 'https://vitejs.dev/'
-                    }
-                ]
-            }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      {
+        label: "Router",
+        icon: "pi pi-palette",
+        items: [
+          {
+            label: "Installation",
+            icon: "pi pi-eraser",
+            route: "/installation",
+          },
+          {
+            label: "Configuration",
+            icon: "pi pi-heart",
+            route: "/configuration",
+          },
+        ],
+      },
+      {
+        label: "Programmatic",
+        icon: "pi pi-link",
+        command: () => {
+          this.router.navigate(["/installation"]);
+        },
+      },
+      {
+        label: "External",
+        icon: "pi pi-home",
+        items: [
+          {
+            label: "Angular",
+            icon: "pi pi-star",
+            url: "https://angular.io/",
+          },
+          {
+            label: "Vite.js",
+            icon: "pi pi-bookmark",
+            url: "https://vitejs.dev/",
+          },
+        ],
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-panelMenu [model]="items" styleClass="w-full md:w-20rem">
+  code: Code = {
+    basic: `<p-panelMenu [model]="items" styleClass="w-full md:w-20rem">
     <ng-template pTemplate="item" let-item>
         <ng-container *ngIf="item.route; else urlRef">
             <a [routerLink]="item.route" class="flex align-items-center 
@@ -117,7 +134,7 @@ export class RouterDoc implements OnInit {
     </ng-template>
 </p-panelMenu>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-panelMenu [model]="items" styleClass="w-full md:w-20rem">
         <ng-template pTemplate="item" let-item>
             <ng-container *ngIf="item.route; else urlRef">
@@ -145,7 +162,7 @@ export class RouterDoc implements OnInit {
     </p-panelMenu>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { Router } from '@angular/router';
@@ -206,6 +223,6 @@ export class PanelMenuRouterDemo implements OnInit {
         ];
     }
 
-}`
-    };
+}`,
+  };
 }

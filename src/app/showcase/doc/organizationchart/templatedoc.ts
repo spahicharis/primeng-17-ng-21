@@ -1,71 +1,80 @@
-import { Component, Input } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'template-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Custom content instead of a node <i>label</i> is defined using the <i>pTemplate</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center overflow-x-auto">
-            <p-organizationChart [value]="data" [collapsible]="true">
-                <ng-template let-node pTemplate="default">
-                    <div class="p-2 text-center">
-                        <img src="https://primefaces.org/cdn/primeng/images/flag/flag_placeholder.png" [alt]="node.label" [class]="'flag' + ' flag-' + node.data" width="32" />
-                        <div>{{ node.data.name }}</div>
-                        <div class="p-2">{{ node.label }}</div>
-                    </div>
-                </ng-template>
-            </p-organizationChart>
-        </div>
-        <app-code [code]="code" selector="organization-chart-template-demo" />
-    `,
-    standalone: false
+  selector: "template-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Custom content instead of a node <i>label</i> is defined using the
+        <i>pTemplate</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center overflow-x-auto">
+      <p-organizationChart [value]="data" [collapsible]="true">
+        <ng-template let-node pTemplate="default">
+          <div class="p-2 text-center">
+            <img
+              src="https://primefaces.org/cdn/primeng/images/flag/flag_placeholder.png"
+              [alt]="node.label"
+              [class]="'flag' + ' flag-' + node.data"
+              width="32"
+            />
+            <div>{{ node.data.name }}</div>
+            <div class="p-2">{{ node.label }}</div>
+          </div>
+        </ng-template>
+      </p-organizationChart>
+    </div>
+    <app-code [code]="code" selector="organization-chart-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc {
-    data: TreeNode[] = [
+  data: TreeNode[] = [
+    {
+      label: "Argentina",
+      expanded: true,
+      data: "ar",
+      children: [
         {
-            label: 'Argentina',
-            expanded: true,
-            data: 'ar',
-            children: [
-                {
-                    label: 'Argentina',
-                    expanded: true,
-                    data: 'ar',
-                    children: [
-                        {
-                            label: 'Argentina',
-                            data: 'ar'
-                        },
-                        {
-                            label: 'Croatia',
-                            data: 'hr'
-                        }
-                    ]
-                },
-                {
-                    label: 'France',
-                    expanded: true,
-                    data: 'fr',
-                    children: [
-                        {
-                            label: 'France',
-                            data: 'fr'
-                        },
-                        {
-                            label: 'Morocco',
-                            data: 'ma'
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
+          label: "Argentina",
+          expanded: true,
+          data: "ar",
+          children: [
+            {
+              label: "Argentina",
+              data: "ar",
+            },
+            {
+              label: "Croatia",
+              data: "hr",
+            },
+          ],
+        },
+        {
+          label: "France",
+          expanded: true,
+          data: "fr",
+          children: [
+            {
+              label: "France",
+              data: "fr",
+            },
+            {
+              label: "Morocco",
+              data: "ma",
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
-    code: Code = {
-        basic: `<p-organizationChart [value]="data" [collapsible]="true">
+  code: Code = {
+    basic: `<p-organizationChart [value]="data" [collapsible]="true">
     <ng-template let-node pTemplate="default">
         <div class="p-2 text-center">
             <img 
@@ -83,7 +92,7 @@ export class TemplateDoc {
     </ng-template>
 </p-organizationChart>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-organizationChart [value]="data" [collapsible]="true">
         <ng-template let-node pTemplate="default">
             <div class="p-2 text-center">
@@ -103,7 +112,7 @@ export class TemplateDoc {
     </p-organizationChart>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 
@@ -153,6 +162,6 @@ export class OrganizationChartTemplateDemo {
             ]
         }
     ];
-}`
-    };
+}`,
+  };
 }

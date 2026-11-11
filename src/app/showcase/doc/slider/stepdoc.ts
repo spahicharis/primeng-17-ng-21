@@ -1,30 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'step-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Size of each movement is defined with the <i>step</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-slider [(ngModel)]="value" [step]="20" styleClass="w-14rem" />
-        </div>
-        <app-code [code]="code" selector="slider-step-demo" />
-    `,
-    standalone: false
+  selector: "step-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Size of each movement is defined with the <i>step</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-slider [(ngModel)]="value" [step]="20" styleClass="w-14rem" />
+    </div>
+    <app-code [code]="code" selector="slider-step-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class StepDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-slider [(ngModel)]="value" [step]="20" styleClass="w-14rem" />`,
+  code: Code = {
+    basic: `<p-slider [(ngModel)]="value" [step]="20" styleClass="w-14rem" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-slider [(ngModel)]="value" [step]="20" styleClass="w-14rem" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderModule } from 'primeng/slider';
 
@@ -36,6 +37,6 @@ import { SliderModule } from 'primeng/slider';
 })
 export class SliderStepDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

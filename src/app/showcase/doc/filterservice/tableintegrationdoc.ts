@@ -1,88 +1,113 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FilterMatchMode, FilterService, SelectItem } from 'primeng/api';
-import { Car } from '@domain/car';
-import { Code } from '@domain/code';
-import { CarService } from '@service/carservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { FilterMatchMode, FilterService, SelectItem } from "primeng/api";
+import { Car } from "@domain/car";
+import { Code } from "@domain/code";
+import { CarService } from "@service/carservice";
 
 @Component({
-    selector: 'filter-service-table-integration-demo',
-    template: `
-        <app-docsectiontext>
-          <p>A custom equals filter that checks for exact case sensitive value is registered and defined as a match mode of a column filter.</p>
-        </app-docsectiontext>
-        <div class="card">
-          <p-table #dt [columns]="cols" [value]="cars" [paginator]="true" [rows]="10" responsiveLayout="scroll">
-            <ng-template pTemplate="header" let-columns>
-              <tr>
-                @for (col of columns; track col) {
-                  <th>&#123;&#123;col.header&#125;&#125;</th>
-                }
-              </tr>
-              <tr>
-                @for (col of columns; track col) {
-                  <th>
-                    <p-columnFilter type="text" [field]="col.field" [matchModeOptions]="matchModeOptions" [matchMode]="'custom-equals'" />
-                  </th>
-                }
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr [pSelectableRow]="rowData">
-                @for (col of columns; track col) {
-                  <td>&#123;&#123;rowData[col.field]&#125;&#125;</td>
-                }
-              </tr>
-            </ng-template>
-          </p-table>
-        </div>
-        <app-code [code]="code" selector="filter-service-table-integration-demo" [extFiles]="extFiles" />
-        `,
-    providers: [FilterService],
-    standalone: false
+  selector: "filter-service-table-integration-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A custom equals filter that checks for exact case sensitive value is
+        registered and defined as a match mode of a column filter.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-table
+        #dt
+        [columns]="cols"
+        [value]="cars"
+        [paginator]="true"
+        [rows]="10"
+        responsiveLayout="scroll"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            @for (col of columns; track col) {
+              <th>&#123;&#123;col.header&#125;&#125;</th>
+            }
+          </tr>
+          <tr>
+            @for (col of columns; track col) {
+              <th>
+                <p-columnFilter
+                  type="text"
+                  [field]="col.field"
+                  [matchModeOptions]="matchModeOptions"
+                  [matchMode]="'custom-equals'"
+                />
+              </th>
+            }
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            @for (col of columns; track col) {
+              <td>&#123;&#123;rowData[col.field]&#125;&#125;</td>
+            }
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <app-code
+      [code]="code"
+      selector="filter-service-table-integration-demo"
+      [extFiles]="extFiles"
+    />
+  `,
+  providers: [FilterService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TableIntegrationDoc implements OnInit {
-    private carService = inject(CarService);
-    private filterService = inject(FilterService);
+  private carService = inject(CarService);
+  private filterService = inject(FilterService);
 
-    cars: Car[];
+  cars: Car[];
 
-    cols: any[];
+  cols: any[];
 
-    matchModeOptions: SelectItem[];
+  matchModeOptions: SelectItem[];
 
-    ngOnInit() {
-        const customFilterName = 'custom-equals';
+  ngOnInit() {
+    const customFilterName = "custom-equals";
 
-        this.filterService.register(customFilterName, (value, filter): boolean => {
-            if (filter === undefined || filter === null || filter.trim() === '') {
-                return true;
-            }
+    this.filterService.register(customFilterName, (value, filter): boolean => {
+      if (filter === undefined || filter === null || filter.trim() === "") {
+        return true;
+      }
 
-            if (value === undefined || value === null) {
-                return false;
-            }
+      if (value === undefined || value === null) {
+        return false;
+      }
 
-            return value.toString() === filter.toString();
-        });
+      return value.toString() === filter.toString();
+    });
 
-        this.cols = [
-            { field: 'year', header: 'Year' },
-            { field: 'brand', header: 'Brand' },
-            { field: 'color', header: 'Color' },
-            { field: 'vin', header: 'Vin' }
-        ];
+    this.cols = [
+      { field: "year", header: "Year" },
+      { field: "brand", header: "Brand" },
+      { field: "color", header: "Color" },
+      { field: "vin", header: "Vin" },
+    ];
 
-        this.matchModeOptions = [
-            { label: 'Custom Equals', value: customFilterName },
-            { label: 'Starts With', value: FilterMatchMode.STARTS_WITH },
-            { label: 'Contains', value: FilterMatchMode.CONTAINS }
-        ];
+    this.matchModeOptions = [
+      { label: "Custom Equals", value: customFilterName },
+      { label: "Starts With", value: FilterMatchMode.STARTS_WITH },
+      { label: "Contains", value: FilterMatchMode.CONTAINS },
+    ];
 
-        this.carService.getCarsMedium().then((cars) => (this.cars = cars));
-    }
+    this.carService.getCarsMedium().then((cars) => (this.cars = cars));
+  }
 
-    code: Code = {
-        basic: `<p-table #dt [columns]="cols" [value]="cars" [paginator]="true" [rows]="10" responsiveLayout="scroll">
+  code: Code = {
+    basic: `<p-table #dt [columns]="cols" [value]="cars" [paginator]="true" [rows]="10" responsiveLayout="scroll">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -107,7 +132,7 @@ export class TableIntegrationDoc implements OnInit {
         </tr>
     </ng-template>
 </p-table>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <p-table #dt [columns]="cols" [value]="cars" [paginator]="true" [rows]="10" responsiveLayout="scroll">
         <ng-template pTemplate="header" let-columns>
             <tr>
@@ -130,7 +155,7 @@ export class TableIntegrationDoc implements OnInit {
         </ng-template>
     </p-table>
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FilterMatchMode, FilterService, SelectItem } from 'primeng/api';
 import { Car } from '@domain/car';
 import { CarService } from '@service/carservice';
@@ -184,13 +209,13 @@ export class FilterServiceTableIntegrationDemo implements OnInit {
         this.carService.getCarsMedium().then((cars) => (this.cars = cars));
     }
 }`,
-        service: ['CarService']
-    };
+    service: ["CarService"],
+  };
 
-    extFiles = [
-        {
-            path: 'src/domain/product.ts',
-            content: `
+  extFiles = [
+    {
+      path: "src/domain/product.ts",
+      content: `
 export interface Product {
     id?: string;
     code?: string;
@@ -202,11 +227,11 @@ export interface Product {
     category?: string;
     image?: string;
     rating?: number;
-}`
-        },
-        {
-            path: 'src/domain/car.ts',
-            content: `
+}`,
+    },
+    {
+      path: "src/domain/car.ts",
+      content: `
 export interface Car {
     id?;
     vin?;
@@ -215,7 +240,7 @@ export interface Car {
     color?;
     price?;
     saleDate?;
-}`
-        }
-    ];
+}`,
+    },
+  ];
 }

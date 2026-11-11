@@ -1,29 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
-    selector: 'templates-doc',
-    template: `
-        <div class="doc-tablewrapper">
-            <table class="doc-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Parameters</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>accepticon</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>rejecticon</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    `,
-    standalone: false
+  selector: "templates-doc",
+  template: `
+    <div class="doc-tablewrapper">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Parameters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>accepticon</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>rejecticon</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplatesDoc {}

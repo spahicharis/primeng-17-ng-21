@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'integer-only-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>integerOnly</i> is present, only integers can be accepted as input.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-inputOtp [(ngModel)]="value" [integerOnly]="true" />
-        </div>
-        <app-code [code]="code" selector="input-otp-integer-only-demo" />
-    `,
-    standalone: false
+  selector: "integer-only-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>integerOnly</i> is present, only integers can be accepted as
+        input.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-inputOtp [(ngModel)]="value" [integerOnly]="true" />
+    </div>
+    <app-code [code]="code" selector="input-otp-integer-only-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class IntegerOnlyDoc {
-    value: any;
+  value: any;
 
-    code: Code = {
-        basic: `<p-inputOtp [(ngModel)]="value" [integerOnly]="true" />`,
+  code: Code = {
+    basic: `<p-inputOtp [(ngModel)]="value" [integerOnly]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-inputOtp [(ngModel)]="value" [integerOnly]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputOtpModule } from 'primeng/inputotp';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +40,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputOtpIntegerOnlyDemo {
     value : any
-}`
-    };
+}`,
+  };
 }

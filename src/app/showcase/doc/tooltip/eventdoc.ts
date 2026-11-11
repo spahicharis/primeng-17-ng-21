@@ -1,29 +1,39 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'event-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Tooltip gets displayed on <i>hover</i> event of its target by default, other option is the <i>focus</i> event to display and blur to hide.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap justify-content-center gap-2">
-            <input type="text" pInputText pTooltip="Enter your username" tooltipEvent="focus" placeholder="focus to display tooltip" />
-        </div>
-        <app-code [code]="code" selector="tooltip-event-demo" />
-    `,
-    standalone: false
+  selector: "event-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Tooltip gets displayed on <i>hover</i> event of its target by default,
+        other option is the <i>focus</i> event to display and blur to hide.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap justify-content-center gap-2">
+      <input
+        type="text"
+        pInputText
+        pTooltip="Enter your username"
+        tooltipEvent="focus"
+        placeholder="focus to display tooltip"
+      />
+    </div>
+    <app-code [code]="code" selector="tooltip-event-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class EventDoc {
-    code: Code = {
-        basic: `<input 
+  code: Code = {
+    basic: `<input 
     type="text" 
     pInputText
     pTooltip="Enter your username" 
     tooltipEvent="focus" 
     placeholder="focus to display tooltip" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <input 
         type="text" 
         pInputText 
@@ -32,7 +42,7 @@ export class EventDoc {
         placeholder="focus to display tooltip">
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -42,6 +52,6 @@ import { InputTextModule } from 'primeng/inputtext';
     standalone: true,
     imports: [TooltipModule, InputTextModule]
 })
-export class TooltipEventDemo {}`
-    };
+export class TooltipEventDemo {}`,
+  };
 }

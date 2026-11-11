@@ -1,35 +1,46 @@
-import { Component, Input } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'overlay-template-demo',
-    template: ` <app-docsectiontext>
-            <p>Content can be customized with the <i>content</i> template.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-button (onClick)="toggle()" label="Show Overlay"></p-button>
-            <p-overlay [(visible)]="overlayVisible" [responsive]="{ breakpoint: '640px', direction: 'bottom', contentStyleClass: 'h-20rem' }" contentStyleClass="p-4 surface-overlay shadow-2 border-round">
-                <ng-template pTemplate="content" let-option> Content - {{ option.mode }} </ng-template>
-            </p-overlay>
-        </div>
-        <app-code [code]="code" selector="overlay-template-demo" />`,
-    standalone: false
+  selector: "overlay-template-demo",
+  template: ` <app-docsectiontext>
+      <p>Content can be customized with the <i>content</i> template.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-button (onClick)="toggle()" label="Show Overlay"></p-button>
+      <p-overlay
+        [(visible)]="overlayVisible"
+        [responsive]="{
+          breakpoint: '640px',
+          direction: 'bottom',
+          contentStyleClass: 'h-20rem',
+        }"
+        contentStyleClass="p-4 surface-overlay shadow-2 border-round"
+      >
+        <ng-template pTemplate="content" let-option>
+          Content - {{ option.mode }}
+        </ng-template>
+      </p-overlay>
+    </div>
+    <app-code [code]="code" selector="overlay-template-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class OverlayTemplateDemo {
-    overlayVisible: boolean = false;
+  overlayVisible: boolean = false;
 
-    toggle() {
-        this.overlayVisible = !this.overlayVisible;
-    }
+  toggle() {
+    this.overlayVisible = !this.overlayVisible;
+  }
 
-    code: Code = {
-        basic: `<p-button (onClick)="toggle()" label="Show Overlay"></p-button>
+  code: Code = {
+    basic: `<p-button (onClick)="toggle()" label="Show Overlay"></p-button>
 <p-overlay [(visible)]="overlayVisible" [responsive]="{ breakpoint: '640px', direction: 'bottom', contentStyleClass: 'h-20rem' }" contentStyleClass="p-4 surface-overlay shadow-2 border-round">
     <ng-template pTemplate="content" let-option>
         Content - {{option.mode}}
     </ng-template>
 </p-overlay>`,
-        html: `
+    html: `
 <div class="card flex justify-content-center">
     <p-button (onClick)="toggle()" label="Show Overlay"></p-button>
     <p-overlay [(visible)]="overlayVisible" [responsive]="{ breakpoint: '640px', direction: 'bottom', contentStyleClass: 'h-20rem' }" contentStyleClass="p-4 surface-overlay shadow-2 border-round">
@@ -38,7 +49,7 @@ export class OverlayTemplateDemo {
         </ng-template>
     </p-overlay>
 </div>`,
-        typescript: `
+    typescript: `
 import { Component } from '@angular/core';
 
 @Component({
@@ -51,6 +62,6 @@ export class OverlayTemplateDemo {
     toggle() {
         this.overlayVisible = !this.overlayVisible;
     }
-}`
-    };
+}`,
+  };
 }

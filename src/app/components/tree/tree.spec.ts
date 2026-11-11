@@ -1,326 +1,455 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { Tree, UITreeNode } from './tree';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ContextMenu, ContextMenuSub } from 'primeng/contextmenu';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Component, ElementRef, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
-import { ContextMenuService, TreeDragDropService } from 'primeng/api';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { Tree, UITreeNode } from "./tree";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { ContextMenu, ContextMenuSub } from "primeng/contextmenu";
+import { RouterTestingModule } from "@angular/router/testing";
+import {
+  Component,
+  ElementRef,
+  NO_ERRORS_SCHEMA,
+  OnInit,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { ContextMenuService, TreeDragDropService } from "primeng/api";
 
 @Component({
-    template: `
-        <p-tree />
-        <p-contextMenu #cm [model]="item" />
-        <p-tree class="files" [value]="filesTree7" draggableNodes="true" droppableNodes="true" droppableScope="files" draggableScope="server2" />
-        <p-tree class="server1" [value]="filesTree8" draggableNodes="true" droppableNodes="true" droppableScope="server1" draggableScope="files" />
-        <p-tree class="server2" [value]="filesTree9" draggableNodes="true" droppableNodes="true" droppableScope="server2" draggableScope="server1" />
-    `,
-    standalone: false
+  template: `
+    <p-tree />
+    <p-contextMenu #cm [model]="item" />
+    <p-tree
+      class="files"
+      [value]="filesTree7"
+      draggableNodes="true"
+      droppableNodes="true"
+      droppableScope="files"
+      draggableScope="server2"
+    />
+    <p-tree
+      class="server1"
+      [value]="filesTree8"
+      draggableNodes="true"
+      droppableNodes="true"
+      droppableScope="server1"
+      draggableScope="files"
+    />
+    <p-tree
+      class="server2"
+      [value]="filesTree9"
+      draggableNodes="true"
+      droppableNodes="true"
+      droppableScope="server2"
+      draggableScope="server1"
+    />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 class TestTreeComponent implements OnInit {
-    @ViewChild('cm') cm: ElementRef;
+  @ViewChild("cm") cm: ElementRef;
 
-    filesTree7: any;
+  filesTree7: any;
 
-    filesTree8: any;
+  filesTree8: any;
 
-    filesTree9: any;
+  filesTree9: any;
 
-    items: any;
-    ngOnInit() {
-        this.filesTree7 = [
-            {
-                label: 'Documents',
-                data: 'Documents Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder',
-                children: [
-                    {
-                        label: 'Work',
-                        data: 'Work Folder',
-                        expandedIcon: 'pi pi-folder-open',
-                        collapsedIcon: 'pi pi-folder',
-                        children: [
-                            { label: 'Expenses.doc', icon: 'pi pi-file-word-o', data: 'Expenses Document' },
-                            { label: 'Resume.doc', icon: 'pi pi-file-word-o', data: 'Resume Document' }
-                        ]
-                    },
-                    {
-                        label: 'Home',
-                        data: 'Home Folder',
-                        expandedIcon: 'pi pi-folder-open',
-                        collapsedIcon: 'pi pi-folder',
-                        children: [{ label: 'Invoices.txt', icon: 'pi pi-file-word-o', data: 'Invoices for this month' }]
-                    }
-                ]
-            },
-            {
-                label: 'Pictures',
-                data: 'Pictures Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder',
-                children: [
-                    { label: 'barcelona.jpg', icon: 'pi pi-file-image-o', data: 'Barcelona Photo' },
-                    { label: 'logo.jpg', icon: 'pi pi-file-image-o', data: 'PrimeFaces Logo' },
-                    { label: 'primeui.png', icon: 'pi pi-file-image-o', data: 'PrimeUI Logo' }
-                ]
-            },
-            {
-                label: 'Movies',
-                data: 'Movies Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder',
-                children: [
-                    {
-                        label: 'Al Pacino',
-                        data: 'Pacino Movies',
-                        children: [
-                            { label: 'Scarface', icon: 'pi pi-file-video-o', data: 'Scarface Movie' },
-                            { label: 'Serpico', icon: 'pi pi-file-video-o', data: 'Serpico Movie' }
-                        ]
-                    },
-                    {
-                        label: 'Robert De Niro',
-                        data: 'De Niro Movies',
-                        children: [
-                            { label: 'Goodfellas', icon: 'pi pi-file-video-o', data: 'Goodfellas Movie' },
-                            { label: 'Untouchables', icon: 'pi pi-file-video-o', data: 'Untouchables Movie', selectable: false }
-                        ]
-                    }
-                ]
-            }
-        ];
+  items: any;
+  ngOnInit() {
+    this.filesTree7 = [
+      {
+        label: "Documents",
+        data: "Documents Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            label: "Work",
+            data: "Work Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+            children: [
+              {
+                label: "Expenses.doc",
+                icon: "pi pi-file-word-o",
+                data: "Expenses Document",
+              },
+              {
+                label: "Resume.doc",
+                icon: "pi pi-file-word-o",
+                data: "Resume Document",
+              },
+            ],
+          },
+          {
+            label: "Home",
+            data: "Home Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+            children: [
+              {
+                label: "Invoices.txt",
+                icon: "pi pi-file-word-o",
+                data: "Invoices for this month",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: "Pictures",
+        data: "Pictures Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            label: "barcelona.jpg",
+            icon: "pi pi-file-image-o",
+            data: "Barcelona Photo",
+          },
+          {
+            label: "logo.jpg",
+            icon: "pi pi-file-image-o",
+            data: "PrimeFaces Logo",
+          },
+          {
+            label: "primeui.png",
+            icon: "pi pi-file-image-o",
+            data: "PrimeUI Logo",
+          },
+        ],
+      },
+      {
+        label: "Movies",
+        data: "Movies Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            label: "Al Pacino",
+            data: "Pacino Movies",
+            children: [
+              {
+                label: "Scarface",
+                icon: "pi pi-file-video-o",
+                data: "Scarface Movie",
+              },
+              {
+                label: "Serpico",
+                icon: "pi pi-file-video-o",
+                data: "Serpico Movie",
+              },
+            ],
+          },
+          {
+            label: "Robert De Niro",
+            data: "De Niro Movies",
+            children: [
+              {
+                label: "Goodfellas",
+                icon: "pi pi-file-video-o",
+                data: "Goodfellas Movie",
+              },
+              {
+                label: "Untouchables",
+                icon: "pi pi-file-video-o",
+                data: "Untouchables Movie",
+                selectable: false,
+              },
+            ],
+          },
+        ],
+      },
+    ];
 
-        this.filesTree8 = [
-            {
-                label: 'Backup',
-                data: 'Backup Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder'
-            }
-        ];
+    this.filesTree8 = [
+      {
+        label: "Backup",
+        data: "Backup Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+      },
+    ];
 
-        this.filesTree9 = [
-            {
-                label: 'Storage',
-                data: 'Storage Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder'
-            }
-        ];
+    this.filesTree9 = [
+      {
+        label: "Storage",
+        data: "Storage Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+      },
+    ];
 
-        this.items = [
-            { label: 'View', icon: 'pi pi-search' },
-            { label: 'Unselect', icon: 'pi pi-close' }
-        ];
-    }
+    this.items = [
+      { label: "View", icon: "pi pi-search" },
+      { label: "Unselect", icon: "pi pi-close" },
+    ];
+  }
 }
 
-describe('Tree', () => {
-    let tree: Tree;
-    let filesTree: Tree;
-    let server1Tree: Tree;
-    let server2Tree: Tree;
-    let contextMenu: ContextMenu;
-    let testComponent: TestTreeComponent;
-    let fixture: ComponentFixture<TestTreeComponent>;
+describe("Tree", () => {
+  let tree: Tree;
+  let filesTree: Tree;
+  let server1Tree: Tree;
+  let server2Tree: Tree;
+  let contextMenu: ContextMenu;
+  let testComponent: TestTreeComponent;
+  let fixture: ComponentFixture<TestTreeComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, RouterTestingModule.withRoutes([{ path: 'test', component: ContextMenu }])],
-            declarations: [Tree, UITreeNode, ContextMenu, ContextMenuSub, TestTreeComponent],
-            providers: [TreeDragDropService, ContextMenuService],
-            schemas: [NO_ERRORS_SCHEMA]
-        });
-
-        fixture = TestBed.createComponent(TestTreeComponent);
-        tree = fixture.debugElement.children[0].componentInstance;
-        filesTree = fixture.debugElement.children[2].componentInstance;
-        server1Tree = fixture.debugElement.children[3].componentInstance;
-        server2Tree = fixture.debugElement.children[4].componentInstance;
-        testComponent = fixture.componentInstance;
-        contextMenu = fixture.debugElement.children[1].componentInstance;
-        tree.value = [
-            {
-                label: 'Documents',
-                data: 'Documents Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder',
-                children: [
-                    {
-                        label: 'Work',
-                        data: 'Work Folder',
-                        expandedIcon: 'pi pi-folder-open',
-                        collapsedIcon: 'pi pi-folder',
-                        children: [
-                            { label: 'Expenses.doc', icon: 'pi pi-file-word-o', data: 'Expenses Document' },
-                            { label: 'Resume.doc', icon: 'pi pi-file-word-o', data: 'Resume Document' }
-                        ]
-                    },
-                    {
-                        label: 'Home',
-                        data: 'Home Folder',
-                        expandedIcon: 'pi pi-folder-open',
-                        collapsedIcon: 'pi pi-folder',
-                        children: [{ label: 'Invoices.txt', icon: 'pi pi-file-word-o', data: 'Invoices for this month' }]
-                    }
-                ]
-            },
-            {
-                label: 'Pictures',
-                data: 'Pictures Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder',
-                children: [
-                    { label: 'barcelona.jpg', icon: 'pi pi-file-image-o', data: 'Barcelona Photo' },
-                    { label: 'logo.jpg', icon: 'pi pi-file-image-o', data: 'PrimeFaces Logo' },
-                    { label: 'primeui.png', icon: 'pi pi-file-image-o', data: 'PrimeUI Logo' }
-                ]
-            },
-            {
-                label: 'Movies',
-                data: 'Movies Folder',
-                expandedIcon: 'pi pi-folder-open',
-                collapsedIcon: 'pi pi-folder',
-                children: [
-                    {
-                        label: 'Al Pacino',
-                        data: 'Pacino Movies',
-                        children: [
-                            { label: 'Scarface', icon: 'pi pi-file-video-o', data: 'Scarface Movie' },
-                            { label: 'Serpico', icon: 'pi pi-file-video-o', data: 'Serpico Movie' }
-                        ]
-                    },
-                    {
-                        label: 'Robert De Niro',
-                        data: 'De Niro Movies',
-                        children: [
-                            { label: 'Goodfellas', icon: 'pi pi-file-video-o', data: 'Goodfellas Movie' },
-                            {
-                                label: 'Untouchables',
-                                icon: 'pi pi-file-video-o',
-                                data: 'Untouchables Movie',
-                                selectable: false
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule,
+        RouterTestingModule.withRoutes([
+          { path: "test", component: ContextMenu },
+        ]),
+      ],
+      declarations: [
+        Tree,
+        UITreeNode,
+        ContextMenu,
+        ContextMenuSub,
+        TestTreeComponent,
+      ],
+      providers: [TreeDragDropService, ContextMenuService],
+      schemas: [NO_ERRORS_SCHEMA],
     });
 
-    it('should created', () => {
-        fixture.detectChanges();
+    fixture = TestBed.createComponent(TestTreeComponent);
+    tree = fixture.debugElement.children[0].componentInstance;
+    filesTree = fixture.debugElement.children[2].componentInstance;
+    server1Tree = fixture.debugElement.children[3].componentInstance;
+    server2Tree = fixture.debugElement.children[4].componentInstance;
+    testComponent = fixture.componentInstance;
+    contextMenu = fixture.debugElement.children[1].componentInstance;
+    tree.value = [
+      {
+        label: "Documents",
+        data: "Documents Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            label: "Work",
+            data: "Work Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+            children: [
+              {
+                label: "Expenses.doc",
+                icon: "pi pi-file-word-o",
+                data: "Expenses Document",
+              },
+              {
+                label: "Resume.doc",
+                icon: "pi pi-file-word-o",
+                data: "Resume Document",
+              },
+            ],
+          },
+          {
+            label: "Home",
+            data: "Home Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+            children: [
+              {
+                label: "Invoices.txt",
+                icon: "pi pi-file-word-o",
+                data: "Invoices for this month",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: "Pictures",
+        data: "Pictures Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            label: "barcelona.jpg",
+            icon: "pi pi-file-image-o",
+            data: "Barcelona Photo",
+          },
+          {
+            label: "logo.jpg",
+            icon: "pi pi-file-image-o",
+            data: "PrimeFaces Logo",
+          },
+          {
+            label: "primeui.png",
+            icon: "pi pi-file-image-o",
+            data: "PrimeUI Logo",
+          },
+        ],
+      },
+      {
+        label: "Movies",
+        data: "Movies Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            label: "Al Pacino",
+            data: "Pacino Movies",
+            children: [
+              {
+                label: "Scarface",
+                icon: "pi pi-file-video-o",
+                data: "Scarface Movie",
+              },
+              {
+                label: "Serpico",
+                icon: "pi pi-file-video-o",
+                data: "Serpico Movie",
+              },
+            ],
+          },
+          {
+            label: "Robert De Niro",
+            data: "De Niro Movies",
+            children: [
+              {
+                label: "Goodfellas",
+                icon: "pi pi-file-video-o",
+                data: "Goodfellas Movie",
+              },
+              {
+                label: "Untouchables",
+                icon: "pi pi-file-video-o",
+                data: "Untouchables Movie",
+                selectable: false,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+  });
 
-        const treeEl = fixture.debugElement.query(By.css('.p-tree'));
-        expect(treeEl.nativeElement).toBeTruthy();
-    });
+  it("should created", () => {
+    fixture.detectChanges();
 
-    it('should call toggle and expand clicked row', () => {
-        fixture.detectChanges();
+    const treeEl = fixture.debugElement.query(By.css(".p-tree"));
+    expect(treeEl.nativeElement).toBeTruthy();
+  });
 
-        const toggleEls = fixture.debugElement.queryAll(By.css('.p-tree-toggler'));
-        const documentsToggleEl = toggleEls[0];
-        const treeNodes = fixture.debugElement.queryAll(By.css('p-treeNode'));
-        const documentsNode = treeNodes[0].componentInstance as UITreeNode;
-        const expandSpy = spyOn(documentsNode, 'expand').and.callThrough();
-        expect(documentsNode.node.expanded).toBeUndefined();
-        documentsToggleEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should call toggle and expand clicked row", () => {
+    fixture.detectChanges();
 
-        expect(documentsNode.node.expanded).toBeTruthy();
-        expect(expandSpy).toHaveBeenCalled();
-    });
+    const toggleEls = fixture.debugElement.queryAll(By.css(".p-tree-toggler"));
+    const documentsToggleEl = toggleEls[0];
+    const treeNodes = fixture.debugElement.queryAll(By.css("p-treeNode"));
+    const documentsNode = treeNodes[0].componentInstance as UITreeNode;
+    const expandSpy = spyOn(documentsNode, "expand").and.callThrough();
+    expect(documentsNode.node.expanded).toBeUndefined();
+    documentsToggleEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should call toggle and collapse clicked row', () => {
-        fixture.detectChanges();
+    expect(documentsNode.node.expanded).toBeTruthy();
+    expect(expandSpy).toHaveBeenCalled();
+  });
 
-        const toggleEls = fixture.debugElement.queryAll(By.css('.p-tree-toggler'));
-        const documentsToggleEl = toggleEls[0];
-        const treeNodes = fixture.debugElement.queryAll(By.css('p-treeNode'));
-        const documentsNode = treeNodes[0].componentInstance as UITreeNode;
-        const collapseSpy = spyOn(documentsNode, 'collapse').and.callThrough();
-        expect(documentsNode.node.expanded).toBeUndefined();
-        documentsToggleEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should call toggle and collapse clicked row", () => {
+    fixture.detectChanges();
 
-        documentsToggleEl.nativeElement.click();
-        fixture.detectChanges();
+    const toggleEls = fixture.debugElement.queryAll(By.css(".p-tree-toggler"));
+    const documentsToggleEl = toggleEls[0];
+    const treeNodes = fixture.debugElement.queryAll(By.css("p-treeNode"));
+    const documentsNode = treeNodes[0].componentInstance as UITreeNode;
+    const collapseSpy = spyOn(documentsNode, "collapse").and.callThrough();
+    expect(documentsNode.node.expanded).toBeUndefined();
+    documentsToggleEl.nativeElement.click();
+    fixture.detectChanges();
 
-        expect(documentsNode.node.expanded).toBeFalsy();
-        expect(collapseSpy).toHaveBeenCalled();
-    });
+    documentsToggleEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should expand&collapse with right and left key', () => {
-        fixture.detectChanges();
+    expect(documentsNode.node.expanded).toBeFalsy();
+    expect(collapseSpy).toHaveBeenCalled();
+  });
 
-        const contentEls = fixture.debugElement.queryAll(By.css('.p-treenode'));
-        const treeNodes = fixture.debugElement.queryAll(By.css('p-treeNode'));
-        const documentsNode = treeNodes[0].componentInstance as UITreeNode;
-        const onKeyDownSpy = spyOn(documentsNode, 'onKeyDown').and.callThrough();
+  it("should expand&collapse with right and left key", () => {
+    fixture.detectChanges();
 
-        const firstEl = contentEls[0];
-        firstEl.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight' }));
-        fixture.detectChanges();
+    const contentEls = fixture.debugElement.queryAll(By.css(".p-treenode"));
+    const treeNodes = fixture.debugElement.queryAll(By.css("p-treeNode"));
+    const documentsNode = treeNodes[0].componentInstance as UITreeNode;
+    const onKeyDownSpy = spyOn(documentsNode, "onKeyDown").and.callThrough();
 
-        expect(onKeyDownSpy).toHaveBeenCalled();
-        expect(documentsNode.node.expanded).toBeTruthy();
-        firstEl.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowLeft' }));
-        fixture.detectChanges();
+    const firstEl = contentEls[0];
+    firstEl.nativeElement.dispatchEvent(
+      new KeyboardEvent("keydown", { code: "ArrowRight" }),
+    );
+    fixture.detectChanges();
 
-        expect(documentsNode.node.expanded).toBeFalsy();
-        firstEl.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
-        fixture.detectChanges();
+    expect(onKeyDownSpy).toHaveBeenCalled();
+    expect(documentsNode.node.expanded).toBeTruthy();
+    firstEl.nativeElement.dispatchEvent(
+      new KeyboardEvent("keydown", { code: "ArrowLeft" }),
+    );
+    fixture.detectChanges();
 
-        expect(documentsNode.node.expanded).toBeFalsy();
-        firstEl.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
-        fixture.detectChanges();
+    expect(documentsNode.node.expanded).toBeFalsy();
+    firstEl.nativeElement.dispatchEvent(
+      new KeyboardEvent("keydown", { code: "Enter" }),
+    );
+    fixture.detectChanges();
 
-        expect(documentsNode.node.expanded).toBeFalsy();
-    });
+    expect(documentsNode.node.expanded).toBeFalsy();
+    firstEl.nativeElement.dispatchEvent(
+      new KeyboardEvent("keydown", { code: "Enter" }),
+    );
+    fixture.detectChanges();
 
-    it('should be filtered', () => {
-        tree.filter = true;
-        fixture.detectChanges();
+    expect(documentsNode.node.expanded).toBeFalsy();
+  });
 
-        const filterInput = fixture.debugElement.query(By.css('.p-tree-filter'));
-        expect(filterInput).toBeTruthy();
-        filterInput.triggerEventHandler('input', { target: { value: 'd' } });
-        fixture.detectChanges();
+  it("should be filtered", () => {
+    tree.filter = true;
+    fixture.detectChanges();
 
-        expect(tree.filteredNodes).toBeTruthy();
-        expect(tree.filteredNodes.length).toEqual(2);
-    });
+    const filterInput = fixture.debugElement.query(By.css(".p-tree-filter"));
+    expect(filterInput).toBeTruthy();
+    filterInput.triggerEventHandler("input", { target: { value: "d" } });
+    fixture.detectChanges();
 
-    it('should select nodes by reference', () => {
-        // <p-tree selectionMode="single" [value]="[root]" [selection]="root" />
+    expect(tree.filteredNodes).toBeTruthy();
+    expect(tree.filteredNodes.length).toEqual(2);
+  });
 
-        const root = { key: undefined, label: '(root)' };
-        tree.selectionMode = 'single';
-        tree.value = [root];
+  it("should select nodes by reference", () => {
+    // <p-tree selectionMode="single" [value]="[root]" [selection]="root" />
 
-        tree.selection = root;
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.p-highlight'))).toBeTruthy();
+    const root = { key: undefined, label: "(root)" };
+    tree.selectionMode = "single";
+    tree.value = [root];
 
-        tree.selection = undefined;
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.p-highlight'))).toBeFalsy();
-    });
+    tree.selection = root;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css(".p-highlight"))).toBeTruthy();
 
-    it('should select nodes by key (even if key is empty!)', () => {
-        // <p-tree selectionMode="single" [value]="[root]" [selection]="{key: root.key, label: root.label}" />
+    tree.selection = undefined;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css(".p-highlight"))).toBeFalsy();
+  });
 
-        const root = { key: '', label: '(root)' };
-        tree.selectionMode = 'single';
-        tree.value = [root];
+  it("should select nodes by key (even if key is empty!)", () => {
+    // <p-tree selectionMode="single" [value]="[root]" [selection]="{key: root.key, label: root.label}" />
 
-        tree.selection = { key: root.key, label: root.label };
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.p-highlight'))).toBeTruthy();
+    const root = { key: "", label: "(root)" };
+    tree.selectionMode = "single";
+    tree.value = [root];
 
-        tree.selection = { key: 'non-' + root.key, label: root.label };
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.p-highlight'))).toBeFalsy();
-    });
+    tree.selection = { key: root.key, label: root.label };
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css(".p-highlight"))).toBeTruthy();
+
+    tree.selection = { key: "non-" + root.key, label: root.label };
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css(".p-highlight"))).toBeFalsy();
+  });
 });

@@ -1,56 +1,77 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'service-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                MessageService alternative does not require a value binding to an array. In order to use this service, import the class and define it as a provider in a component higher up in the component tree such as application instance itself so
-                that descandant components can have it injected. If there are multiple message components having the same message service, you may use key property of the component to match the key of the message to implement scoping.
-            </p>
-        </app-docsectiontext>
-        <div class="card">
-            <div class="flex justify-content-center gap-2">
-                <p-button (onClick)="addSingle()" label="Show Single" />
-                <p-button severity="success" (onClick)="addMultiple()" label="Show Multiple" />
-                <p-button severity="secondary" (onClick)="clear()" label="Clear All" />
-            </div>
-            <p-messages />
-        </div>
-        <app-code [code]="code" selector="messages-service-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "service-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        MessageService alternative does not require a value binding to an array.
+        In order to use this service, import the class and define it as a
+        provider in a component higher up in the component tree such as
+        application instance itself so that descandant components can have it
+        injected. If there are multiple message components having the same
+        message service, you may use key property of the component to match the
+        key of the message to implement scoping.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div class="flex justify-content-center gap-2">
+        <p-button (onClick)="addSingle()" label="Show Single" />
+        <p-button
+          severity="success"
+          (onClick)="addMultiple()"
+          label="Show Multiple"
+        />
+        <p-button severity="secondary" (onClick)="clear()" label="Clear All" />
+      </div>
+      <p-messages />
+    </div>
+    <app-code [code]="code" selector="messages-service-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ServiceDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  addSingle() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Service Message",
+      detail: "Via MessageService",
+    });
+  }
 
-    addSingle() {
-        this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
-    }
+  addMultiple() {
+    this.messageService.addAll([
+      {
+        severity: "success",
+        summary: "Service Message",
+        detail: "Via MessageService",
+      },
+      {
+        severity: "info",
+        summary: "Info Message",
+        detail: "Via MessageService",
+      },
+    ]);
+  }
 
-    addMultiple() {
-        this.messageService.addAll([
-            { severity: 'success', summary: 'Service Message', detail: 'Via MessageService' },
-            { severity: 'info', summary: 'Info Message', detail: 'Via MessageService' }
-        ]);
-    }
+  clear() {
+    this.messageService.clear();
+  }
 
-    clear() {
-        this.messageService.clear();
-    }
-
-    code: Code = {
-        basic: `<div class="flex justify-content-center gap-2">
+  code: Code = {
+    basic: `<div class="flex justify-content-center gap-2">
     <p-button (onClick)="addSingle()" label="Show Single" />
     <p-button severity="success" (onClick)="addMultiple()" label="Show Multiple" />
     <p-button severity="secondary" (onClick)="clear()" label="Clear All" />
 </div>
 <p-messages />`,
-        html: `<div class="card">
+    html: `<div class="card">
     <div class="flex justify-content-center gap-2">
         <p-button (onClick)="addSingle()" label="Show Single" />
         <p-button severity="success" (onClick)="addMultiple()" label="Show Multiple" />
@@ -58,7 +79,7 @@ export class ServiceDoc {
     </div>
     <p-messages />
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ButtonModule } from 'primeng/button';
@@ -87,6 +108,6 @@ export class MessagesServiceDemo {
     clear() {
         this.messageService.clear();
     }
-}`
-    };
+}`,
+  };
 }

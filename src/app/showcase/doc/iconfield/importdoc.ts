@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'import-doc',
-    template: `<app-code [code]="code" [hideToggleCode]="true" /> `,
-    standalone: false
+  selector: "import-doc",
+  template: `<app-code [code]="code" [hideToggleCode]="true" /> `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ImportDoc {
-    code: Code = {
-        typescript: `import { IconFieldModule } from 'primeng/iconfield';
+  code: Code = {
+    typescript: `import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';`
-    };
+import { InputTextModule } from 'primeng/inputtext';`,
+  };
 }

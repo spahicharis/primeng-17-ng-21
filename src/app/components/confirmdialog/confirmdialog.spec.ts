@@ -1,179 +1,228 @@
-import { Component, NO_ERRORS_SCHEMA, inject } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ConfirmationService } from 'primeng/api';
-import { ConfirmDialog } from './confirmdialog';
+import {
+  Component,
+  NO_ERRORS_SCHEMA,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmDialog } from "./confirmdialog";
 
 @Component({
-    template: `<p-confirmDialog />
+  template: `<p-confirmDialog />
 
-        <button type="button" (click)="confirm1()" pButton icon="pi pi-check" label="Confirm"></button>`,
-    standalone: false
+    <button
+      type="button"
+      (click)="confirm1()"
+      pButton
+      icon="pi pi-check"
+      label="Confirm"
+    ></button>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 class TestConfirmDialogComponent {
-    private confirmationService = inject(ConfirmationService);
+  private confirmationService = inject(ConfirmationService);
 
+  header: string;
 
-    header: string;
-
-    confirm1() {
-        this.confirmationService.confirm({
-            message: 'Are you sure that you want to proceed?',
-            header: 'Confirmation',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.header = 'accept';
-            },
-            reject: () => {
-                this.header = 'reject';
-            }
-        });
-    }
+  confirm1() {
+    this.confirmationService.confirm({
+      message: "Are you sure that you want to proceed?",
+      header: "Confirmation",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        this.header = "accept";
+      },
+      reject: () => {
+        this.header = "reject";
+      },
+    });
+  }
 }
 
-describe('ConfirmDialog', () => {
-    let confirmDialog: ConfirmDialog;
-    let fixture: ComponentFixture<TestConfirmDialogComponent>;
+describe("ConfirmDialog", () => {
+  let confirmDialog: ConfirmDialog;
+  let fixture: ComponentFixture<TestConfirmDialogComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            schemas: [NO_ERRORS_SCHEMA],
-            imports: [NoopAnimationsModule],
-            declarations: [ConfirmDialog, TestConfirmDialogComponent],
-            providers: [ConfirmationService]
-        });
-
-        fixture = TestBed.createComponent(TestConfirmDialogComponent);
-        confirmDialog = fixture.debugElement.query(By.css('p-confirmDialog')).componentInstance;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [NoopAnimationsModule],
+      declarations: [ConfirmDialog, TestConfirmDialogComponent],
+      providers: [ConfirmationService],
     });
 
-    it('should display the header', () => {
-        confirmDialog.header = 'PrimengRocks!';
-        confirmDialog.visible = true;
-        fixture.detectChanges();
+    fixture = TestBed.createComponent(TestConfirmDialogComponent);
+    confirmDialog = fixture.debugElement.query(
+      By.css("p-confirmDialog"),
+    ).componentInstance;
+  });
 
-        const confirmDialogEl = fixture.debugElement.query(By.css('.p-dialog-title')).nativeElement;
-        expect(confirmDialogEl).toBeTruthy();
-        expect(confirmDialogEl.textContent).toContain('PrimengRocks!');
-    });
+  it("should display the header", () => {
+    confirmDialog.header = "PrimengRocks!";
+    confirmDialog.visible = true;
+    fixture.detectChanges();
 
-    it('should display the close icon when closable is true', () => {
-        confirmDialog.visible = true;
-        fixture.detectChanges();
+    const confirmDialogEl = fixture.debugElement.query(
+      By.css(".p-dialog-title"),
+    ).nativeElement;
+    expect(confirmDialogEl).toBeTruthy();
+    expect(confirmDialogEl.textContent).toContain("PrimengRocks!");
+  });
 
-        const closeEl = fixture.debugElement.query(By.css('.p-dialog-header-close'));
-        expect(closeEl).not.toBeNull();
-    });
+  it("should display the close icon when closable is true", () => {
+    confirmDialog.visible = true;
+    fixture.detectChanges();
 
-    it('should not create the container element by default', () => {
-        fixture.detectChanges();
+    const closeEl = fixture.debugElement.query(
+      By.css(".p-dialog-header-close"),
+    );
+    expect(closeEl).not.toBeNull();
+  });
 
-        expect(fixture.debugElement.query(By.css('.p-dialog'))).toBeFalsy;
-        expect(confirmDialog.visible).toEqual(undefined);
-    });
+  it("should not create the container element by default", () => {
+    fixture.detectChanges();
 
-    it('should add rtl class when rtl is enabled', () => {
-        confirmDialog.visible = true;
-        confirmDialog.rtl = true;
-        fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css(".p-dialog"))).toBeFalsy;
+    expect(confirmDialog.visible).toEqual(undefined);
+  });
 
-        expect(fixture.debugElement.query(By.css('.p-dialog')).classes['p-dialog-rtl']).toEqual(true);
-    });
+  it("should add rtl class when rtl is enabled", () => {
+    confirmDialog.visible = true;
+    confirmDialog.rtl = true;
+    fixture.detectChanges();
 
-    it('should not have a close icon', () => {
-        confirmDialog.visible = true;
-        confirmDialog.closable = false;
-        fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(By.css(".p-dialog")).classes["p-dialog-rtl"],
+    ).toEqual(true);
+  });
 
-        expect(fixture.debugElement.query(By.css('a'))).toBeFalsy();
-    });
+  it("should not have a close icon", () => {
+    confirmDialog.visible = true;
+    confirmDialog.closable = false;
+    fixture.detectChanges();
 
-    it('should change buttonStyles', () => {
-        confirmDialog.visible = true;
-        confirmDialog.rejectButtonStyleClass = 'Primeng ROCKS!';
-        confirmDialog.acceptButtonStyleClass = 'Primeng ROCKS!';
-        fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css("a"))).toBeFalsy();
+  });
 
-        expect(fixture.debugElement.query(By.css('.p-dialog-footer')).children[0].nativeElement.className).toContain('Primeng ROCKS!');
-        expect(fixture.debugElement.query(By.css('.p-dialog-footer')).children[1].nativeElement.className).toContain('Primeng ROCKS!');
-    });
+  it("should change buttonStyles", () => {
+    confirmDialog.visible = true;
+    confirmDialog.rejectButtonStyleClass = "Primeng ROCKS!";
+    confirmDialog.acceptButtonStyleClass = "Primeng ROCKS!";
+    fixture.detectChanges();
 
-    it('should change icons', () => {
-        confirmDialog.visible = true;
-        confirmDialog.icon = 'Primeng ROCKS!';
-        confirmDialog.acceptIcon = 'Primeng ROCKS!';
-        confirmDialog.rejectIcon = 'Primeng ROCKS!';
-        fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(By.css(".p-dialog-footer")).children[0]
+        .nativeElement.className,
+    ).toContain("Primeng ROCKS!");
+    expect(
+      fixture.debugElement.query(By.css(".p-dialog-footer")).children[1]
+        .nativeElement.className,
+    ).toContain("Primeng ROCKS!");
+  });
 
-        expect(fixture.debugElement.query(By.css('.p-dialog-footer')).children[0].query(By.css('i')).nativeElement.className).toContain('Primeng ROCKS!');
-    });
+  it("should change icons", () => {
+    confirmDialog.visible = true;
+    confirmDialog.icon = "Primeng ROCKS!";
+    confirmDialog.acceptIcon = "Primeng ROCKS!";
+    confirmDialog.rejectIcon = "Primeng ROCKS!";
+    fixture.detectChanges();
 
-    it('should not show accept button', () => {
-        confirmDialog.visible = true;
-        confirmDialog.acceptVisible = false;
-        fixture.detectChanges();
+    expect(
+      fixture.debugElement
+        .query(By.css(".p-dialog-footer"))
+        .children[0].query(By.css("i")).nativeElement.className,
+    ).toContain("Primeng ROCKS!");
+  });
 
-        expect(fixture.debugElement.query(By.css('.p-dialog-footer')).children[1]).toBeFalsy();
-    });
+  it("should not show accept button", () => {
+    confirmDialog.visible = true;
+    confirmDialog.acceptVisible = false;
+    fixture.detectChanges();
 
-    it('should not show reject button', () => {
-        confirmDialog.visible = true;
-        confirmDialog.rejectVisible = false;
-        fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(By.css(".p-dialog-footer")).children[1],
+    ).toBeFalsy();
+  });
 
-        expect(fixture.debugElement.query(By.css('.p-dialog-footer')).children[1]).toBeFalsy();
-    });
+  it("should not show reject button", () => {
+    confirmDialog.visible = true;
+    confirmDialog.rejectVisible = false;
+    fixture.detectChanges();
 
-    it('should run reject', () => {
-        const confirmEl = fixture.debugElement.query(By.css('button')).nativeElement;
-        confirmEl.click();
-        fixture.detectChanges();
+    expect(
+      fixture.debugElement.query(By.css(".p-dialog-footer")).children[1],
+    ).toBeFalsy();
+  });
 
-        const acceptButtonEl = fixture.debugElement.query(By.css('.p-dialog-footer')).children[0].nativeElement;
-        acceptButtonEl.click();
-        expect(fixture.componentInstance.header).toEqual('reject');
-    });
+  it("should run reject", () => {
+    const confirmEl = fixture.debugElement.query(
+      By.css("button"),
+    ).nativeElement;
+    confirmEl.click();
+    fixture.detectChanges();
 
-    it('should run accept', () => {
-        const confirmEl = fixture.debugElement.query(By.css('button')).nativeElement;
-        confirmEl.click();
-        fixture.detectChanges();
+    const acceptButtonEl = fixture.debugElement.query(
+      By.css(".p-dialog-footer"),
+    ).children[0].nativeElement;
+    acceptButtonEl.click();
+    expect(fixture.componentInstance.header).toEqual("reject");
+  });
 
-        const rejectButtonEl = fixture.debugElement.query(By.css('.p-dialog-footer')).children[1].nativeElement;
-        rejectButtonEl.click();
-        expect(fixture.componentInstance.header).toEqual('accept');
-    });
+  it("should run accept", () => {
+    const confirmEl = fixture.debugElement.query(
+      By.css("button"),
+    ).nativeElement;
+    confirmEl.click();
+    fixture.detectChanges();
 
-    it('should close when click close icon', fakeAsync(() => {
-        const buttonEl = fixture.debugElement.query(By.css('button')).nativeElement;
-        buttonEl.click();
-        fixture.detectChanges();
+    const rejectButtonEl = fixture.debugElement.query(
+      By.css(".p-dialog-footer"),
+    ).children[1].nativeElement;
+    rejectButtonEl.click();
+    expect(fixture.componentInstance.header).toEqual("accept");
+  });
 
-        const closeEl = fixture.debugElement.query(By.css('.p-dialog-header-close')).nativeElement;
-        closeEl.click();
-        tick(300);
-        fixture.detectChanges();
+  it("should close when click close icon", fakeAsync(() => {
+    const buttonEl = fixture.debugElement.query(By.css("button")).nativeElement;
+    buttonEl.click();
+    fixture.detectChanges();
 
-        const confirmDialogEl = fixture.debugElement.query(By.css('.iui-dialog'));
-        expect(confirmDialogEl).toBeFalsy();
-        flush();
-    }));
+    const closeEl = fixture.debugElement.query(
+      By.css(".p-dialog-header-close"),
+    ).nativeElement;
+    closeEl.click();
+    tick(300);
+    fixture.detectChanges();
 
-    it('should close with esc', fakeAsync(() => {
-        const buttonEl = fixture.debugElement.query(By.css('button')).nativeElement;
-        buttonEl.click();
-        const closeSpy = spyOn(confirmDialog, 'close').and.callThrough();
-        fixture.detectChanges();
+    const confirmDialogEl = fixture.debugElement.query(By.css(".iui-dialog"));
+    expect(confirmDialogEl).toBeFalsy();
+    flush();
+  }));
 
-        tick(300);
-        const escapeEvent: any = document.createEvent('CustomEvent');
-        escapeEvent.which = 27;
-        escapeEvent.initEvent('keydown', true, true);
-        document.dispatchEvent(escapeEvent as KeyboardEvent);
-        fixture.detectChanges();
+  it("should close with esc", fakeAsync(() => {
+    const buttonEl = fixture.debugElement.query(By.css("button")).nativeElement;
+    buttonEl.click();
+    const closeSpy = spyOn(confirmDialog, "close").and.callThrough();
+    fixture.detectChanges();
 
-        expect(closeSpy).toHaveBeenCalled();
-        flush();
-    }));
+    tick(300);
+    const escapeEvent: any = document.createEvent("CustomEvent");
+    escapeEvent.which = 27;
+    escapeEvent.initEvent("keydown", true, true);
+    document.dispatchEvent(escapeEvent as KeyboardEvent);
+    fixture.detectChanges();
+
+    expect(closeSpy).toHaveBeenCalled();
+    flush();
+  }));
 });

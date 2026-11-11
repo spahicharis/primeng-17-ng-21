@@ -1,61 +1,87 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { Product } from '@domain/product';
-import { ProductService } from '@service/productservice';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { Product } from "@domain/product";
+import { ProductService } from "@service/productservice";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>OrderList is used as a controlled input with <i>value</i> properties. Content of a list item needs to be defined with the <i>pTemplate</i> property that receives an object in the list as parameter.</p>
-        </app-docsectiontext>
-        <div class="card xl:flex xl:justify-content-center">
-            <p-orderList [value]="products" [listStyle]="{ height: '25rem' }" header="List of Products">
-                <ng-template let-product pTemplate="item">
-                    <div class="flex flex-wrap p-2 align-items-center gap-3">
-                        <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="w-4rem shadow-2 flex-shrink-0 border-round" />
-                        <div class="flex-1 flex flex-column gap-2">
-                            <span class="font-bold">{{ product.name }}</span>
-                            <div class="flex align-items-center gap-2">
-                                <i class="pi pi-tag text-sm"></i>
-                                <span>{{ product.category }}</span>
-                            </div>
-                        </div>
-                        <span class="font-bold text-900">{{ '$' + product.price }}</span>
-                    </div>
-                </ng-template>
-            </p-orderList>
-        </div>
-        <app-code [code]="code" selector="orderlist-basic-demo" [extFiles]="extFiles" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        OrderList is used as a controlled input with <i>value</i> properties.
+        Content of a list item needs to be defined with the
+        <i>pTemplate</i> property that receives an object in the list as
+        parameter.
+      </p>
+    </app-docsectiontext>
+    <div class="card xl:flex xl:justify-content-center">
+      <p-orderList
+        [value]="products"
+        [listStyle]="{ height: '25rem' }"
+        header="List of Products"
+      >
+        <ng-template let-product pTemplate="item">
+          <div class="flex flex-wrap p-2 align-items-center gap-3">
+            <img
+              src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+                product.image
+              }}"
+              [alt]="product.name"
+              class="w-4rem shadow-2 flex-shrink-0 border-round"
+            />
+            <div class="flex-1 flex flex-column gap-2">
+              <span class="font-bold">{{ product.name }}</span>
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-tag text-sm"></i>
+                <span>{{ product.category }}</span>
+              </div>
+            </div>
+            <span class="font-bold text-900">{{ "$" + product.price }}</span>
+          </div>
+        </ng-template>
+      </p-orderList>
+    </div>
+    <app-code
+      [code]="code"
+      selector="orderlist-basic-demo"
+      [extFiles]="extFiles"
+    />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc implements OnInit {
-    private productService = inject(ProductService);
-    private cdr = inject(ChangeDetectorRef);
+  private productService = inject(ProductService);
+  private cdr = inject(ChangeDetectorRef);
 
-    products!: Product[];
+  products!: Product[];
 
-    ngOnInit() {
-        this.productService.getProductsSmall().then((cars) => {
-            this.products = cars;
-            this.cdr.detectChanges();
-        });
+  ngOnInit() {
+    this.productService.getProductsSmall().then((cars) => {
+      this.products = cars;
+      this.cdr.detectChanges();
+    });
+  }
+
+  getSeverity(status: string) {
+    switch (status) {
+      case "INSTOCK":
+        return "success";
+      case "LOWSTOCK":
+        return "warning";
+      case "OUTOFSTOCK":
+        return "danger";
     }
+  }
 
-    getSeverity(status: string) {
-        switch (status) {
-            case 'INSTOCK':
-                return 'success';
-            case 'LOWSTOCK':
-                return 'warning';
-            case 'OUTOFSTOCK':
-                return 'danger';
-        }
-    }
-
-    code: Code = {
-        basic: `<p-orderList 
+  code: Code = {
+    basic: `<p-orderList 
     [value]="products" 
     [listStyle]="{ height: '25rem' }" 
     header="List of Products">
@@ -81,7 +107,7 @@ export class BasicDoc implements OnInit {
         </ng-template>
 </p-orderList>`,
 
-        html: `<div class="card xl:flex xl:justify-content-center">
+    html: `<div class="card xl:flex xl:justify-content-center">
     <p-orderList 
         [value]="products" 
         [listStyle]="{ height: '25rem' }" 
@@ -109,7 +135,7 @@ export class BasicDoc implements OnInit {
     </p-orderList>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { Product } from '@domain/product';
 import { ProductService } from '@service/productservice';
 import { OrderListModule } from 'primeng/orderlist';
@@ -142,7 +168,7 @@ export class OrderlistBasicDemo implements OnInit {
     }
 }`,
 
-        data: `
+    data: `
 /* ProductService */        
 {
     id: '1000',
@@ -158,13 +184,13 @@ export class OrderlistBasicDemo implements OnInit {
 },
 ...`,
 
-        service: ['ProductService']
-    };
+    service: ["ProductService"],
+  };
 
-    extFiles = [
-        {
-            path: 'src/domain/product.ts',
-            content: `
+  extFiles = [
+    {
+      path: "src/domain/product.ts",
+      content: `
 export interface Product {
     id?: string;
     code?: string;
@@ -176,7 +202,7 @@ export interface Product {
     category?: string;
     image?: string;
     rating?: number;
-}`
-        }
-    ];
+}`,
+    },
+  ];
 }

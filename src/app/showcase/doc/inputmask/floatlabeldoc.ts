@@ -1,27 +1,32 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'floatlabel-doc',
-    template: `
-        <app-docsectiontext>
-            <p>A floating label appears on top of the input field when focused. Visit <a routerLink="/floatlabel">FloatLabel</a> documentation for more information.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-floatLabel>
-                <p-inputMask mask="999-99-9999" [(ngModel)]="value" id="ssn_input" />
-                <label for="ssn_input">SSN</label>
-            </p-floatLabel>
-        </div>
-        <app-code [code]="code" selector="input-mask-floatlabel-demo" />
-    `,
-    standalone: false
+  selector: "floatlabel-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A floating label appears on top of the input field when focused. Visit
+        <a routerLink="/floatlabel">FloatLabel</a> documentation for more
+        information.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-floatLabel>
+        <p-inputMask mask="999-99-9999" [(ngModel)]="value" id="ssn_input" />
+        <label for="ssn_input">SSN</label>
+      </p-floatLabel>
+    </div>
+    <app-code [code]="code" selector="input-mask-floatlabel-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FloatlabelDoc {
-    value: string | undefined;
+  value: string | undefined;
 
-    code: Code = {
-        basic: `<p-floatLabel>
+  code: Code = {
+    basic: `<p-floatLabel>
     <p-inputMask 
         mask="999-99-9999" 
         [(ngModel)]="value" 
@@ -29,7 +34,7 @@ export class FloatlabelDoc {
     <label for="ssn_input">SSN</label>
 </p-floatLabel>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-floatLabel>
         <p-inputMask 
             mask="999-99-9999" 
@@ -39,7 +44,7 @@ export class FloatlabelDoc {
     </p-floatLabel>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputMaskModule } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from "primeng/floatlabel"
@@ -52,6 +57,6 @@ import { FloatLabelModule } from "primeng/floatlabel"
 })
 export class InputMaskFloatlabelDemo {
     value: string | undefined;
-}`
-    };
+}`,
+  };
 }

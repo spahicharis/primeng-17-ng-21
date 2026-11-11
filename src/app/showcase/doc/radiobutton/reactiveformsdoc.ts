@@ -1,45 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'reactive-forms-doc',
-    template: `
-        <app-docsectiontext>
-          <p>RadioButton can also be used with reactive forms. In this case, the <i>formControlName</i> property is used to bind the component to a form control.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-          <form class="flex flex-column gap-3" [formGroup]="formGroup">
-            @for (category of categories; track category) {
-              <div class="field-checkbox">
-                <p-radioButton [inputId]="category.key" [value]="category" formControlName="selectedCategory" />
-                <label [for]="category.key" class="ml-2">{{ category.name }}</label>
-              </div>
-            }
-          </form>
-        </div>
-        <app-code [code]="code" selector="radio-button-reactive-forms-demo" />
-        `,
-    standalone: false
+  selector: "reactive-forms-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        RadioButton can also be used with reactive forms. In this case, the
+        <i>formControlName</i> property is used to bind the component to a form
+        control.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <form class="flex flex-column gap-3" [formGroup]="formGroup">
+        @for (category of categories; track category) {
+          <div class="field-checkbox">
+            <p-radioButton
+              [inputId]="category.key"
+              [value]="category"
+              formControlName="selectedCategory"
+            />
+            <label [for]="category.key" class="ml-2">{{ category.name }}</label>
+          </div>
+        }
+      </form>
+    </div>
+    <app-code [code]="code" selector="radio-button-reactive-forms-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ReactiveFormsDoc implements OnInit {
-    formGroup!: FormGroup;
+  formGroup!: FormGroup;
 
-    categories: any[] = [
-        { name: 'Accounting', key: 'A' },
-        { name: 'Marketing', key: 'M' },
-        { name: 'Production', key: 'P' },
-        { name: 'Research', key: 'R' }
-    ];
+  categories: any[] = [
+    { name: "Accounting", key: "A" },
+    { name: "Marketing", key: "M" },
+    { name: "Production", key: "P" },
+    { name: "Research", key: "R" },
+  ];
 
-    ngOnInit() {
-        this.formGroup = new FormGroup({
-            selectedCategory: new FormControl()
-        });
-    }
+  ngOnInit() {
+    this.formGroup = new FormGroup({
+      selectedCategory: new FormControl(),
+    });
+  }
 
-    code: Code = {
-        basic: `<form class="flex flex-column gap-3" [formGroup]="formGroup">
+  code: Code = {
+    basic: `<form class="flex flex-column gap-3" [formGroup]="formGroup">
     <div *ngFor="let category of categories" class="field-checkbox">
         <p-radioButton 
             [inputId]="category.key" 
@@ -51,7 +60,7 @@ export class ReactiveFormsDoc implements OnInit {
     </div>
 </form>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <form class="flex flex-column gap-3" [formGroup]="formGroup">
         <div *ngFor="let category of categories" class="field-checkbox">
             <p-radioButton 
@@ -65,7 +74,7 @@ export class ReactiveFormsDoc implements OnInit {
     </form>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
@@ -90,6 +99,6 @@ export class RadioButtonReactiveFormsDemo implements OnInit {
             selectedCategory: new FormControl()
         });
     }
-}`
-    };
+}`,
+  };
 }

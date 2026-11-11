@@ -1,35 +1,44 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'template-doc',
-    template: `
-        <app-docsectiontext>
-            <p>For custom content support define a ng-template with <i>pTemplate</i> where the local ng-template variable refers to an option in the options collection.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-selectButton [options]="justifyOptions" [(ngModel)]="value" optionLabel="icon">
-                <ng-template let-item pTemplate>
-                    <i [class]="item.icon"></i>
-                </ng-template>
-            </p-selectButton>
-        </div>
-        <app-code [code]="code" selector="select-button-template-demo" />
-    `,
-    standalone: false
+  selector: "template-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        For custom content support define a ng-template with
+        <i>pTemplate</i> where the local ng-template variable refers to an
+        option in the options collection.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-selectButton
+        [options]="justifyOptions"
+        [(ngModel)]="value"
+        optionLabel="icon"
+      >
+        <ng-template let-item pTemplate>
+          <i [class]="item.icon"></i>
+        </ng-template>
+      </p-selectButton>
+    </div>
+    <app-code [code]="code" selector="select-button-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc {
-    value: any;
+  value: any;
 
-    justifyOptions: any[] = [
-        { icon: 'pi pi-align-left', justify: 'Left' },
-        { icon: 'pi pi-align-right', justify: 'Right' },
-        { icon: 'pi pi-align-center', justify: 'Center' },
-        { icon: 'pi pi-align-justify', justify: 'Justify' }
-    ];
+  justifyOptions: any[] = [
+    { icon: "pi pi-align-left", justify: "Left" },
+    { icon: "pi pi-align-right", justify: "Right" },
+    { icon: "pi pi-align-center", justify: "Center" },
+    { icon: "pi pi-align-justify", justify: "Justify" },
+  ];
 
-    code: Code = {
-        basic: `<p-selectButton 
+  code: Code = {
+    basic: `<p-selectButton 
     [options]="justifyOptions" 
     [(ngModel)]="value" 
     optionLabel="icon">
@@ -38,7 +47,7 @@ export class TemplateDoc {
         </ng-template>
 </p-selectButton>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-selectButton 
         [options]="justifyOptions" 
         [(ngModel)]="value" 
@@ -49,7 +58,7 @@ export class TemplateDoc {
     </p-selectButton>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
@@ -69,6 +78,6 @@ export class SelectButtonTemplateDemo {
         { icon: 'pi pi-align-justify', justify: 'Justify' }
     ];
 
-}`
-    };
+}`,
+  };
 }

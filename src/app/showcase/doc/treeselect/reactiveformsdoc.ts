@@ -1,42 +1,58 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'reactive-forms-doc',
-    template: `
-        <app-docsectiontext>
-            <p>TreeSelect can also be used with reactive forms. In this case, the <i>formControlName</i> property is used to bind the component to a form control.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <form class="flex justify-content-center" [formGroup]="formGroup">
-                <p-treeSelect class="md:w-20rem w-full" containerStyleClass="w-full" formControlName="selectedNodes" [options]="nodes" placeholder="Select Item" />
-            </form>
-        </div>
-        <app-code [code]="code" selector="tree-select-reactive-forms-demo" />
-    `,
-    standalone: false
+  selector: "reactive-forms-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        TreeSelect can also be used with reactive forms. In this case, the
+        <i>formControlName</i> property is used to bind the component to a form
+        control.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <form class="flex justify-content-center" [formGroup]="formGroup">
+        <p-treeSelect
+          class="md:w-20rem w-full"
+          containerStyleClass="w-full"
+          formControlName="selectedNodes"
+          [options]="nodes"
+          placeholder="Select Item"
+        />
+      </form>
+    </div>
+    <app-code [code]="code" selector="tree-select-reactive-forms-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ReactiveFormsDoc implements OnInit {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    nodes!: any[];
+  nodes!: any[];
 
-    formGroup!: FormGroup;
+  formGroup!: FormGroup;
 
-    constructor() {
-        this.nodeService.getFiles().then((files) => (this.nodes = files));
-    }
+  constructor() {
+    this.nodeService.getFiles().then((files) => (this.nodes = files));
+  }
 
-    ngOnInit() {
-        this.formGroup = new FormGroup({
-            selectedNodes: new FormControl()
-        });
-    }
+  ngOnInit() {
+    this.formGroup = new FormGroup({
+      selectedNodes: new FormControl(),
+    });
+  }
 
-    code: Code = {
-        basic: `<form [formGroup]="formGroup">
+  code: Code = {
+    basic: `<form [formGroup]="formGroup">
     <p-treeSelect 
         class="md:w-20rem w-full" 
         containerStyleClass="w-full" 
@@ -45,7 +61,7 @@ export class ReactiveFormsDoc implements OnInit {
         placeholder="Select Item" />
 </form>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <form [formGroup]="formGroup">
         <p-treeSelect 
             class="md:w-20rem w-full" 
@@ -56,7 +72,7 @@ export class ReactiveFormsDoc implements OnInit {
     </form>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NodeService } from '@service/nodeservice';
 
@@ -82,8 +98,8 @@ export class TreeSelectReactiveFormsDemo implements OnInit {
         });
     }
 }`,
-        service: ['NodeService'],
-        data: `
+    service: ["NodeService"],
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -110,6 +126,6 @@ export class TreeSelectReactiveFormsDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

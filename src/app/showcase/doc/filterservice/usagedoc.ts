@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'usage-doc',
-    template: `
-        <app-docsectiontext>
-            <p><i>FilterService</i> needs to be injected into your component. Filters are accessed with <i>FilterService.filters</i>.</p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    standalone: false
+  selector: "usage-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        <i>FilterService</i> needs to be injected into your component. Filters
+        are accessed with <i>FilterService.filters</i>.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class UsageDoc {
-    code: Code = {
-        typescript: `export class FilterServiceDemo implements OnInit {
+  code: Code = {
+    typescript: `export class FilterServiceDemo implements OnInit {
 
     constructor(private filterService: FilterService) {}
 
@@ -30,6 +34,6 @@ export class UsageDoc {
         this.filterService.filters.gt(50, 20);                                     //true
         this.filterService.filters.in(value, ['PrimeFaces', 'PrimeNG']);           //true
     }
-}`
-    };
+}`,
+  };
 }

@@ -1,30 +1,35 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'filled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Specify the <i>variant</i> property as <i>filled</i> to display the component with a higher visual emphasis than the default <i>outlined</i> style.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <input type="text" pInputText [(ngModel)]="value" variant="filled" />
-        </div>
-        <app-code [code]="code" selector="input-text-filled-demo" />
-    `,
-    standalone: false
+  selector: "filled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Specify the <i>variant</i> property as <i>filled</i> to display the
+        component with a higher visual emphasis than the default
+        <i>outlined</i> style.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <input type="text" pInputText [(ngModel)]="value" variant="filled" />
+    </div>
+    <app-code [code]="code" selector="input-text-filled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilledDoc {
-    value: string;
+  value: string;
 
-    code: Code = {
-        basic: `<input 
+  code: Code = {
+    basic: `<input 
     type="text" 
     pInputText 
     [(ngModel)]="value" 
     variant="filled" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <input 
         type="text" 
         pInputText 
@@ -32,7 +37,7 @@ export class FilledDoc {
         variant="filled" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 
@@ -44,6 +49,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputTextFilledDemo {
     value: string;
-}`
-    };
+}`,
+  };
 }

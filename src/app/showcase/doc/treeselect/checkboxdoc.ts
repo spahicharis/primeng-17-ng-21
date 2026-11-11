@@ -1,33 +1,46 @@
-import { Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'checkbox-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Selection of multiple nodes via checkboxes is enabled by configuring <i>selectionMode</i> as <i>checkbox</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-treeSelect class="w-full md:w-20rem" containerStyleClass="w-full" [(ngModel)]="selectedNodes" [options]="nodes" display="chip" [metaKeySelection]="false" selectionMode="checkbox" placeholder="Select Item" />
-        </div>
-        <app-code [code]="code" selector="tree-select-checkbox-demo" />
-    `,
-    standalone: false
+  selector: "checkbox-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Selection of multiple nodes via checkboxes is enabled by configuring
+        <i>selectionMode</i> as <i>checkbox</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-treeSelect
+        class="w-full md:w-20rem"
+        containerStyleClass="w-full"
+        [(ngModel)]="selectedNodes"
+        [options]="nodes"
+        display="chip"
+        [metaKeySelection]="false"
+        selectionMode="checkbox"
+        placeholder="Select Item"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-select-checkbox-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CheckboxDoc {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    nodes!: any[];
+  nodes!: any[];
 
-    selectedNodes: any;
+  selectedNodes: any;
 
-    constructor() {
-        this.nodeService.getFiles().then((files) => (this.nodes = files));
-    }
+  constructor() {
+    this.nodeService.getFiles().then((files) => (this.nodes = files));
+  }
 
-    code: Code = {
-        basic: `<p-treeSelect 
+  code: Code = {
+    basic: `<p-treeSelect 
     class="w-full md:w-20rem" 
     containerStyleClass="w-full" 
     [(ngModel)]="selectedNodes" 
@@ -37,7 +50,7 @@ export class CheckboxDoc {
     selectionMode="checkbox" 
     placeholder="Select Item" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-treeSelect 
         class="w-full md:w-20rem" 
         containerStyleClass="w-full" 
@@ -49,7 +62,7 @@ export class CheckboxDoc {
         placeholder="Select Item" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { NodeService } from '@service/nodeservice';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -71,9 +84,9 @@ export class TreeSelectCheckboxDemo {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -100,6 +113,6 @@ export class TreeSelectCheckboxDemo {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

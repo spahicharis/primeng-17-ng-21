@@ -1,37 +1,53 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 interface UploadEvent {
-    originalEvent: Event;
-    files: File[];
+  originalEvent: Event;
+  files: File[];
 }
 
 @Component({
-    selector: 'file-upload-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>FileUpload basic <i>mode</i> provides a simpler UI as an alternative to default advanced mode.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-toast />
-            <p-fileUpload mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload" name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" accept="image/*" maxFileSize="1000000" (onUpload)="onUpload($event)" />
-        </div>
-        <app-code [code]="code" selector="file-upload-basic-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "file-upload-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        FileUpload basic <i>mode</i> provides a simpler UI as an alternative to
+        default advanced mode.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-toast />
+      <p-fileUpload
+        mode="basic"
+        chooseLabel="Choose"
+        chooseIcon="pi pi-upload"
+        name="demo[]"
+        url="https://www.primefaces.org/cdn/api/upload.php"
+        accept="image/*"
+        maxFileSize="1000000"
+        (onUpload)="onUpload($event)"
+      />
+    </div>
+    <app-code [code]="code" selector="file-upload-basic-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  onUpload(event: UploadEvent) {
+    this.messageService.add({
+      severity: "info",
+      summary: "Success",
+      detail: "File Uploaded with Basic Mode",
+    });
+  }
 
-    onUpload(event: UploadEvent) {
-        this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
-    }
-
-    code: Code = {
-        basic: `<p-fileUpload 
+  code: Code = {
+    basic: `<p-fileUpload 
     mode="basic" 
     chooseLabel="Choose" 
     chooseIcon="pi pi-upload"
@@ -40,7 +56,7 @@ export class BasicDoc {
     accept="image/*" 
     maxFileSize="1000000" 
     (onUpload)="onUpload($event)" />`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast />
     <p-fileUpload 
         mode="basic" 
@@ -52,7 +68,7 @@ export class BasicDoc {
         maxFileSize="1000000" 
         (onUpload)="onUpload($event)" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
@@ -75,6 +91,6 @@ export class FileUploadBasicDemo {
     onUpload(event: UploadEvent) {
         this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
     }
-}`
-    };
+}`,
+  };
 }

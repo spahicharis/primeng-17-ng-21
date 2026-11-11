@@ -1,32 +1,36 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column gap-3 align-items-center">
-            <p-triStateCheckbox [(ngModel)]="value" [disabled]="true" />
-            <label>{{ value === null ? 'null' : value }}</label>
-        </div>
-        <app-code [code]="code" selector="tri-state-checkbox-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-column gap-3 align-items-center">
+      <p-triStateCheckbox [(ngModel)]="value" [disabled]="true" />
+      <label>{{ value === null ? "null" : value }}</label>
+    </div>
+    <app-code [code]="code" selector="tri-state-checkbox-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<p-triStateCheckbox [(ngModel)]="value" [disabled]="true" />`,
+  code: Code = {
+    basic: `<p-triStateCheckbox [(ngModel)]="value" [disabled]="true" />`,
 
-        html: `<div class="card flex flex-column gap-3 align-items-center">
+    html: `<div class="card flex flex-column gap-3 align-items-center">
     <p-triStateCheckbox [(ngModel)]="value" [disabled]="true" />
     <label>{{value === null ? 'null' : value}}</label>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { FormsModule } from '@angular/forms';
 
@@ -38,6 +42,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class TriStateCheckboxDisabledDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

@@ -1,40 +1,48 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'clear-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Clicking the close icon on the toast, removes it manually. Same can also be achieved programmatically using the clear function of the <i>messageService</i>. Calling it without any arguments, removes all displayed messages whereas
-                calling it with a key, removes the messages displayed on a toast having the same key.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center gap-2">
-            <p-toast key="myKey" />
-            <p-button (onClick)="show()" label="Show" />
-            <p-button (onClick)="clear()" label="Clear" severity="secondary" />
-        </div>
-        <app-code [code]="code" selector="toast-clear-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "clear-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Clicking the close icon on the toast, removes it manually. Same can also
+        be achieved programmatically using the clear function of the
+        <i>messageService</i>. Calling it without any arguments, removes all
+        displayed messages whereas calling it with a key, removes the messages
+        displayed on a toast having the same key.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center gap-2">
+      <p-toast key="myKey" />
+      <p-button (onClick)="show()" label="Show" />
+      <p-button (onClick)="clear()" label="Clear" severity="secondary" />
+    </div>
+    <app-code [code]="code" selector="toast-clear-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ClearDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  show() {
+    this.messageService.add({
+      key: "myKey",
+      severity: "success",
+      summary: "Message 1",
+      detail: "Message Content",
+    });
+  }
 
-    show() {
-        this.messageService.add({ key: 'myKey', severity: 'success', summary: 'Message 1', detail: 'Message Content' });
-    }
+  clear() {
+    this.messageService.clear();
+  }
 
-    clear() {
-        this.messageService.clear();
-    }
-
-    code: Code = {
-        basic: `<p-toast key="myKey" />
+  code: Code = {
+    basic: `<p-toast key="myKey" />
 <p-button 
     (onClick)="show()" 
     label="Show" />
@@ -42,7 +50,7 @@ export class ClearDoc {
     (onClick)="clear()" 
     label="Clear" 
     severity="secondary" />`,
-        html: `<div class="card flex justify-content-center gap-2">
+    html: `<div class="card flex justify-content-center gap-2">
     <p-toast key="myKey" />
     <p-button 
         (onClick)="show()" 
@@ -52,7 +60,7 @@ export class ClearDoc {
         label="Clear" 
         severity="secondary" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -75,6 +83,6 @@ export class ToastClearDemo {
     clear() {
         this.messageService.clear();
     }
-}`
-    };
+}`,
+  };
 }

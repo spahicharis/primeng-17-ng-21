@@ -1,41 +1,53 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'disabled-doc',
-    template: ` <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions" placeholder="Search" (completeMethod)="search($event)" [disabled]="true" />
-        </div>
-        <app-code [code]="code" selector="autocomplete-disabled-demo" />`,
-    standalone: false
+  selector: "disabled-doc",
+  template: ` <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-autoComplete
+        [(ngModel)]="selectedItem"
+        [suggestions]="suggestions"
+        placeholder="Search"
+        (completeMethod)="search($event)"
+        [disabled]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="autocomplete-disabled-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    items: any[] | undefined;
+  items: any[] | undefined;
 
-    selectedItem: any;
+  selectedItem: any;
 
-    suggestions: any[] | undefined;
+  suggestions: any[] | undefined;
 
-    search(event: AutoCompleteCompleteEvent) {
-        this.suggestions = [...Array(10).keys()].map((item) => event.query + '-' + item);
-    }
+  search(event: AutoCompleteCompleteEvent) {
+    this.suggestions = [...Array(10).keys()].map(
+      (item) => event.query + "-" + item,
+    );
+  }
 
-    code: Code = {
-        basic: `<p-autoComplete 
+  code: Code = {
+    basic: `<p-autoComplete 
     [(ngModel)]="selectedItem" 
     [suggestions]="suggestions"
     (completeMethod)="search($event)" 
     [disabled]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-autoComplete 
         [(ngModel)]="selectedItem" 
         [suggestions]="suggestions" 
@@ -43,7 +55,7 @@ export class DisabledDoc {
         [disabled]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
 
@@ -68,6 +80,6 @@ export class AutocompleteDisabledDemo {
     search(event: AutoCompleteCompleteEvent) {
         this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
     }
-}`
-    };
+}`,
+  };
 }

@@ -1,60 +1,116 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'severity-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                The <i>severity</i> option specifies the type of the message. There are four types of messages: <i>success</i>, <i>info</i>, <i>warn</i> and <i>error</i>. The severity of the message is used to display the icon and the color of the
-                toast.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center gap-2">
-            <p-toast />
-            <p-button type="button" (onClick)="showSuccess()" label="Success" severity="success" />
-            <p-button type="button" (onClick)="showInfo()" label="Info" severity="info" />
-            <p-button type="button" (onClick)="showWarn()" label="Warn" severity="warning" />
-            <p-button type="button" (onClick)="showError()" label="Error" severity="danger" />
-            <p-button type="button" (onClick)="showSecondary()" label="Secondary" severity="secondary" />
-            <p-button type="button" (onClick)="showContrast()" label="Contrast" severity="contrast" />
-        </div>
-        <app-code [code]="code" selector="toast-severity-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "severity-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        The <i>severity</i> option specifies the type of the message. There are
+        four types of messages: <i>success</i>, <i>info</i>, <i>warn</i> and
+        <i>error</i>. The severity of the message is used to display the icon
+        and the color of the toast.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center gap-2">
+      <p-toast />
+      <p-button
+        type="button"
+        (onClick)="showSuccess()"
+        label="Success"
+        severity="success"
+      />
+      <p-button
+        type="button"
+        (onClick)="showInfo()"
+        label="Info"
+        severity="info"
+      />
+      <p-button
+        type="button"
+        (onClick)="showWarn()"
+        label="Warn"
+        severity="warning"
+      />
+      <p-button
+        type="button"
+        (onClick)="showError()"
+        label="Error"
+        severity="danger"
+      />
+      <p-button
+        type="button"
+        (onClick)="showSecondary()"
+        label="Secondary"
+        severity="secondary"
+      />
+      <p-button
+        type="button"
+        (onClick)="showContrast()"
+        label="Contrast"
+        severity="contrast"
+      />
+    </div>
+    <app-code [code]="code" selector="toast-severity-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SeverityDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  showSuccess() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Message Content",
+    });
+  }
 
-    showSuccess() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-    }
+  showInfo() {
+    this.messageService.add({
+      severity: "info",
+      summary: "Info",
+      detail: "Message Content",
+    });
+  }
 
-    showInfo() {
-        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-    }
+  showWarn() {
+    this.messageService.add({
+      severity: "warn",
+      summary: "Warn",
+      detail: "Message Content",
+    });
+  }
 
-    showWarn() {
-        this.messageService.add({ severity: 'warn', summary: 'Warn', detail: 'Message Content' });
-    }
+  showError() {
+    this.messageService.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Message Content",
+    });
+  }
 
-    showError() {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
-    }
+  showContrast() {
+    this.messageService.add({
+      severity: "contrast",
+      summary: "Error",
+      detail: "Message Content",
+    });
+  }
 
-    showContrast() {
-        this.messageService.add({ severity: 'contrast', summary: 'Error', detail: 'Message Content' });
-    }
+  showSecondary() {
+    this.messageService.add({
+      severity: "secondary",
+      summary: "Secondary",
+      detail: "Message Content",
+    });
+  }
 
-    showSecondary() {
-        this.messageService.add({ severity: 'secondary', summary: 'Secondary', detail: 'Message Content' });
-    }
-
-    code: Code = {
-        basic: `<p-toast />
+  code: Code = {
+    basic: `<p-toast />
 <p-button 
     type="button" 
     (onClick)="showSuccess()" 
@@ -85,7 +141,7 @@ export class SeverityDoc {
     (onClick)="showContrast()" 
     label="Contrast" 
     severity="contrast" />`,
-        html: `<div class="card flex justify-content-center gap-2">
+    html: `<div class="card flex justify-content-center gap-2">
     <p-toast />
     <p-button 
         type="button"
@@ -118,7 +174,7 @@ export class SeverityDoc {
         label="Contrast" 
         severity="contrast" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -157,6 +213,6 @@ export class ToastSeverityDemo {
     showSecondary() {
         this.messageService.add({ severity: 'secondary', summary: 'Secondary', detail: 'Message Content' });
     }
-}`
-    };
+}`,
+  };
 }

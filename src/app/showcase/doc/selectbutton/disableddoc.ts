@@ -1,37 +1,54 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused entirely. Certain options can also be disabled using the <i>optionDisabled</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center flex-wrap gap-3">
-            <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label" optionValue="value" [disabled]="true" />
-            <p-selectButton [options]="stateOptions2" [(ngModel)]="value2" optionLabel="label" optionValue="value" optionDisabled="constant" />
-        </div>
-        <app-code [code]="code" selector="select-button-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused entirely. Certain options can also be disabled using the
+        <i>optionDisabled</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center flex-wrap gap-3">
+      <p-selectButton
+        [options]="stateOptions"
+        [(ngModel)]="value1"
+        optionLabel="label"
+        optionValue="value"
+        [disabled]="true"
+      />
+      <p-selectButton
+        [options]="stateOptions2"
+        [(ngModel)]="value2"
+        optionLabel="label"
+        optionValue="value"
+        optionDisabled="constant"
+      />
+    </div>
+    <app-code [code]="code" selector="select-button-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    stateOptions: any[] = [
-        { label: 'Off', value: 'off' },
-        { label: 'On', value: 'on' }
-    ];
+  stateOptions: any[] = [
+    { label: "Off", value: "off" },
+    { label: "On", value: "on" },
+  ];
 
-    stateOptions2: any[] = [
-        { label: 'Option 1', value: 'Option 1' },
-        { label: 'Option 2', value: 'Option 2', constant: true }
-    ];
+  stateOptions2: any[] = [
+    { label: "Option 1", value: "Option 1" },
+    { label: "Option 2", value: "Option 2", constant: true },
+  ];
 
-    value1: string = 'off';
+  value1: string = "off";
 
-    value2: string = 'Option 1';
+  value2: string = "Option 1";
 
-    code: Code = {
-        basic: `<p-selectButton 
+  code: Code = {
+    basic: `<p-selectButton 
     [options]="stateOptions" 
     [(ngModel)]="value1" 
     optionLabel="label"
@@ -45,7 +62,7 @@ export class DisabledDoc {
     optionValue="value" 
     optionDisabled="constant" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-selectButton 
         [options]="stateOptions" 
         [(ngModel)]="value1" 
@@ -60,7 +77,7 @@ export class DisabledDoc {
         optionDisabled="constant" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
@@ -84,6 +101,6 @@ export class SelectButtonDisabledDemo {
     value1: string = 'off';
 
     value2: string = 'Option 1';
-}`
-    };
+}`,
+  };
 }

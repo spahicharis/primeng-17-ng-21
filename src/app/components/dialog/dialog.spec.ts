@@ -1,342 +1,405 @@
-import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Footer } from 'primeng/api';
-import { TimesIcon } from 'primeng/icons/times';
-import { WindowMaximizeIcon } from 'primeng/icons/windowmaximize';
-import { WindowMinimizeIcon } from 'primeng/icons/windowminimize';
-import { ButtonModule } from '../button/button';
-import { FocusTrapModule } from '../focustrap/focustrap';
-import { Dialog } from './dialog';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  tick,
+} from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { Footer } from "primeng/api";
+import { TimesIcon } from "primeng/icons/times";
+import { WindowMaximizeIcon } from "primeng/icons/windowmaximize";
+import { WindowMinimizeIcon } from "primeng/icons/windowminimize";
+import { ButtonModule } from "../button/button";
+import { FocusTrapModule } from "../focustrap/focustrap";
+import { Dialog } from "./dialog";
 
 @Component({
-    template: `
-        <p-dialog [(visible)]="display">
-            <p-footer>
-                <button type="button" pButton icon="pi pi-check" (click)="display = false" label="Yes"></button>
-                <button type="button" pButton icon="pi pi-times" (click)="display = false" label="No" class="ui-button-secondary"></button>
-            </p-footer>
-        </p-dialog>
-        <button type="button" (click)="showDialog()" pButton icon="pi pi-info-circle" label="Show"></button>
-    `,
-    standalone: false
+  template: `
+    <p-dialog [(visible)]="display">
+      <p-footer>
+        <button
+          type="button"
+          pButton
+          icon="pi pi-check"
+          (click)="display = false"
+          label="Yes"
+        ></button>
+        <button
+          type="button"
+          pButton
+          icon="pi pi-times"
+          (click)="display = false"
+          label="No"
+          class="ui-button-secondary"
+        ></button>
+      </p-footer>
+    </p-dialog>
+    <button
+      type="button"
+      (click)="showDialog()"
+      pButton
+      icon="pi pi-info-circle"
+      label="Show"
+    ></button>
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 class TestDialogComponent {
-    display: boolean = false;
+  display: boolean = false;
 
-    showDialog() {
-        this.display = true;
-    }
+  showDialog() {
+    this.display = true;
+  }
 }
 
-describe('Dialog', () => {
-    let dialog: Dialog;
-    let fixture: ComponentFixture<TestDialogComponent>;
-    let testComponent: TestDialogComponent;
+describe("Dialog", () => {
+  let dialog: Dialog;
+  let fixture: ComponentFixture<TestDialogComponent>;
+  let testComponent: TestDialogComponent;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, FocusTrapModule, ButtonModule, TimesIcon, WindowMaximizeIcon, WindowMinimizeIcon, Footer],
-            declarations: [Dialog, TestDialogComponent]
-        });
-
-        fixture = TestBed.createComponent(TestDialogComponent);
-        dialog = fixture.debugElement.children[0].componentInstance;
-        testComponent = fixture.debugElement.componentInstance;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        NoopAnimationsModule,
+        FocusTrapModule,
+        ButtonModule,
+        TimesIcon,
+        WindowMaximizeIcon,
+        WindowMinimizeIcon,
+        Footer,
+      ],
+      declarations: [Dialog, TestDialogComponent],
     });
 
-    it('should display the header', () => {
-        dialog.header = 'PrimeNG Dialog Header';
-        fixture.detectChanges();
+    fixture = TestBed.createComponent(TestDialogComponent);
+    dialog = fixture.debugElement.children[0].componentInstance;
+    testComponent = fixture.debugElement.componentInstance;
+  });
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should display the header", () => {
+    dialog.header = "PrimeNG Dialog Header";
+    fixture.detectChanges();
 
-        const headerEl = fixture.debugElement.query(By.css('.p-dialog-title'));
-        expect(headerEl.nativeElement.textContent).toContain('PrimeNG Dialog Header');
-    });
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should display the close icon when closable', () => {
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+    const headerEl = fixture.debugElement.query(By.css(".p-dialog-title"));
+    expect(headerEl.nativeElement.textContent).toContain(
+      "PrimeNG Dialog Header",
+    );
+  });
 
-        const closeEl = fixture.debugElement.query(By.css('.p-dialog-header-close'));
-        expect(closeEl).not.toBeNull();
-    });
+  it("should display the close icon when closable", () => {
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should display the resizer when resizable is true', () => {
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+    const closeEl = fixture.debugElement.query(
+      By.css(".p-dialog-header-close"),
+    );
+    expect(closeEl).not.toBeNull();
+  });
 
-        const resizeEl = fixture.debugElement.query(By.css('.p-resizable-handle'));
-        expect(resizeEl).not.toBeNull();
-    });
+  it("should display the resizer when resizable is true", () => {
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should not create the container element by default', () => {
-        fixture.detectChanges();
+    const resizeEl = fixture.debugElement.query(By.css(".p-resizable-handle"));
+    expect(resizeEl).not.toBeNull();
+  });
 
-        expect(fixture.debugElement.children[0].nativeElement.childElementCount).toEqual(0);
-        expect(dialog.visible).toEqual(false);
-    });
+  it("should not create the container element by default", () => {
+    fixture.detectChanges();
 
-    it('should add rtl class when rtl is enabled', () => {
-        dialog.rtl = true;
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+    expect(
+      fixture.debugElement.children[0].nativeElement.childElementCount,
+    ).toEqual(0);
+    expect(dialog.visible).toEqual(false);
+  });
 
-        const rtlEl = fixture.debugElement.query(By.css('.p-dialog-rtl'));
-        expect(rtlEl).toBeTruthy();
-    });
+  it("should add rtl class when rtl is enabled", () => {
+    dialog.rtl = true;
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should add draggable class when dragging is enabled', () => {
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+    const rtlEl = fixture.debugElement.query(By.css(".p-dialog-rtl"));
+    expect(rtlEl).toBeTruthy();
+  });
 
-        const draggableEl = fixture.debugElement.query(By.css('.p-dialog-draggable'));
-        expect(draggableEl).toBeTruthy();
-    });
+  it("should add draggable class when dragging is enabled", () => {
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should update visible as false binding when close icon is clicked', () => {
-        let show = true;
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
-        dialog.visibleChange.subscribe((value) => (show = value));
+    const draggableEl = fixture.debugElement.query(
+      By.css(".p-dialog-draggable"),
+    );
+    expect(draggableEl).toBeTruthy();
+  });
 
-        const closeEl = fixture.nativeElement.querySelector('.p-dialog-header-close');
-        closeEl.click();
+  it("should update visible as false binding when close icon is clicked", () => {
+    let show = true;
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
+    dialog.visibleChange.subscribe((value) => (show = value));
 
-        expect(show).toEqual(false);
-    });
+    const closeEl = fixture.nativeElement.querySelector(
+      ".p-dialog-header-close",
+    );
+    closeEl.click();
 
-    it('should maximizable', fakeAsync(() => {
-        dialog.maximizable = true;
-        fixture.detectChanges();
+    expect(show).toEqual(false);
+  });
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should maximizable", fakeAsync(() => {
+    dialog.maximizable = true;
+    fixture.detectChanges();
 
-        tick(300);
-        const maximizeSpy = spyOn(dialog, 'maximize').and.callThrough();
-        const maximizableEl = fixture.nativeElement.querySelector('.p-dialog-header-maximize');
-        expect(maximizableEl).toBeTruthy();
-        maximizableEl.click();
-        fixture.detectChanges();
-        flush();
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-        const minIconEl = fixture.debugElement.query(By.css('windowminimizeicon'));
-        expect(maximizeSpy).toHaveBeenCalled();
-        expect(dialog.maximized).toEqual(true);
-        expect(minIconEl).toBeTruthy();
-        dialog.container = fixture.debugElement.query(By.css('div')).nativeElement;
-        fixture.detectChanges();
+    tick(300);
+    const maximizeSpy = spyOn(dialog, "maximize").and.callThrough();
+    const maximizableEl = fixture.nativeElement.querySelector(
+      ".p-dialog-header-maximize",
+    );
+    expect(maximizableEl).toBeTruthy();
+    maximizableEl.click();
+    fixture.detectChanges();
+    flush();
 
-        maximizableEl.click();
-        tick(350);
-        fixture.detectChanges();
+    const minIconEl = fixture.debugElement.query(By.css("windowminimizeicon"));
+    expect(maximizeSpy).toHaveBeenCalled();
+    expect(dialog.maximized).toEqual(true);
+    expect(minIconEl).toBeTruthy();
+    dialog.container = fixture.debugElement.query(By.css("div")).nativeElement;
+    fixture.detectChanges();
 
-        expect(dialog.maximized).toEqual(false);
-        flush();
-    }));
+    maximizableEl.click();
+    tick(350);
+    fixture.detectChanges();
 
-    it('should close (maximized)', fakeAsync(() => {
-        dialog.maximizable = true;
-        fixture.detectChanges();
+    expect(dialog.maximized).toEqual(false);
+    flush();
+  }));
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should close (maximized)", fakeAsync(() => {
+    dialog.maximizable = true;
+    fixture.detectChanges();
 
-        dialog.container = fixture.debugElement.query(By.css('div')).nativeElement;
-        fixture.detectChanges();
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-        const maximizableEl = fixture.nativeElement.querySelector('.p-dialog-header-maximize ');
-        expect(maximizableEl).toBeTruthy();
-        maximizableEl.click();
-        fixture.detectChanges();
+    dialog.container = fixture.debugElement.query(By.css("div")).nativeElement;
+    fixture.detectChanges();
 
-        const closeEl = fixture.debugElement.query(By.css('.p-dialog-header-close'));
-        dialog.visibleChange.subscribe((value) => (dialog.visible = value));
-        closeEl.nativeElement.click();
-        tick(350);
-        fixture.detectChanges();
+    const maximizableEl = fixture.nativeElement.querySelector(
+      ".p-dialog-header-maximize ",
+    );
+    expect(maximizableEl).toBeTruthy();
+    maximizableEl.click();
+    fixture.detectChanges();
 
-        expect(dialog.visible).toEqual(false);
-        flush();
-    }));
+    const closeEl = fixture.debugElement.query(
+      By.css(".p-dialog-header-close"),
+    );
+    dialog.visibleChange.subscribe((value) => (dialog.visible = value));
+    closeEl.nativeElement.click();
+    tick(350);
+    fixture.detectChanges();
 
-    it('should change modal blockScroll and dismissableMask ', fakeAsync(() => {
-        const closeSpy = spyOn(dialog, 'close').and.callThrough();
-        dialog.modal = true;
-        dialog.blockScroll = true;
-        dialog.dismissableMask = true;
-        fixture.detectChanges();
+    expect(dialog.visible).toEqual(false);
+    flush();
+  }));
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should change modal blockScroll and dismissableMask ", fakeAsync(() => {
+    const closeSpy = spyOn(dialog, "close").and.callThrough();
+    dialog.modal = true;
+    dialog.blockScroll = true;
+    dialog.dismissableMask = true;
+    fixture.detectChanges();
 
-        const dialogEl = fixture.debugElement.query(By.css('div'));
-        const closeEl = fixture.debugElement.query(By.css('.p-dialog-header-close'));
-        expect(dialogEl).toBeTruthy();
-        dialog.visibleChange.subscribe((value) => (dialog.visible = value));
-        closeEl.nativeElement.click();
-        closeEl.nativeElement.dispatchEvent(new Event('mousedown'));
-        tick(350);
-        fixture.detectChanges();
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-        expect(dialog.visible).toEqual(false);
-        expect(closeSpy).toHaveBeenCalled();
-        flush();
-    }));
+    const dialogEl = fixture.debugElement.query(By.css("div"));
+    const closeEl = fixture.debugElement.query(
+      By.css(".p-dialog-header-close"),
+    );
+    expect(dialogEl).toBeTruthy();
+    dialog.visibleChange.subscribe((value) => (dialog.visible = value));
+    closeEl.nativeElement.click();
+    closeEl.nativeElement.dispatchEvent(new Event("mousedown"));
+    tick(350);
+    fixture.detectChanges();
 
-    it('should open with focusOnShow', () => {
-        dialog.focusOnShow = true;
-        fixture.detectChanges();
+    expect(dialog.visible).toEqual(false);
+    expect(closeSpy).toHaveBeenCalled();
+    flush();
+  }));
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should open with focusOnShow", () => {
+    dialog.focusOnShow = true;
+    fixture.detectChanges();
 
-        expect(dialog.visible).toEqual(true);
-    });
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should change appendTo (body)', () => {
-        dialog.appendTo = 'body';
-        fixture.detectChanges();
+    expect(dialog.visible).toEqual(true);
+  });
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should change appendTo (body)", () => {
+    dialog.appendTo = "body";
+    fixture.detectChanges();
 
-        expect(dialog.visible).toEqual(true);
-    });
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should change appendTo (button)', () => {
-        dialog.appendTo = fixture.debugElement.query(By.css('button')).nativeElement;
-        fixture.detectChanges();
+    expect(dialog.visible).toEqual(true);
+  });
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should change appendTo (button)", () => {
+    dialog.appendTo = fixture.debugElement.query(
+      By.css("button"),
+    ).nativeElement;
+    fixture.detectChanges();
 
-        expect(dialog.visible).toEqual(true);
-    });
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-    it('should call ngOnDestroy', fakeAsync(() => {
-        dialog.maximizable = true;
-        dialog.modal = true;
-        dialog.appendTo = 'body';
-        fixture.detectChanges();
+    expect(dialog.visible).toEqual(true);
+  });
 
-        const restoreAppendSpy = spyOn(dialog, 'restoreAppend').and.callThrough();
-        const onOverlayHideSpy = spyOn(dialog, 'onContainerDestroy').and.callThrough();
-        const disableModalitySpy = spyOn(dialog, 'disableModality').and.callThrough();
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should call ngOnDestroy", fakeAsync(() => {
+    dialog.maximizable = true;
+    dialog.modal = true;
+    dialog.appendTo = "body";
+    fixture.detectChanges();
 
-        dialog.container = fixture.debugElement.query(By.css('div')).nativeElement;
-        fixture.detectChanges();
+    const restoreAppendSpy = spyOn(dialog, "restoreAppend").and.callThrough();
+    const onOverlayHideSpy = spyOn(
+      dialog,
+      "onContainerDestroy",
+    ).and.callThrough();
+    const disableModalitySpy = spyOn(
+      dialog,
+      "disableModality",
+    ).and.callThrough();
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-        const maximizableEl = fixture.nativeElement.querySelector('.p-dialog-header-maximize ');
-        maximizableEl.click();
-        fixture.detectChanges();
+    dialog.container = fixture.debugElement.query(By.css("div")).nativeElement;
+    fixture.detectChanges();
 
-        dialog.container = fixture.debugElement.query(By.css('div')).nativeElement;
-        fixture.detectChanges();
+    const maximizableEl = fixture.nativeElement.querySelector(
+      ".p-dialog-header-maximize ",
+    );
+    maximizableEl.click();
+    fixture.detectChanges();
 
-        maximizableEl.click();
-        tick(350);
-        fixture.detectChanges();
+    dialog.container = fixture.debugElement.query(By.css("div")).nativeElement;
+    fixture.detectChanges();
 
-        dialog.ngOnDestroy();
-        fixture.detectChanges();
+    maximizableEl.click();
+    tick(350);
+    fixture.detectChanges();
 
-        expect(restoreAppendSpy).toHaveBeenCalled();
-        expect(onOverlayHideSpy).toHaveBeenCalled();
-        expect(disableModalitySpy).toHaveBeenCalled();
-        expect(dialog.container).toEqual(null);
-        flush();
-    }));
+    dialog.ngOnDestroy();
+    fixture.detectChanges();
 
-    it('should change location with drag actions', fakeAsync(() => {
-        fixture.detectChanges();
+    expect(restoreAppendSpy).toHaveBeenCalled();
+    expect(onOverlayHideSpy).toHaveBeenCalled();
+    expect(disableModalitySpy).toHaveBeenCalled();
+    expect(dialog.container).toEqual(null);
+    flush();
+  }));
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should change location with drag actions", fakeAsync(() => {
+    fixture.detectChanges();
 
-        tick(300);
-        let firstLeft = dialog.container.style.left;
-        let firstTop = dialog.container.style.top;
-        let event = {
-            pageX: 500,
-            pageY: 500,
-            target: fixture.debugElement.nativeElement.querySelector('.p-dialog-header')
-        };
-        dialog.initDrag(event as MouseEvent);
-        expect(dialog.dragging).toEqual(true);
-        event.pageX = 505;
-        event.pageY = 505;
-        dialog.onDrag(event as DragEvent);
-        dialog.endDrag(event as DragEvent);
-        fixture.detectChanges();
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-        expect(dialog.container.style.left).not.toEqual(firstLeft);
-        expect(dialog.container.style.top).not.toEqual(firstTop);
-        expect(dialog.dragging).toEqual(false);
-        flush();
-    }));
+    tick(300);
+    let firstLeft = dialog.container.style.left;
+    let firstTop = dialog.container.style.top;
+    let event = {
+      pageX: 500,
+      pageY: 500,
+      target:
+        fixture.debugElement.nativeElement.querySelector(".p-dialog-header"),
+    };
+    dialog.initDrag(event as MouseEvent);
+    expect(dialog.dragging).toEqual(true);
+    event.pageX = 505;
+    event.pageY = 505;
+    dialog.onDrag(event as DragEvent);
+    dialog.endDrag(event as DragEvent);
+    fixture.detectChanges();
 
-    it('should change location with resize actions', fakeAsync(() => {
-        fixture.detectChanges();
+    expect(dialog.container.style.left).not.toEqual(firstLeft);
+    expect(dialog.container.style.top).not.toEqual(firstTop);
+    expect(dialog.dragging).toEqual(false);
+    flush();
+  }));
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        fixture.detectChanges();
+  it("should change location with resize actions", fakeAsync(() => {
+    fixture.detectChanges();
 
-        tick(300);
-        let firstWidth = dialog.container.offsetWidth;
-        let firstHeight = dialog.container.offsetHeight;
-        let event = {
-            pageX: 500,
-            pageY: 500
-        };
-        dialog.initResize(event as MouseEvent);
-        expect(dialog.resizing).toEqual(true);
-        event.pageX = 505;
-        event.pageY = 505;
-        dialog.onResize(event as MouseEvent);
-        dialog.resizeEnd(event as MouseEvent);
-        fixture.detectChanges();
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    fixture.detectChanges();
 
-        expect(parseInt(dialog.container.style.width)).not.toEqual(firstWidth);
-        expect(parseInt(dialog.container.style.height)).not.toEqual(firstHeight);
-        expect(dialog.resizing).toEqual(false);
-        flush();
-    }));
+    tick(300);
+    let firstWidth = dialog.container.offsetWidth;
+    let firstHeight = dialog.container.offsetHeight;
+    let event = {
+      pageX: 500,
+      pageY: 500,
+    };
+    dialog.initResize(event as MouseEvent);
+    expect(dialog.resizing).toEqual(true);
+    event.pageX = 505;
+    event.pageY = 505;
+    dialog.onResize(event as MouseEvent);
+    dialog.resizeEnd(event as MouseEvent);
+    fixture.detectChanges();
 
-    it('should close when press esc key', fakeAsync(() => {
-        fixture.detectChanges();
+    expect(parseInt(dialog.container.style.width)).not.toEqual(firstWidth);
+    expect(parseInt(dialog.container.style.height)).not.toEqual(firstHeight);
+    expect(dialog.resizing).toEqual(false);
+    flush();
+  }));
 
-        const buttonEl = fixture.debugElement.query(By.css('button'));
-        buttonEl.nativeElement.click();
-        const closeSpy = spyOn(dialog, 'close').and.callThrough();
-        fixture.detectChanges();
+  it("should close when press esc key", fakeAsync(() => {
+    fixture.detectChanges();
 
-        tick(300);
-        document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-        fixture.detectChanges();
+    const buttonEl = fixture.debugElement.query(By.css("button"));
+    buttonEl.nativeElement.click();
+    const closeSpy = spyOn(dialog, "close").and.callThrough();
+    fixture.detectChanges();
 
-        expect(closeSpy).toHaveBeenCalled();
-        flush();
-    }));
+    tick(300);
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    fixture.detectChanges();
+
+    expect(closeSpy).toHaveBeenCalled();
+    flush();
+  }));
 });

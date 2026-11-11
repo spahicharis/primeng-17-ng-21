@@ -1,23 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'button-badge-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Buttons have built-in <i>badge</i> support with badge and <i>badgeClass</i> properties.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center flex-wrap gap-3">
-            <p-button label="Emails" badge="2" styleClass="m-0" />
-            <p-button label="Messages" icon="pi pi-users" badge="2" badgeClass="p-badge-contrast" styleClass="m-0" outlined="true" />
-        </div>
-        <app-code [code]="code" selector="button-badge-demo" />
-    `,
-    standalone: false
+  selector: "button-badge-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Buttons have built-in <i>badge</i> support with badge and
+        <i>badgeClass</i> properties.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center flex-wrap gap-3">
+      <p-button label="Emails" badge="2" styleClass="m-0" />
+      <p-button
+        label="Messages"
+        icon="pi pi-users"
+        badge="2"
+        badgeClass="p-badge-contrast"
+        styleClass="m-0"
+        outlined="true"
+      />
+    </div>
+    <app-code [code]="code" selector="button-badge-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BadgeDoc {
-    code: Code = {
-        basic: `<p-button label="Emails" badge="8" />
+  code: Code = {
+    basic: `<p-button label="Emails" badge="8" />
 <p-button 
     label="Messages" 
     icon="pi pi-users" 
@@ -25,7 +36,7 @@ export class BadgeDoc {
     badgeClass="p-badge-contrast" 
     outlined="true" />`,
 
-        html: `<div class="card flex justify-content-center flex-wrap gap-3">
+    html: `<div class="card flex justify-content-center flex-wrap gap-3">
     <p-button label="Emails" badge="2" />
     <p-button 
         label="Messages" 
@@ -35,7 +46,7 @@ export class BadgeDoc {
         outlined="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -44,6 +55,6 @@ import { ButtonModule } from 'primeng/button';
     standalone: true,
     imports: [ButtonModule]
 })
-export class ButtonBadgeDemo { }`
-    };
+export class ButtonBadgeDemo { }`,
+  };
 }

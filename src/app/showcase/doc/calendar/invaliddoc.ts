@@ -1,34 +1,38 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-invalid-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-calendar [(ngModel)]="date" class="ng-invalid ng-dirty" />
-        </div>
-        <app-code [code]="code" selector="calendar-invalid-demo" />
-    `,
-    standalone: false
+  selector: "calendar-invalid-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-calendar [(ngModel)]="date" class="ng-invalid ng-dirty" />
+    </div>
+    <app-code [code]="code" selector="calendar-invalid-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    date: Date | undefined;
+  date: Date | undefined;
 
-    code: Code = {
-        basic: `<p-calendar 
+  code: Code = {
+    basic: `<p-calendar 
     [(ngModel)]="date" 
     class="ng-invalid ng-dirty" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-calendar 
         [(ngModel)]="date" 
         class="ng-invalid ng-dirty" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -40,6 +44,6 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class CalendarInvalidDemo {
     date: Date | undefined;
-}`
-    };
+}`,
+  };
 }

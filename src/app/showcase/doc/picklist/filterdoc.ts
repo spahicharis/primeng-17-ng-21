@@ -1,66 +1,85 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { Product } from '@domain/product';
-import { ProductService } from '@service/productservice';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { Product } from "@domain/product";
+import { ProductService } from "@service/productservice";
 
 @Component({
-    selector: 'filter-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Filter value is checked against the property of an object configured with the <i>filterBy</i> property.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-pickList
-                [source]="sourceProducts"
-                [target]="targetProducts"
-                sourceHeader="Available"
-                targetHeader="Selected"
-                [dragdrop]="true"
-                [responsive]="true"
-                [sourceStyle]="{ height: '30rem' }"
-                [targetStyle]="{ height: '30rem' }"
-                filterBy="name"
-                sourceFilterPlaceholder="Search by name"
-                targetFilterPlaceholder="Search by name"
-                breakpoint="1400px"
-            >
-                <ng-template let-product pTemplate="item">
-                    <div class="flex flex-wrap p-2 align-items-center gap-3">
-                        <img class="w-4rem shadow-2 flex-shrink-0 border-round" src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" alt="{item.name}" />
-                        <div class="flex-1 flex flex-column gap-2">
-                            <span class="font-bold">{{ product.name }}</span>
-                            <div class="flex align-products-center gap-2">
-                                <i class="pi pi-tag text-sm"></i>
-                                <span>{{ product.category }}</span>
-                            </div>
-                        </div>
-                        <span class="font-bold text-900">{{ '$' + product.price }}</span>
-                    </div>
-                </ng-template>
-            </p-pickList>
-        </div>
-        <app-code [code]="code" selector="picklist-filter-demo" [extFiles]="extFiles" />
-    `,
-    standalone: false
+  selector: "filter-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Filter value is checked against the property of an object configured
+        with the <i>filterBy</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-pickList
+        [source]="sourceProducts"
+        [target]="targetProducts"
+        sourceHeader="Available"
+        targetHeader="Selected"
+        [dragdrop]="true"
+        [responsive]="true"
+        [sourceStyle]="{ height: '30rem' }"
+        [targetStyle]="{ height: '30rem' }"
+        filterBy="name"
+        sourceFilterPlaceholder="Search by name"
+        targetFilterPlaceholder="Search by name"
+        breakpoint="1400px"
+      >
+        <ng-template let-product pTemplate="item">
+          <div class="flex flex-wrap p-2 align-items-center gap-3">
+            <img
+              class="w-4rem shadow-2 flex-shrink-0 border-round"
+              src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+                product.image
+              }}"
+              alt="{item.name}"
+            />
+            <div class="flex-1 flex flex-column gap-2">
+              <span class="font-bold">{{ product.name }}</span>
+              <div class="flex align-products-center gap-2">
+                <i class="pi pi-tag text-sm"></i>
+                <span>{{ product.category }}</span>
+              </div>
+            </div>
+            <span class="font-bold text-900">{{ "$" + product.price }}</span>
+          </div>
+        </ng-template>
+      </p-pickList>
+    </div>
+    <app-code
+      [code]="code"
+      selector="picklist-filter-demo"
+      [extFiles]="extFiles"
+    />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilterDoc {
-    private carService = inject(ProductService);
-    private cdr = inject(ChangeDetectorRef);
+  private carService = inject(ProductService);
+  private cdr = inject(ChangeDetectorRef);
 
-    sourceProducts!: Product[];
+  sourceProducts!: Product[];
 
-    targetProducts!: Product[];
+  targetProducts!: Product[];
 
-    ngOnInit() {
-        this.carService.getProductsSmall().then((products) => {
-            this.sourceProducts = products;
-            this.cdr.markForCheck();
-        });
-        this.targetProducts = [];
-    }
+  ngOnInit() {
+    this.carService.getProductsSmall().then((products) => {
+      this.sourceProducts = products;
+      this.cdr.markForCheck();
+    });
+    this.targetProducts = [];
+  }
 
-    code: Code = {
-        basic: `<p-pickList 
+  code: Code = {
+    basic: `<p-pickList 
     [source]="sourceProducts" 
     [target]="targetProducts" 
     sourceHeader="Available" 
@@ -97,7 +116,7 @@ export class FilterDoc {
         </ng-template>
 </p-pickList>`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-pickList 
         [source]="sourceProducts" 
         [target]="targetProducts" 
@@ -136,7 +155,7 @@ export class FilterDoc {
     </p-pickList>
 </div>`,
 
-        typescript: `import { Component, ChangeDetectorRef } from '@angular/core';
+    typescript: `import { Component, ChangeDetectorRef } from '@angular/core';
 import { Product } from '@domain/product';
 import { ProductService } from '@service/productservice';
 import { PickListModule } from 'primeng/picklist';
@@ -167,7 +186,7 @@ export class PicklistFilterDemo {
     }
 }`,
 
-        data: `
+    data: `
 /* ProductService */        
 {
     id: '1000',
@@ -183,13 +202,13 @@ export class PicklistFilterDemo {
 },
 ...`,
 
-        service: ['ProductService']
-    };
+    service: ["ProductService"],
+  };
 
-    extFiles = [
-        {
-            path: 'src/domain/product.ts',
-            content: `
+  extFiles = [
+    {
+      path: "src/domain/product.ts",
+      content: `
 export interface Product {
     id?: string;
     code?: string;
@@ -201,7 +220,7 @@ export interface Product {
     category?: string;
     image?: string;
     rating?: number;
-}`
-        }
-    ];
+}`,
+    },
+  ];
 }

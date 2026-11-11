@@ -1,63 +1,89 @@
-import { Component, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'sizes-doc',
-    template: `
-        <app-docsectiontext>
-            <p>SplitButton provides <i>small</i> and <i>large</i> sizes as alternatives to the standard.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <p-toast />
-            <p-splitButton label="Small" [model]="items" (onClick)="save('info')" size="sm" />
-            <p-splitButton label="Normal" [model]="items" (onClick)="save('info')" />
-            <p-splitButton label="Large" [model]="items" (onClick)="save('info')" size="lg" />
-        </div>
-        <app-code [code]="code" selector="split-button-sizes-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "sizes-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        SplitButton provides <i>small</i> and <i>large</i> sizes as alternatives
+        to the standard.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap justify-content-center gap-3">
+      <p-toast />
+      <p-splitButton
+        label="Small"
+        [model]="items"
+        (onClick)="save('info')"
+        size="sm"
+      />
+      <p-splitButton label="Normal" [model]="items" (onClick)="save('info')" />
+      <p-splitButton
+        label="Large"
+        [model]="items"
+        (onClick)="save('info')"
+        size="lg"
+      />
+    </div>
+    <app-code [code]="code" selector="split-button-sizes-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SizesDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    constructor() {
-        this.items = [
-            {
-                label: 'Update',
-                command: () => {
-                    this.update();
-                }
-            },
-            {
-                label: 'Delete',
-                command: () => {
-                    this.delete();
-                }
-            },
-            { label: 'Angular Website', url: 'http://angular.io' },
-            { separator: true },
-            { label: 'Upload', routerLink: ['/fileupload'] }
-        ];
-    }
+  constructor() {
+    this.items = [
+      {
+        label: "Update",
+        command: () => {
+          this.update();
+        },
+      },
+      {
+        label: "Delete",
+        command: () => {
+          this.delete();
+        },
+      },
+      { label: "Angular Website", url: "http://angular.io" },
+      { separator: true },
+      { label: "Upload", routerLink: ["/fileupload"] },
+    ];
+  }
 
-    items: MenuItem[];
+  items: MenuItem[];
 
-    save(severity: string) {
-        this.messageService.add({ severity: severity, summary: 'Success', detail: 'Data Saved' });
-    }
+  save(severity: string) {
+    this.messageService.add({
+      severity: severity,
+      summary: "Success",
+      detail: "Data Saved",
+    });
+  }
 
-    update() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-    }
+  update() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Updated",
+    });
+  }
 
-    delete() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Deleted' });
-    }
+  delete() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Deleted",
+    });
+  }
 
-    code: Code = {
-        basic: `<p-splitButton 
+  code: Code = {
+    basic: `<p-splitButton 
     label="Small" 
     [model]="items" 
     (onClick)="save('info')" 
@@ -72,7 +98,7 @@ export class SizesDoc {
     (onClick)="save('info')" 
     size="lg" />`,
 
-        html: `<div class="card flex flex-wrap gap-3 justify-content-center">
+    html: `<div class="card flex flex-wrap gap-3 justify-content-center">
     <p-toast />
     <p-splitButton 
         label="Small" 
@@ -90,7 +116,7 @@ export class SizesDoc {
         size="lg" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
@@ -136,6 +162,6 @@ export class SplitButtonSizesDemo {
     delete() {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Deleted' });
     }
-}`
-    };
+}`,
+  };
 }

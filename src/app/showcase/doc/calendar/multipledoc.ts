@@ -1,36 +1,44 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-multiple-demo',
-    template: `
-        <app-docsectiontext>
-            <p>In order to choose multiple dates, set <i>selectionMode</i> as <i>multiple</i>. In this mode, the value binding should be an array.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-calendar [(ngModel)]="dates" selectionMode="multiple" [readonlyInput]="true" />
-        </div>
-        <app-code [code]="code" selector="calendar-multiple-demo" />
-    `,
-    standalone: false
+  selector: "calendar-multiple-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        In order to choose multiple dates, set <i>selectionMode</i> as
+        <i>multiple</i>. In this mode, the value binding should be an array.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-calendar
+        [(ngModel)]="dates"
+        selectionMode="multiple"
+        [readonlyInput]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="calendar-multiple-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MultipleDoc {
-    dates: Date[] | undefined;
+  dates: Date[] | undefined;
 
-    code: Code = {
-        basic: `<p-calendar 
+  code: Code = {
+    basic: `<p-calendar 
     [(ngModel)]="dates" 
     selectionMode="multiple" 
     [readonlyInput]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-calendar 
         [(ngModel)]="dates" 
         selectionMode="multiple" 
         [readonlyInput]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -42,6 +50,6 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class CalendarMultipleDemo {
     dates: Date[] | undefined;
-}`
-    };
+}`,
+  };
 }

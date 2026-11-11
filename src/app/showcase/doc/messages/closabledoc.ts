@@ -1,36 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Message } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'closable-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Messages are <i>closable</i> by default resulting in a close icon being displayed on top right corner. In order to disable closable messages, set <i>closable</i> to <i>false</i>. Note that in this case two-way binding is not necessary
-                as the component does not need to update its value.
-            </p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-messages [(value)]="messages" [closable]="false" />
-        </div>
-        <app-code [code]="code" selector="messages-closable-demo" />
-    `,
-    standalone: false
+  selector: "closable-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Messages are <i>closable</i> by default resulting in a close icon being
+        displayed on top right corner. In order to disable closable messages,
+        set <i>closable</i> to <i>false</i>. Note that in this case two-way
+        binding is not necessary as the component does not need to update its
+        value.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-messages [(value)]="messages" [closable]="false" />
+    </div>
+    <app-code [code]="code" selector="messages-closable-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ClosableDoc implements OnInit {
-    messages: Message[] | undefined;
+  messages: Message[] | undefined;
 
-    ngOnInit() {
-        this.messages = [{ severity: 'info', detail: 'Not Closable' }];
-    }
+  ngOnInit() {
+    this.messages = [{ severity: "info", detail: "Not Closable" }];
+  }
 
-    code: Code = {
-        basic: `<p-messages [(value)]="messages" [closable]="false" />`,
-        html: `<div class="card">
+  code: Code = {
+    basic: `<p-messages [(value)]="messages" [closable]="false" />`,
+    html: `<div class="card">
     <p-messages [(value)]="messages" [closable]="false" />
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
@@ -56,6 +60,6 @@ export class MessagesClosableDemo implements OnInit {
             { severity: 'error', summary: 'Error', detail: 'Closable Message Content' },
         ];
     }
-}`
-    };
+}`,
+  };
 }

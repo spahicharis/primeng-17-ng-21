@@ -1,56 +1,65 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
+import { Router } from "@angular/router";
 
 @Component({
-    selector: 'router-doc',
-    template: `
-        <app-docsectiontext>
-          <p>Items with navigation are defined with templating to be able to use a router link directive, an external link or programmatic navigation.</p>
-        </app-docsectiontext>
-        <div class="card">
-          <p-tabMenu [model]="items">
-            <ng-template pTemplate="item" let-item>
-              @if (item.route) {
-                <a [routerLink]="item.route" class="p-menuitem-link">
-                  <span [class]="item.icon"></span>
-                  <span class="ml-2">{{ item.label }}</span>
-                </a>
-              } @else {
-                <a [href]="item.url" class="p-menuitem-link">
-                  <span [class]="item.icon"></span>
-                  <span class="ml-2">{{ item.label }}</span>
-                </a>
-              }
-            </ng-template>
-          </p-tabMenu>
-        </div>
-        <app-code [code]="code" selector="tab-menu-router-demo" />
-        `,
-    standalone: false
+  selector: "router-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Items with navigation are defined with templating to be able to use a
+        router link directive, an external link or programmatic navigation.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-tabMenu [model]="items">
+        <ng-template pTemplate="item" let-item>
+          @if (item.route) {
+            <a [routerLink]="item.route" class="p-menuitem-link">
+              <span [class]="item.icon"></span>
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          } @else {
+            <a [href]="item.url" class="p-menuitem-link">
+              <span [class]="item.icon"></span>
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          }
+        </ng-template>
+      </p-tabMenu>
+    </div>
+    <app-code [code]="code" selector="tab-menu-router-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RouterDoc implements OnInit {
-    private router = inject(Router);
+  private router = inject(Router);
 
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            { label: 'Router Link', icon: 'pi pi-home', route: '/tabmenu' },
-            {
-                label: 'Programmatic',
-                icon: 'pi pi-palette',
-                command: () => {
-                    this.router.navigate(['/theming']);
-                }
-            },
-            { label: 'External', icon: 'pi pi-link', url: 'https://angular.io/' }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      { label: "Router Link", icon: "pi pi-home", route: "/tabmenu" },
+      {
+        label: "Programmatic",
+        icon: "pi pi-palette",
+        command: () => {
+          this.router.navigate(["/theming"]);
+        },
+      },
+      { label: "External", icon: "pi pi-link", url: "https://angular.io/" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-tabMenu [model]="items">
+  code: Code = {
+    basic: `<p-tabMenu [model]="items">
     <ng-template pTemplate="item" let-item>
         <ng-container *ngIf="item.route; else elseBlock">
             <a [routerLink]="item.route" class="p-menuitem-link">
@@ -71,7 +80,7 @@ export class RouterDoc implements OnInit {
     </ng-template>
 </p-tabMenu>`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-tabMenu [model]="items">
         <ng-template pTemplate="item" let-item>
             <ng-container *ngIf="item.route; else elseBlock">
@@ -94,7 +103,7 @@ export class RouterDoc implements OnInit {
     </p-tabMenu>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -125,6 +134,6 @@ export class TabMenuRouterDemo implements OnInit {
         ];
     }
 
-}`
-    };
+}`,
+  };
 }

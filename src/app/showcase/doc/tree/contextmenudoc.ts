@@ -1,53 +1,77 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService, TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService, TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'context-menu-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Tree requires a collection of <i>TreeNode</i> instances as a value.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-tree class="w-full md:w-30rem" [value]="files" selectionMode="single" [(selection)]="selectedFile" [contextMenu]="cm" />
-            <p-contextMenu #cm [model]="items" />
-            <p-toast />
-        </div>
-        <app-code [code]="code" selector="tree-context-menu-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "context-menu-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Tree requires a collection of <i>TreeNode</i> instances as a value.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-tree
+        class="w-full md:w-30rem"
+        [value]="files"
+        selectionMode="single"
+        [(selection)]="selectedFile"
+        [contextMenu]="cm"
+      />
+      <p-contextMenu #cm [model]="items" />
+      <p-toast />
+    </div>
+    <app-code [code]="code" selector="tree-context-menu-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ContextMenuDoc implements OnInit {
-    private nodeService = inject(NodeService);
-    private messageService = inject(MessageService);
+  private nodeService = inject(NodeService);
+  private messageService = inject(MessageService);
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    selectedFile!: TreeNode | null;
+  selectedFile!: TreeNode | null;
 
-    items!: MenuItem[];
+  items!: MenuItem[];
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((files) => (this.files = files));
+  ngOnInit() {
+    this.nodeService.getFiles().then((files) => (this.files = files));
 
-        this.items = [
-            { label: 'View', icon: 'pi pi-search', command: (event) => this.viewFile(this.selectedFile) },
-            { label: 'Unselect', icon: 'pi pi-times', command: (event) => this.unselectFile() }
-        ];
-    }
+    this.items = [
+      {
+        label: "View",
+        icon: "pi pi-search",
+        command: (event) => this.viewFile(this.selectedFile),
+      },
+      {
+        label: "Unselect",
+        icon: "pi pi-times",
+        command: (event) => this.unselectFile(),
+      },
+    ];
+  }
 
-    viewFile(file: TreeNode) {
-        this.messageService.add({ severity: 'info', summary: 'Node Details', detail: file.label });
-    }
+  viewFile(file: TreeNode) {
+    this.messageService.add({
+      severity: "info",
+      summary: "Node Details",
+      detail: file.label,
+    });
+  }
 
-    unselectFile() {
-        this.selectedFile = null;
-    }
+  unselectFile() {
+    this.selectedFile = null;
+  }
 
-    code: Code = {
-        basic: `<p-tree 
+  code: Code = {
+    basic: `<p-tree 
     class="w-full md:w-30rem" 
     [value]="files" 
     selectionMode="single" 
@@ -56,7 +80,7 @@ export class ContextMenuDoc implements OnInit {
 <p-contextMenu #cm [model]="items" />
 <p-toast />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-tree 
         class="w-full md:w-30rem" 
         [value]="files"
@@ -67,7 +91,7 @@ export class ContextMenuDoc implements OnInit {
     <p-toast />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService, TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -108,9 +132,9 @@ export class TreeContextMenuDemo implements OnInit {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -137,6 +161,6 @@ export class TreeContextMenuDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

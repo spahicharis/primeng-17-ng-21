@@ -1,31 +1,41 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <input id="disabled-input" type="text" pInputText [disabled]="true" [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="input-text-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <input
+        id="disabled-input"
+        type="text"
+        pInputText
+        [disabled]="true"
+        [(ngModel)]="value"
+      />
+    </div>
+    <app-code [code]="code" selector="input-text-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    value: string | undefined;
+  value: string | undefined;
 
-    code: Code = {
-        basic: `<input 
+  code: Code = {
+    basic: `<input 
     id="disabled-input" 
     type="text"
     pInputText 
     [disabled]="true" 
     [(ngModel)]="value" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <input 
         id="disabled-input"
         type="text"
@@ -34,7 +44,7 @@ export class DisabledDoc {
         [(ngModel)]="value" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 
@@ -46,6 +56,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputTextDisabledDemo {
     value: string | undefined;
-}`
-    };
+}`,
+  };
 }

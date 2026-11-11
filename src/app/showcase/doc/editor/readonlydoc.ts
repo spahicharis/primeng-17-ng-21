@@ -1,30 +1,35 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'editor-readonly-demo',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>readonly</i> is present, the value cannot be edited.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-editor [(ngModel)]="text" [readonly]="true" [style]="{ height: '320px' }" />
-        </div>
-        <app-code [code]="code" selector="editor-readonly-demo" />
-    `,
-    standalone: false
+  selector: "editor-readonly-demo",
+  template: `
+    <app-docsectiontext>
+      <p>When <i>readonly</i> is present, the value cannot be edited.</p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-editor
+        [(ngModel)]="text"
+        [readonly]="true"
+        [style]="{ height: '320px' }"
+      />
+    </div>
+    <app-code [code]="code" selector="editor-readonly-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ReadOnlyDoc {
-    text: string = 'Always bet on Prime!';
+  text: string = "Always bet on Prime!";
 
-    code: Code = {
-        basic: `<p-editor [(ngModel)]="text" [readonly]="true" [style]="{ height: '320px' }" />`,
+  code: Code = {
+    basic: `<p-editor [(ngModel)]="text" [readonly]="true" [style]="{ height: '320px' }" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-editor [(ngModel)]="text" [readonly]="true" [style]="{ height: '320px' }" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 
@@ -36,6 +41,6 @@ import { EditorModule } from 'primeng/editor';
 })
 export class EditorReadonlyDemo {
     text: string = 'Always bet on Prime!';
-}`
-    };
+}`,
+  };
 }

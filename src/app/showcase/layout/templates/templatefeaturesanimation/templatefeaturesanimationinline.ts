@@ -1,114 +1,131 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, NgModule, PLATFORM_ID, ViewEncapsulation, inject } from '@angular/core';
-import { SharedModule } from 'primeng/api';
+import { CommonModule, isPlatformBrowser } from "@angular/common";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  NgModule,
+  PLATFORM_ID,
+  ViewEncapsulation,
+  inject,
+} from "@angular/core";
+import { SharedModule } from "primeng/api";
 
 @Component({
-    selector: 'template-features-animation-inline',
-    template: `
-        <div class="template-features-animation-right-inline">
-          <div class="template-features-animation-right-inline-tabs">
-            @for (data of inlineFeaturesData; track data; let i = $index) {
-              <button
-                (mouseenter)="enterCardArea(data.id)"
-                (mouseleave)="leaveCardArea(data.id)"
-                [class.template-features-animation-right-inline-tabs-btnActive]="data.id === selectedID"
-                (click)="handleBtnClick(data.id)"
-                >
-                {{ data.title }}
-              </button>
-            }
-          </div>
-          <div class="template-features-animation-right-inline-image">
-            <img [src]="inlineFeaturesData[selectedID - 1]?.src" alt="Animation Inline Feature Image" />
-          </div>
-        </div>
-        `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: "template-features-animation-inline",
+  template: `
+    <div class="template-features-animation-right-inline">
+      <div class="template-features-animation-right-inline-tabs">
+        @for (data of inlineFeaturesData; track data; let i = $index) {
+          <button
+            (mouseenter)="enterCardArea(data.id)"
+            (mouseleave)="leaveCardArea(data.id)"
+            [class.template-features-animation-right-inline-tabs-btnActive]="
+              data.id === selectedID
+            "
+            (click)="handleBtnClick(data.id)"
+          >
+            {{ data.title }}
+          </button>
+        }
+      </div>
+      <div class="template-features-animation-right-inline-image">
+        <img
+          [src]="
+            $safeNavigationMigration(inlineFeaturesData[selectedID - 1]?.src)
+          "
+          alt="Animation Inline Feature Image"
+        />
+      </div>
+    </div>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class TemplateFeaturesAnimationInline {
-    private cd = inject(ChangeDetectorRef);
-    el = inject(ElementRef);
-    private platformId = inject(PLATFORM_ID);
+  private cd = inject(ChangeDetectorRef);
+  el = inject(ElementRef);
+  private platformId = inject(PLATFORM_ID);
 
-    @Input() inlineFeaturesData;
+  @Input() inlineFeaturesData;
 
-    @Input() parentHandleClick;
+  @Input() parentHandleClick;
 
-    @Input() parentHandleHover;
+  @Input() parentHandleHover;
 
-    @Input() parentID;
+  @Input() parentID;
 
-    @Input() inlineSeconds;
+  @Input() inlineSeconds;
 
-    selectedID = 1;
+  selectedID = 1;
 
-    hoveredID = '';
+  hoveredID = "";
 
-    intervalId;
+  intervalId;
 
-    observer = null;
+  observer = null;
 
-    timeout = null;
+  timeout = null;
 
-    options;
+  options;
 
-    ngOnInit() {
-        if (isPlatformBrowser(this.platformId)) {
-            this.observer = new IntersectionObserver(([entry]) => {
-                clearTimeout(this.timeout);
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.observer = new IntersectionObserver(([entry]) => {
+        clearTimeout(this.timeout);
 
-                if (entry.isIntersecting) {
-                    this.startInterval();
-                    this.timeout = setTimeout(() => {
-                        this.observer.unobserve(this.el.nativeElement);
-                    }, 350);
-                }
-            }, this.options);
-
-            this.observer.observe(this.el.nativeElement);
+        if (entry.isIntersecting) {
+          this.startInterval();
+          this.timeout = setTimeout(() => {
+            this.observer.unobserve(this.el.nativeElement);
+          }, 350);
         }
-    }
-    handleClick(id) {
-        this.selectedID = id;
-    }
+      }, this.options);
 
-    handleBtnClick = (id) => {
-        this.handleClick(id);
-        this.parentHandleClick(id);
-    };
-
-    startInterval() {
-        this.intervalId = setInterval(() => {
-            this.selectedID++;
-            if (this.selectedID > this.inlineFeaturesData.length) {
-                this.selectedID = 1;
-            }
-            this.cd.markForCheck();
-        }, this.inlineSeconds);
+      this.observer.observe(this.el.nativeElement);
     }
+  }
+  handleClick(id) {
+    this.selectedID = id;
+  }
 
-    enterCardArea() {
-        clearInterval(this.intervalId);
-    }
+  handleBtnClick = (id) => {
+    this.handleClick(id);
+    this.parentHandleClick(id);
+  };
 
-    leaveCardArea() {
-        this.startInterval();
-    }
+  startInterval() {
+    this.intervalId = setInterval(() => {
+      this.selectedID++;
+      if (this.selectedID > this.inlineFeaturesData.length) {
+        this.selectedID = 1;
+      }
+      this.cd.markForCheck();
+    }, this.inlineSeconds);
+  }
 
-    ngOnDestroy() {
-        clearInterval(this.intervalId);
-        this.intervalId = null;
-        if (this.el.nativeElement) {
-            this.observer?.unobserve(this.el.nativeElement);
-        }
+  enterCardArea() {
+    clearInterval(this.intervalId);
+  }
+
+  leaveCardArea() {
+    this.startInterval();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+    if (this.el.nativeElement) {
+      this.observer?.unobserve(this.el.nativeElement);
     }
+  }
 }
 
 @NgModule({
-    imports: [CommonModule, SharedModule],
-    exports: [TemplateFeaturesAnimationInline, SharedModule],
-    declarations: [TemplateFeaturesAnimationInline]
+  imports: [CommonModule, SharedModule],
+  exports: [TemplateFeaturesAnimationInline, SharedModule],
+  declarations: [TemplateFeaturesAnimationInline],
 })
 export class TemplateFeaturesAnimationInlineModule {}

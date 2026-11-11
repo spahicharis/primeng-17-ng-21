@@ -1,36 +1,40 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'checkbox-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Binary checkbox is used as a controlled input with <i>ngModel</i> and <i>binary</i> properties.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" />
-        </div>
-        <app-code [code]="code" selector="checkbox-basic-demo" />
-    `,
-    standalone: false
+  selector: "checkbox-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Binary checkbox is used as a controlled input with <i>ngModel</i> and
+        <i>binary</i> properties.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" />
+    </div>
+    <app-code [code]="code" selector="checkbox-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    checked: boolean = false;
+  checked: boolean = false;
 
-    code: Code = {
-        basic: `<p-checkbox 
+  code: Code = {
+    basic: `<p-checkbox 
     [(ngModel)]="checked" 
     [binary]="true" 
     inputId="binary" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-checkbox 
         [(ngModel)]="checked" 
         [binary]="true" 
         inputId="binary" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 
@@ -42,6 +46,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 })
 export class CheckboxBasicDemo {
     checked: boolean = false;
-}`
-    };
+}`,
+  };
 }

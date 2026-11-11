@@ -1,48 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface City {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 @Component({
-    selector: 'loading-state-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Loading state can be used <i>loading</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-multiSelect [options]="cities" [(ngModel)]="selectedCities" [loading]="true" optionLabel="name" placeholder="Loading..." />
-        </div>
-        <app-code [code]="code" selector="multi-select-loading-state-demo" />
-    `,
-    standalone: false
+  selector: "loading-state-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Loading state can be used <i>loading</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-multiSelect
+        [options]="cities"
+        [(ngModel)]="selectedCities"
+        [loading]="true"
+        optionLabel="name"
+        placeholder="Loading..."
+      />
+    </div>
+    <app-code [code]="code" selector="multi-select-loading-state-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LoadingStateDoc implements OnInit {
-    cities!: City[];
+  cities!: City[];
 
-    selectedCities!: any[];
+  selectedCities!: any[];
 
-    ngOnInit() {
-        this.cities = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ];
-    }
+  ngOnInit() {
+    this.cities = [
+      { name: "New York", code: "NY" },
+      { name: "Rome", code: "RM" },
+      { name: "London", code: "LDN" },
+      { name: "Istanbul", code: "IST" },
+      { name: "Paris", code: "PRS" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-multiSelect 
+  code: Code = {
+    basic: `<p-multiSelect 
     [options]="cities" 
     [(ngModel)]="selectedCities" 
     [loading]="true"
     optionLabel="name" 
     placeholder="Loading..." />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-multiSelect 
         [options]="cities" 
         [(ngModel)]="selectedCities" 
@@ -51,7 +58,7 @@ export class LoadingStateDoc implements OnInit {
         placeholder="Loading..." />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 
@@ -81,6 +88,6 @@ export class MultiSelectLoadingStateDemo implements OnInit {
             {name: 'Paris', code: 'PRS'}
         ];
     }
-}`
-    };
+}`,
+  };
 }

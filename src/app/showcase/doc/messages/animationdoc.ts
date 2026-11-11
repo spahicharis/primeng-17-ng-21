@@ -1,44 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Message } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'animation-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Transition of the open and hide animations can be customized using the <i>showTransitionOptions</i> and <i>hideTransitionOptions</i> properties, example below disables the animations altogether.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-messages [(value)]="messages" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" [enableService]="false" />
-        </div>
-        <app-code [code]="code" selector="messages-animation-demo" />
-    `,
-    standalone: false
+  selector: "animation-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Transition of the open and hide animations can be customized using the
+        <i>showTransitionOptions</i> and
+        <i>hideTransitionOptions</i> properties, example below disables the
+        animations altogether.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-messages
+        [(value)]="messages"
+        [showTransitionOptions]="'500ms'"
+        [hideTransitionOptions]="'500ms'"
+        [enableService]="false"
+      />
+    </div>
+    <app-code [code]="code" selector="messages-animation-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AnimationDoc implements OnInit {
-    messages: Message[] | undefined;
+  messages: Message[] | undefined;
 
-    ngOnInit() {
-        this.messages = [
-            { severity: 'success', summary: 'Success', detail: 'Message Content' },
-            { severity: 'info', summary: 'Info', detail: 'Message Content' }
-        ];
-    }
+  ngOnInit() {
+    this.messages = [
+      { severity: "success", summary: "Success", detail: "Message Content" },
+      { severity: "info", summary: "Info", detail: "Message Content" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-messages 
+  code: Code = {
+    basic: `<p-messages 
     [(value)]="messages" 
     [showTransitionOptions]="'500ms'" 
     [hideTransitionOptions]="'500ms'" 
     [enableService]="false" />`,
-        html: `<div class="card">
+    html: `<div class="card">
     <p-messages 
         [(value)]="messages" 
         [showTransitionOptions]="'500ms'" 
         [hideTransitionOptions]="'500ms'" 
         [enableService]="false" />
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
@@ -57,6 +68,6 @@ export class MessagesAnimationDemo implements OnInit {
             { severity: 'info', summary: 'Info', detail: 'Message Content' },
         ];
     }
-}`
-    };
+}`,
+  };
 }

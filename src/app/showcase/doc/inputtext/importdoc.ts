@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'import-doc',
-    template: ` <app-code [hideToggleCode]="true" [hideStackBlitz]="true" [hideCodeSandbox]="true" [code]="code" /> `,
-    standalone: false
+  selector: "import-doc",
+  template: `
+    <app-code
+      [hideToggleCode]="true"
+      [hideStackBlitz]="true"
+      [hideCodeSandbox]="true"
+      [code]="code"
+    />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ImportDoc {
-    value1: string;
+  value1: string;
 
-    code: Code = {
-        typescript: `import { InputTextModule } from 'primeng/inputtext';`
-    };
+  code: Code = {
+    typescript: `import { InputTextModule } from 'primeng/inputtext';`,
+  };
 }

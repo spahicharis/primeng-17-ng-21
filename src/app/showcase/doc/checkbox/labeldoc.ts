@@ -1,34 +1,48 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'checkbox-label-demo',
-    template: `
-        <app-docsectiontext>
-            <p>The label attribute provides a label text for the checkbox. This label is also clickable and toggles the checked state.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center gap-3">
-            <p-checkbox name="groupname" value="val1" label="Value 1" [(ngModel)]="selectedValues"></p-checkbox>
-            <p-checkbox name="groupname" value="val2" label="Value 2" [(ngModel)]="selectedValues"></p-checkbox>
-        </div>
-        <app-code [code]="code" selector="checkbox-label-demo" />
-    `,
-    standalone: false
+  selector: "checkbox-label-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        The label attribute provides a label text for the checkbox. This label
+        is also clickable and toggles the checked state.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center gap-3">
+      <p-checkbox
+        name="groupname"
+        value="val1"
+        label="Value 1"
+        [(ngModel)]="selectedValues"
+      ></p-checkbox>
+      <p-checkbox
+        name="groupname"
+        value="val2"
+        label="Value 2"
+        [(ngModel)]="selectedValues"
+      ></p-checkbox>
+    </div>
+    <app-code [code]="code" selector="checkbox-label-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LabelDoc {
-    selectedValues: string[] = [];
+  selectedValues: string[] = [];
 
-    code: Code = {
-        basic: `<p-checkbox name="groupname" value="val1" label="Value 1" [(ngModel)]="selectedValues"></p-checkbox>
+  code: Code = {
+    basic: `<p-checkbox name="groupname" value="val1" label="Value 1" [(ngModel)]="selectedValues"></p-checkbox>
 <p-checkbox name="groupname" value="val2" label="Value 2" [(ngModel)]="selectedValues"></p-checkbox>`,
 
-        html: `
+    html: `
 <div class="card flex justify-content-center gap-3">
     <p-checkbox name="groupname" value="val1" label="Value 1" [(ngModel)]="selectedValues"></p-checkbox>
     <p-checkbox name="groupname" value="val2" label="Value 2" [(ngModel)]="selectedValues"></p-checkbox>
 </div>`,
 
-        typescript: `
+    typescript: `
 import { Component } from '@angular/core';
 
 @Component({
@@ -37,6 +51,6 @@ import { Component } from '@angular/core';
 })
 export class CheckboxLabelDemo {
     selectedValues: string[] = [];
-}`
-    };
+}`,
+  };
 }

@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'filter-mode-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Default filter modes to display on DataTable filter menus.</p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    standalone: false
+  selector: "filter-mode-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Default filter modes to display on DataTable filter menus.</p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilterModeDoc {
-    code: Code = {
-        typescript: `import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
+  code: Code = {
+    typescript: `import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
 
 @Component({
     selector: 'app-root',
@@ -30,6 +31,6 @@ export class AppComponent implements OnInit {
             date: [FilterMatchMode.DATE_IS, FilterMatchMode.DATE_IS_NOT, FilterMatchMode.DATE_BEFORE, FilterMatchMode.DATE_AFTER]
         };
     }
-}`
-    };
+}`,
+  };
 }

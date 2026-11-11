@@ -1,35 +1,39 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'vertical-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Buttons can also placed vertically by setting <i>buttonLayout</i> as <i>vertical</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-inputNumber
-                [(ngModel)]="value1"
-                [showButtons]="true"
-                buttonLayout="vertical"
-                spinnerMode="vertical"
-                inputId="vertical"
-                [style]="{ width: '3rem' }"
-                decrementButtonClass="p-button-secondary"
-                incrementButtonClass="p-button-secondary"
-                incrementButtonIcon="pi pi-plus"
-                decrementButtonIcon="pi pi-minus"
-            />
-        </div>
-        <app-code [code]="code" selector="input-number-vertical-demo" />
-    `,
-    standalone: false
+  selector: "vertical-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Buttons can also placed vertically by setting <i>buttonLayout</i> as
+        <i>vertical</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-inputNumber
+        [(ngModel)]="value1"
+        [showButtons]="true"
+        buttonLayout="vertical"
+        spinnerMode="vertical"
+        inputId="vertical"
+        [style]="{ width: '3rem' }"
+        decrementButtonClass="p-button-secondary"
+        incrementButtonClass="p-button-secondary"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+      />
+    </div>
+    <app-code [code]="code" selector="input-number-vertical-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class VerticalDoc {
-    value1: number = 50;
+  value1: number = 50;
 
-    code: Code = {
-        basic: `<p-inputNumber 
+  code: Code = {
+    basic: `<p-inputNumber 
     [(ngModel)]="value1" 
     [showButtons]="true" 
     buttonLayout="vertical" 
@@ -40,7 +44,7 @@ export class VerticalDoc {
     incrementButtonIcon="pi pi-plus" 
     decrementButtonIcon="pi pi-minus" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-inputNumber 
         [(ngModel)]="value1" 
         [style]="{'width': '4rem'}" 
@@ -54,7 +58,7 @@ export class VerticalDoc {
         decrementButtonIcon="pi pi-minus" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
 
@@ -66,6 +70,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputNumberVerticalDemo {
     value1: number = 50;
-}`
-    };
+}`,
+  };
 }

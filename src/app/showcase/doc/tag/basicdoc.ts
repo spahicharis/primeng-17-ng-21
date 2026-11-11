@@ -1,26 +1,27 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Label of the tag is defined with the <i>value</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-tag value="New" />
-        </div>
-        <app-code [code]="code" selector="tag-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Label of the tag is defined with the <i>value</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-tag value="New" />
+    </div>
+    <app-code [code]="code" selector="tag-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    code: Code = {
-        basic: `<p-tag value="New" />`,
-        html: `<div class="card flex justify-content-center">
+  code: Code = {
+    basic: `<p-tag value="New" />`,
+    html: `<div class="card flex justify-content-center">
     <p-tag value="New" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 
 @Component({
@@ -29,6 +30,6 @@ import { TagModule } from 'primeng/tag';
     standalone: true,
     imports: [TagModule]
 })
-export class TagBasicDemo {}`
-    };
+export class TagBasicDemo {}`,
+  };
 }

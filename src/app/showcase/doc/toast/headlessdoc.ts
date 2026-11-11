@@ -1,80 +1,120 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'headless-doc',
-    template: `
-        <app-docsectiontext>
-            <p><i>Headless</i> mode allows you to customize the entire user interface instead of the default elements.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-toast position="top-center" key="confirm" (onClose)="onClose()" [baseZIndex]="5000">
-                <ng-template let-message pTemplate="headless" let-closeFn="closeFn">
-                    <section class="flex p-3 gap-3 w-full bg-black-alpha-90 shadow-2" style="border-radius: 10px">
-                        <i class="pi pi-cloud-upload text-primary-500 text-2xl"></i>
-                        <div class="flex flex-column gap-3 w-full">
-                            <p class="m-0 font-semibold text-base text-white">{{ message.summary }}</p>
-                            <p class="m-0 text-base text-700">{{ message.detail }}</p>
-                            <div class="flex flex-column gap-2">
-                                <p-progressBar [value]="progress" [showValue]="false" [style]="{ height: '4px' }" />
-                                <label class="text-right text-xs text-white">{{ progress }}% uploaded...</label>
-                            </div>
-                            <div class="flex gap-3 mb-3">
-                                <p-button label="Another Upload?" [text]="true" styleClass="p-0" (onClick)="closeFn($event)" />
-                                <p-button label="Cancel" [text]="true" styleClass="text-white p-0" (onClick)="closeFn($event)" />
-                            </div>
-                        </div>
-                    </section>
-                </ng-template>
-            </p-toast>
-            <p-button (onClick)="showConfirm()" label="Confirm" />
-        </div>
-        <app-code [code]="code" selector="toast-headless-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "headless-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        <i>Headless</i> mode allows you to customize the entire user interface
+        instead of the default elements.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-toast
+        position="top-center"
+        key="confirm"
+        (onClose)="onClose()"
+        [baseZIndex]="5000"
+      >
+        <ng-template let-message pTemplate="headless" let-closeFn="closeFn">
+          <section
+            class="flex p-3 gap-3 w-full bg-black-alpha-90 shadow-2"
+            style="border-radius: 10px"
+          >
+            <i class="pi pi-cloud-upload text-primary-500 text-2xl"></i>
+            <div class="flex flex-column gap-3 w-full">
+              <p class="m-0 font-semibold text-base text-white">
+                {{ message.summary }}
+              </p>
+              <p class="m-0 text-base text-700">{{ message.detail }}</p>
+              <div class="flex flex-column gap-2">
+                <p-progressBar
+                  [value]="progress"
+                  [showValue]="false"
+                  [style]="{ height: '4px' }"
+                />
+                <label class="text-right text-xs text-white"
+                  >{{ progress }}% uploaded...</label
+                >
+              </div>
+              <div class="flex gap-3 mb-3">
+                <p-button
+                  label="Another Upload?"
+                  [text]="true"
+                  styleClass="p-0"
+                  (onClick)="closeFn($event)"
+                />
+                <p-button
+                  label="Cancel"
+                  [text]="true"
+                  styleClass="text-white p-0"
+                  (onClick)="closeFn($event)"
+                />
+              </div>
+            </div>
+          </section>
+        </ng-template>
+      </p-toast>
+      <p-button (onClick)="showConfirm()" label="Confirm" />
+    </div>
+    <app-code [code]="code" selector="toast-headless-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class HeadlessDoc {
-    private messageService = inject(MessageService);
-    private cdr = inject(ChangeDetectorRef);
+  private messageService = inject(MessageService);
+  private cdr = inject(ChangeDetectorRef);
 
-    visible: boolean = false;
+  visible: boolean = false;
 
-    progress: number = 0;
+  progress: number = 0;
 
-    interval = null;
+  interval = null;
 
-    showConfirm() {
-        if (!this.visible) {
-            this.messageService.add({ key: 'confirm', sticky: true, severity: 'custom', summary: 'Uploading your files.' });
-            this.visible = true;
-            this.progress = 0;
+  showConfirm() {
+    if (!this.visible) {
+      this.messageService.add({
+        key: "confirm",
+        sticky: true,
+        severity: "custom",
+        summary: "Uploading your files.",
+      });
+      this.visible = true;
+      this.progress = 0;
 
-            if (this.interval) {
-                clearInterval(this.interval);
-            }
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
 
-            this.interval = setInterval(() => {
-                if (this.progress <= 100) {
-                    this.progress = this.progress + 20;
-                }
-
-                if (this.progress >= 100) {
-                    this.progress = 100;
-                    clearInterval(this.interval);
-                }
-                this.cdr.markForCheck();
-            }, 1000);
+      this.interval = setInterval(() => {
+        if (this.progress <= 100) {
+          this.progress = this.progress + 20;
         }
-    }
 
-    onClose() {
-        this.visible = false;
+        if (this.progress >= 100) {
+          this.progress = 100;
+          clearInterval(this.interval);
+        }
+        this.cdr.markForCheck();
+      }, 1000);
     }
+  }
 
-    code: Code = {
-        basic: `<p-toast 
+  onClose() {
+    this.visible = false;
+  }
+
+  code: Code = {
+    basic: `<p-toast 
     position="top-center" 
     key="confirm" 
     (onClose)="onClose()" 
@@ -115,7 +155,7 @@ export class HeadlessDoc {
         </ng-template>
 </p-toast>
 <p-button (onClick)="showConfirm()" label="Confirm" />`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast 
         position="top-center" 
         key="confirm" 
@@ -158,7 +198,7 @@ export class HeadlessDoc {
     </p-toast>
     <p-button (onClick)="showConfirm()" label="Confirm" />
 </div>`,
-        typescript: `import { ChangeDetectorRef, Component } from '@angular/core';
+    typescript: `import { ChangeDetectorRef, Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -209,6 +249,6 @@ export class ToastHeadlessDemo {
     onClose() {
         this.visible = false;
     }
-}`
-    };
+}`,
+  };
 }

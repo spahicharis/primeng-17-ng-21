@@ -1,78 +1,99 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
-import { Code } from '@domain/code';
-import { TicketService } from '@service/ticketservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Subscription } from "rxjs";
+import { Code } from "@domain/code";
+import { TicketService } from "@service/ticketservice";
 
 @Component({
-    selector: 'routing-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Example below uses nested routes with Steps.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-toast />
-            <p-steps [model]="items" [readonly]="false" />
-        </div>
-        <router-outlet />
-        <app-code [code]="code" selector="steps-routing-demo" [routeFiles]="routeFiles" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "routing-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Example below uses nested routes with Steps.</p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-toast />
+      <p-steps [model]="items" [readonly]="false" />
+    </div>
+    <router-outlet />
+    <app-code
+      [code]="code"
+      selector="steps-routing-demo"
+      [routeFiles]="routeFiles"
+    />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RoutingDoc implements OnInit {
-    messageService = inject(MessageService);
-    ticketService = inject(TicketService);
+  messageService = inject(MessageService);
+  ticketService = inject(TicketService);
 
-    items: MenuItem[];
+  items: MenuItem[];
 
-    subscription: Subscription;
+  subscription: Subscription;
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'Personal',
-                routerLink: ''
-            },
-            {
-                label: 'Seat',
-                routerLink: 'seat'
-            },
-            {
-                label: 'Payment',
-                routerLink: 'payment'
-            },
-            {
-                label: 'Confirmation',
-                routerLink: 'confirmation'
-            }
-        ];
+  ngOnInit() {
+    this.items = [
+      {
+        label: "Personal",
+        routerLink: "",
+      },
+      {
+        label: "Seat",
+        routerLink: "seat",
+      },
+      {
+        label: "Payment",
+        routerLink: "payment",
+      },
+      {
+        label: "Confirmation",
+        routerLink: "confirmation",
+      },
+    ];
 
-        this.subscription = this.ticketService.paymentComplete$.subscribe((personalInformation) => {
-            this.messageService.add({ severity: 'success', summary: 'Order submitted', detail: 'Dear, ' + personalInformation.firstname + ' ' + personalInformation.lastname + ' your order has been completed.' });
+    this.subscription = this.ticketService.paymentComplete$.subscribe(
+      (personalInformation) => {
+        this.messageService.add({
+          severity: "success",
+          summary: "Order submitted",
+          detail:
+            "Dear, " +
+            personalInformation.firstname +
+            " " +
+            personalInformation.lastname +
+            " your order has been completed.",
         });
-    }
+      },
+    );
+  }
 
-    ngOnDestroy() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
-    code: Code = {
-        basic: `<div class="card">
+  }
+  code: Code = {
+    basic: `<div class="card">
     <p-toast />
     <p-steps [model]="items" [readonly]="false" />
 </div>
 <router-outlet></router-outlet>`,
 
-        html: `
+    html: `
 <div class="card">
     <p-toast />
     <p-steps [model]="items" [readonly]="false" />
 </div>
 <router-outlet></router-outlet>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { TicketService } from '@service/ticketservice';
 import { Subscription } from 'rxjs';
@@ -124,7 +145,7 @@ export class StepsRoutingDemo implements OnInit {
         }
     }
 }`,
-        routerModule: `
+    routerModule: `
     RouterModule.forRoot([
         {
             path: '',
@@ -137,14 +158,14 @@ export class StepsRoutingDemo implements OnInit {
             ]
         }
     ])`,
-        service: ['TicketService']
-    };
+    service: ["TicketService"],
+  };
 
-    routeFiles = [
-        {
-            path: 'src/app/demo/paymentdemo.ts',
-            name: 'PaymentDemo',
-            content: `import { Component, OnInit } from '@angular/core';
+  routeFiles = [
+    {
+      path: "src/app/demo/paymentdemo.ts",
+      name: "PaymentDemo",
+      content: `import { Component, OnInit } from '@angular/core';
 import { TicketService } from '@service/ticketservice';
 import { Router } from '@angular/router';
 
@@ -205,12 +226,12 @@ export class PaymentDemo implements OnInit {
     prevPage() {
         this.router.navigate(['steps/seat']);
     }
-}`
-        },
-        {
-            path: 'src/app/demo/personaldemo.ts',
-            name: 'PersonalDemo',
-            content: `import { Component, OnInit } from '@angular/core';
+}`,
+    },
+    {
+      path: "src/app/demo/personaldemo.ts",
+      name: "PersonalDemo",
+      content: `import { Component, OnInit } from '@angular/core';
 import { TicketService } from '@service/ticketservice';
 import { Router } from '@angular/router';
 
@@ -277,12 +298,12 @@ export class PersonalDemo implements OnInit {
 
         this.submitted = true;
     }
-}`
-        },
-        {
-            path: 'src/app/demo/seatdemo.ts',
-            name: 'SeatDemo',
-            content: `import { Component, OnInit } from '@angular/core';
+}`,
+    },
+    {
+      path: "src/app/demo/seatdemo.ts",
+      name: "SeatDemo",
+      content: `import { Component, OnInit } from '@angular/core';
 import { TicketService } from '@service/ticketservice';
 import { Router } from '@angular/router';
 
@@ -366,12 +387,12 @@ export class SeatDemo implements OnInit {
     prevPage() {
         this.router.navigate(['steps/personal']);
     }
-}`
-        },
-        {
-            path: 'src/app/demo/confirmationdemo.ts',
-            name: 'ConfirmationDemo',
-            content: `import { Component, OnInit } from '@angular/core';
+}`,
+    },
+    {
+      path: "src/app/demo/confirmationdemo.ts",
+      name: "ConfirmationDemo",
+      content: `import { Component, OnInit } from '@angular/core';
 import { TicketService } from '@service/ticketservice';
 import { Router } from '@angular/router';
 
@@ -445,7 +466,7 @@ export class ConfirmationDemo implements OnInit {
     prevPage() {
         this.router.navigate(['steps/payment']);
     }
-}`
-        }
-    ];
+}`,
+    },
+  ];
 }

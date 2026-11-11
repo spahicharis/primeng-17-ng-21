@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'without-cancel-doc',
-    template: `
-        <app-docsectiontext>
-            <p>A cancel icon is displayed to reset the value by default, set <i>cancel</i> as false to remove this option.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-rating [(ngModel)]="value" [cancel]="false" />
-        </div>
-        <app-code [code]="code" selector="rating-without-cancel-demo" />
-    `,
-    standalone: false
+  selector: "without-cancel-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A cancel icon is displayed to reset the value by default, set
+        <i>cancel</i> as false to remove this option.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-rating [(ngModel)]="value" [cancel]="false" />
+    </div>
+    <app-code [code]="code" selector="rating-without-cancel-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class WithoutCancelDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-rating [(ngModel)]="value" [cancel]="false" />`,
+  code: Code = {
+    basic: `<p-rating [(ngModel)]="value" [cancel]="false" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-rating [(ngModel)]="value" [cancel]="false" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 
@@ -36,6 +40,6 @@ import { RatingModule } from 'primeng/rating';
 })
 export class RatingWithoutCancelDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

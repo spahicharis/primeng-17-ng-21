@@ -1,25 +1,33 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'invalid-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column gap-3 align-items-center">
-            <p-triStateCheckbox [(ngModel)]="value" inputId="tricheckbox" class="ng-dirty ng-invalid" />
-            <label for="tricheckbox">{{ value === null ? 'null' : value }}</label>
-        </div>
-        <app-code [code]="code" selector="tri-state-checkbox-invalid-demo" />
-    `,
-    standalone: false
+  selector: "invalid-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-column gap-3 align-items-center">
+      <p-triStateCheckbox
+        [(ngModel)]="value"
+        inputId="tricheckbox"
+        class="ng-dirty ng-invalid"
+      />
+      <label for="tricheckbox">{{ value === null ? "null" : value }}</label>
+    </div>
+    <app-code [code]="code" selector="tri-state-checkbox-invalid-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    value: boolean | null = null;
+  value: boolean | null = null;
 
-    code: Code = {
-        basic: `<p-triStateCheckbox 
+  code: Code = {
+    basic: `<p-triStateCheckbox 
     [(ngModel)]="value" 
     inputId="tricheckbox" 
     class="ng-dirty ng-invalid" />
@@ -27,7 +35,7 @@ export class InvalidDoc {
     {{ value === null ? 'null' : value }}
 </label>`,
 
-        html: `<div class="card flex flex-column gap-3 align-items-center">
+    html: `<div class="card flex flex-column gap-3 align-items-center">
     <p-triStateCheckbox 
         [(ngModel)]="value"
         inputId="tricheckbox" 
@@ -37,7 +45,7 @@ export class InvalidDoc {
     </label>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { FormsModule } from '@angular/forms';
 
@@ -49,6 +57,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class TriStateCheckboxInvalidDemo {
     value: boolean | null = null;
-}`
-    };
+}`,
+  };
 }

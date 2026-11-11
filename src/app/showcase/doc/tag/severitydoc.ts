@@ -1,29 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'severity-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Severity defines the color of the tag, possible values are <i>success</i>, <i>info</i>, <i>warning</i> and <i>danger</i> in addition to the default theme color.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center gap-2">
-            <p-tag value="Primary" />
-            <p-tag severity="success" value="Success" />
-            <p-tag severity="secondary" value="Secondary" />
-            <p-tag severity="info" value="Info" />
-            <p-tag severity="warning" value="Warning" />
-            <p-tag severity="danger" value="Danger" />
-            <p-tag severity="contrast" value="Contrast" />
-        </div>
-        <app-code [code]="code" selector="tag-severity-demo" />
-    `,
-    standalone: false
+  selector: "severity-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Severity defines the color of the tag, possible values are
+        <i>success</i>, <i>info</i>, <i>warning</i> and <i>danger</i> in
+        addition to the default theme color.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center gap-2">
+      <p-tag value="Primary" />
+      <p-tag severity="success" value="Success" />
+      <p-tag severity="secondary" value="Secondary" />
+      <p-tag severity="info" value="Info" />
+      <p-tag severity="warning" value="Warning" />
+      <p-tag severity="danger" value="Danger" />
+      <p-tag severity="contrast" value="Contrast" />
+    </div>
+    <app-code [code]="code" selector="tag-severity-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SeverityDoc {
-    code: Code = {
-        basic: `<p-tag severity="success" value="Success"/>`,
-        html: `<div class="card flex justify-content-center gap-2">
+  code: Code = {
+    basic: `<p-tag severity="success" value="Success"/>`,
+    html: `<div class="card flex justify-content-center gap-2">
     <p-tag value="Primary"/>
     <p-tag severity="success" value="Success"/>
     <p-tag severity="secondary" value="Secondary"/>
@@ -32,7 +37,7 @@ export class SeverityDoc {
     <p-tag severity="danger" value="Danger"/>
     <p-tag severity="contrast" value="Contrast"/>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 
 @Component({
@@ -41,6 +46,6 @@ import { TagModule } from 'primeng/tag';
     standalone: true,
     imports: [TagModule]
 })
-export class TagSeverityDemo {}`
-    };
+export class TagSeverityDemo {}`,
+  };
 }

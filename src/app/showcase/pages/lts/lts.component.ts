@@ -1,22 +1,26 @@
-import { Component, inject } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Meta, Title } from "@angular/platform-browser";
+import { Code } from "@domain/code";
 
 @Component({
-    templateUrl: './lts.component.html',
-    standalone: false
+  templateUrl: "./lts.component.html",
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LTSComponent {
-    private titleService = inject(Title);
-    private metaService = inject(Meta);
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
 
-    constructor() {
-        this.titleService.setTitle('Long Term Support - PrimeNG');
-        this.metaService.updateTag({ name: 'description', content: 'Long Term Support' });
-    }
+  constructor() {
+    this.titleService.setTitle("Long Term Support - PrimeNG");
+    this.metaService.updateTag({
+      name: "description",
+      content: "Long Term Support",
+    });
+  }
 
-    code: Code = {
-        typescript: `import { Component } from '@angular/core';
+  code: Code = {
+    typescript: `import { Component } from '@angular/core';
 import { LicenseManager } from 'primeng/api';
 
 @Component({
@@ -27,6 +31,6 @@ export class AppComponent {
 
     LicenseManager.verify('LICENSE_KEY', 'PASS_KEY');
     
-}`
-    };
+}`,
+  };
 }

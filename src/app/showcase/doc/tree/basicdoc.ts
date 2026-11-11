@@ -1,38 +1,47 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Tree component requires an array of <i>TreeNode</i> objects as its <i>value</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-tree class="w-full md:w-30rem" [value]="files" />
-        </div>
-        <app-code [code]="code" selector="tree-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Tree component requires an array of <i>TreeNode</i> objects as its
+        <i>value</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-tree class="w-full md:w-30rem" [value]="files" />
+    </div>
+    <app-code [code]="code" selector="tree-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc implements OnInit {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((data) => (this.files = data));
-    }
+  ngOnInit() {
+    this.nodeService.getFiles().then((data) => (this.files = data));
+  }
 
-    code: Code = {
-        basic: `<p-tree class="w-full md:w-30rem" [value]="files" />`,
+  code: Code = {
+    basic: `<p-tree class="w-full md:w-30rem" [value]="files" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-tree class="w-full md:w-30rem" [value]="files" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -53,9 +62,9 @@ export class TreeBasicDemo implements OnInit {
         this.nodeService.getFiles().then((data) => (this.files = data));
     } 
 }`,
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -82,6 +91,6 @@ export class TreeBasicDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }
