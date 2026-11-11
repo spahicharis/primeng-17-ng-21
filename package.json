@@ -43,7 +43,7 @@
     "@angular/platform-server": "^22.2.5",
     "@angular/router": "^22.2.5",
     "@angular/ssr": "^22.2.6",
-    "@docsearch/js": "~3.3.5",
+    "@docsearch/js": "~5.2.0",
     "@stackblitz/sdk": "1.11.0",
     "@types/express": "^5.0.5",
     "@types/jasmine": "^5.1.12",
