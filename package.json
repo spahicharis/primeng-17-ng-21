@@ -25,10 +25,10 @@
     "url": "https://github.com/primefaces/primeng.git"
   },
   "devDependencies": {
-    "@angular-eslint/eslint-plugin": "20.5.0",
-    "@angular-eslint/eslint-plugin-template": "20.5.0",
-    "@angular-eslint/schematics": "20.5.0",
-    "@angular-eslint/template-parser": "20.5.0",
+    "@angular-eslint/eslint-plugin": "22.6.0",
+    "@angular-eslint/eslint-plugin-template": "22.6.0",
+    "@angular-eslint/schematics": "22.6.0",
+    "@angular-eslint/template-parser": "22.6.0",
     "@angular/animations": "^21.2.22",
     "@angular/build": "^21.2.23",
     "@angular/cdk": "^21.2.14",
