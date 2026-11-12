@@ -1,44 +1,56 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'checkbox-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Checkbox and RadioButton components can be combined with an input element under the same group.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column md:flex-row gap-3">
-            <p-inputGroup>
-                <input type="text" pInputText placeholder="Price" />
-                <p-inputGroupAddon><p-radioButton [(ngModel)]="radioValue1" name="rb1" value="rb1" /></p-inputGroupAddon>
-            </p-inputGroup>
+  selector: "checkbox-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Checkbox and RadioButton components can be combined with an input
+        element under the same group.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-column md:flex-row gap-3">
+      <p-inputGroup>
+        <input type="text" pInputText placeholder="Price" />
+        <p-inputGroupAddon
+          ><p-radioButton [(ngModel)]="radioValue1" name="rb1" value="rb1"
+        /></p-inputGroupAddon>
+      </p-inputGroup>
 
-            <p-inputGroup>
-                <p-inputGroupAddon><p-checkbox [(ngModel)]="checked1" [binary]="true" /></p-inputGroupAddon>
-                <input type="text" pInputText placeholder="Username" />
-            </p-inputGroup>
+      <p-inputGroup>
+        <p-inputGroupAddon
+          ><p-checkbox [(ngModel)]="checked1" [binary]="true"
+        /></p-inputGroupAddon>
+        <input type="text" pInputText placeholder="Username" />
+      </p-inputGroup>
 
-            <p-inputGroup>
-                <p-inputGroupAddon><p-checkbox [(ngModel)]="checked2" [binary]="true" /></p-inputGroupAddon>
-                <input type="text" pInputText placeholder="Website" />
-                <p-inputGroupAddon><p-radioButton name="rb2" value="rb2" [(ngModel)]="category" /></p-inputGroupAddon>
-            </p-inputGroup>
-        </div>
-        <app-code [code]="code" selector="input-group-checkbox-demo" />
-    `,
-    standalone: false
+      <p-inputGroup>
+        <p-inputGroupAddon
+          ><p-checkbox [(ngModel)]="checked2" [binary]="true"
+        /></p-inputGroupAddon>
+        <input type="text" pInputText placeholder="Website" />
+        <p-inputGroupAddon
+          ><p-radioButton name="rb2" value="rb2" [(ngModel)]="category"
+        /></p-inputGroupAddon>
+      </p-inputGroup>
+    </div>
+    <app-code [code]="code" selector="input-group-checkbox-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CheckboxDoc {
-    radioValue1: boolean = false;
+  radioValue1: boolean = false;
 
-    checked1: boolean = false;
+  checked1: boolean = false;
 
-    checked2: boolean = false;
+  checked2: boolean = false;
 
-    category: string | undefined;
+  category: string | undefined;
 
-    code: Code = {
-        basic: `<p-inputGroup>
+  code: Code = {
+    basic: `<p-inputGroup>
     <input type="text" pInputText placeholder="Price" />
     <p-inputGroupAddon>
         <p-radioButton [(ngModel)]="radioValue1" name="rb1" value="rb1"/>
@@ -56,7 +68,7 @@ export class CheckboxDoc {
     <p-inputGroupAddon><p-radioButton name="rb2" value="rb2" [(ngModel)]="category"/></p-inputGroupAddon>
 </p-inputGroup>`,
 
-        html: `<div class="card flex flex-column md:flex-row gap-3">
+    html: `<div class="card flex flex-column md:flex-row gap-3">
     <p-inputGroup>
         <input type="text" pInputText placeholder="Price" />
         <p-inputGroupAddon>
@@ -76,7 +88,7 @@ export class CheckboxDoc {
     </p-inputGroup>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -98,6 +110,6 @@ export class InputGroupCheckboxDemo {
     checked2: boolean = false;
 
     category: string | undefined;
-}`
-    };
+}`,
+  };
 }

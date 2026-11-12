@@ -1,30 +1,33 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Two-way binding is defined using the standard <i>ngModel</i> directive.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-slider [(ngModel)]="value" styleClass="w-14rem" />
-        </div>
-        <app-code [code]="code" selector="slider-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Two-way binding is defined using the standard <i>ngModel</i> directive.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-slider [(ngModel)]="value" styleClass="w-14rem" />
+    </div>
+    <app-code [code]="code" selector="slider-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-slider [(ngModel)]="value" styleClass="w-14rem"/>`,
+  code: Code = {
+    basic: `<p-slider [(ngModel)]="value" styleClass="w-14rem"/>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-slider [(ngModel)]="value" styleClass="w-14rem"/>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderModule } from 'primeng/slider';
 
@@ -36,6 +39,6 @@ import { SliderModule } from 'primeng/slider';
 })
 export class SliderBasicDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

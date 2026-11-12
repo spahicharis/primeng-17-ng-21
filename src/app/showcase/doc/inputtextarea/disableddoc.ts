@@ -1,29 +1,33 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <textarea rows="5" cols="30" pInputTextarea [disabled]="true"></textarea>
-        </div>
-        <app-code [code]="code" selector="input-textarea-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <textarea rows="5" cols="30" pInputTextarea [disabled]="true"></textarea>
+    </div>
+    <app-code [code]="code" selector="input-textarea-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    code: Code = {
-        basic: `<textarea 
+  code: Code = {
+    basic: `<textarea 
     rows="5"
     cols="30" 
     pInputTextarea 
     [disabled]="true">
 </textarea>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <textarea 
         rows="5"
         cols="30"
@@ -32,7 +36,7 @@ export class DisabledDoc {
     </textarea>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule } from '@angular/forms';
 
@@ -43,6 +47,6 @@ import { FormsModule } from '@angular/forms';
     imports: [FormsModule, InputTextareaModule]
 })
 export class InputTextareaDisabledDemo {
-}`
-    };
+}`,
+  };
 }

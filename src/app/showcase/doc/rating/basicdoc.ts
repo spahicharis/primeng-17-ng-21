@@ -1,30 +1,31 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Two-way value binding is defined using <i>ngModel</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-rating [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="rating-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Two-way value binding is defined using <i>ngModel</i>.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-rating [(ngModel)]="value" />
+    </div>
+    <app-code [code]="code" selector="rating-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-rating [(ngModel)]="value" />`,
+  code: Code = {
+    basic: `<p-rating [(ngModel)]="value" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-rating [(ngModel)]="value" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 
@@ -36,6 +37,6 @@ import { RatingModule } from 'primeng/rating';
 })
 export class RatingBasicDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

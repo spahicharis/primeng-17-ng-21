@@ -1,28 +1,37 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'reactive-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Knob can be controlled with custom controls as well.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column align-items-center gap-2">
-            <p-knob [(ngModel)]="value" size="150" readonly="true" />
-            <div class="flex gap-2">
-                <p-button icon="pi pi-plus" (onClick)="value = value + 1" [disabled]="value >= 100" />
-                <p-button icon="pi pi-minus" (onClick)="value = value - 1" [disabled]="value <= 0" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="knob-reactive-demo" />
-    `,
-    standalone: false
+  selector: "reactive-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Knob can be controlled with custom controls as well.</p>
+    </app-docsectiontext>
+    <div class="card flex flex-column align-items-center gap-2">
+      <p-knob [(ngModel)]="value" size="150" readonly="true" />
+      <div class="flex gap-2">
+        <p-button
+          icon="pi pi-plus"
+          (onClick)="value = value + 1"
+          [disabled]="value >= 100"
+        />
+        <p-button
+          icon="pi pi-minus"
+          (onClick)="value = value - 1"
+          [disabled]="value <= 0"
+        />
+      </div>
+    </div>
+    <app-code [code]="code" selector="knob-reactive-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ReactiveDoc {
-    value: number = 0;
+  value: number = 0;
 
-    code: Code = {
-        basic: `<p-knob [(ngModel)]="value" size="150" readonly="true"/>
+  code: Code = {
+    basic: `<p-knob [(ngModel)]="value" size="150" readonly="true"/>
 <div class="flex gap-2">
     <p-button 
         icon="pi pi-plus" 
@@ -34,7 +43,7 @@ export class ReactiveDoc {
         [disabled]="value <= 0" />
 </div>`,
 
-        html: `<div class="card flex flex-column align-items-center gap-2">
+    html: `<div class="card flex flex-column align-items-center gap-2">
 <p-knob [(ngModel)]="value" size="150" readonly="true"/>
 <div class="flex gap-2">
     <p-button 
@@ -48,7 +57,7 @@ export class ReactiveDoc {
 </div>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { KnobModule } from 'primeng/knob';
 import { ButtonModule } from 'primeng/button';
@@ -61,6 +70,6 @@ import { ButtonModule } from 'primeng/button';
 })
 export class KnobReactiveDemo {
     value: number = 0;
-}`
-    };
+}`,
+  };
 }

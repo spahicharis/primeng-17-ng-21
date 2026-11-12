@@ -1,41 +1,50 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'responsive-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Toast styling can be adjusted per screen size with the <i>breakpoints</i> option. The value of <i>breakpoints</i> should be an object literal whose keys are the maximum screen sizes and values are the styles per screen. In example
-                below, width of the toast messages cover the whole page on screens whose widths is smaller than 921px.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
-            <p-button (onClick)="show()" label="Show" />
-        </div>
-        <app-code [code]="code" selector="toast-responsive-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "responsive-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Toast styling can be adjusted per screen size with the
+        <i>breakpoints</i> option. The value of <i>breakpoints</i> should be an
+        object literal whose keys are the maximum screen sizes and values are
+        the styles per screen. In example below, width of the toast messages
+        cover the whole page on screens whose widths is smaller than 921px.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-toast
+        [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+      />
+      <p-button (onClick)="show()" label="Show" />
+    </div>
+    <app-code [code]="code" selector="toast-responsive-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ResponsiveDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  show() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Message Content",
+    });
+  }
 
-    show() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-    }
-
-    code: Code = {
-        basic: `<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
+  code: Code = {
+    basic: `<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
 <p-button (onClick)="show()" label="Show" />`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }" />
     <p-button (onClick)="show()" label="Show" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
@@ -54,6 +63,6 @@ export class ToastResponsiveDemo {
     show() {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
     }
-}`
-    };
+}`,
+  };
 }

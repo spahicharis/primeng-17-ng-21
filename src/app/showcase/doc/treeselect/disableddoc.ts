@@ -1,33 +1,44 @@
-import { Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-treeSelect class="md:w-20rem w-full" containerStyleClass="w-full" [(ngModel)]="selectedNodes" [options]="nodes" [disabled]="true" placeholder="TreeSelect" />
-        </div>
-        <app-code [code]="code" selector="tree-select-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-treeSelect
+        class="md:w-20rem w-full"
+        containerStyleClass="w-full"
+        [(ngModel)]="selectedNodes"
+        [options]="nodes"
+        [disabled]="true"
+        placeholder="TreeSelect"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-select-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    nodes!: any[];
+  nodes!: any[];
 
-    selectedNodes: any;
+  selectedNodes: any;
 
-    constructor() {
-        this.nodeService.getFiles().then((files) => (this.nodes = files));
-    }
+  constructor() {
+    this.nodeService.getFiles().then((files) => (this.nodes = files));
+  }
 
-    code: Code = {
-        basic: `<p-treeSelect 
+  code: Code = {
+    basic: `<p-treeSelect 
     class="md:w-20rem w-full" 
     containerStyleClass="w-full" 
     [(ngModel)]="selectedNodes" 
@@ -35,7 +46,7 @@ export class DisabledDoc {
     [disabled]="true" 
     placeholder="TreeSelect" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-treeSelect 
         class="md:w-20rem w-full"
         containerStyleClass="w-full"
@@ -45,7 +56,7 @@ export class DisabledDoc {
         placeholder="TreeSelect" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { NodeService } from '@service/nodeservice';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -67,9 +78,9 @@ export class TreeSelectDisabledDemo {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -96,6 +107,6 @@ export class TreeSelectDisabledDemo {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

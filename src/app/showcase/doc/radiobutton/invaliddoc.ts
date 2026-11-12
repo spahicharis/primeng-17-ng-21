@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'invalid-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-radioButton class="ng-invalid ng-dirty" [(ngModel)]="checked" />
-        </div>
-        <app-code [code]="code" selector="radio-button-invalid-demo" />
-    `,
-    standalone: false
+  selector: "invalid-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-radioButton class="ng-invalid ng-dirty" [(ngModel)]="checked" />
+    </div>
+    <app-code [code]="code" selector="radio-button-invalid-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    checked: any;
+  checked: any;
 
-    code: Code = {
-        basic: `<p-radioButton class="ng-invalid ng-dirty" />`,
+  code: Code = {
+    basic: `<p-radioButton class="ng-invalid ng-dirty" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-radioButton class="ng-invalid ng-dirty" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule } from '@angular/forms';
 
@@ -34,6 +38,6 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [FormsModule, RadioButtonModule]
 })
-export class RadioButtonInvalidDemo { }`
-    };
+export class RadioButtonInvalidDemo { }`,
+  };
 }

@@ -1,29 +1,30 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'button-text-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Text buttons are displayed as textual elements.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap gap-3 justify-content-center">
-            <p-button label="Primary" [text]="true" />
-            <p-button label="Secondary" [text]="true" severity="secondary" />
-            <p-button label="Success" [text]="true" severity="success" />
-            <p-button label="Info" [text]="true" severity="info" />
-            <p-button label="Warning" [text]="true" severity="warning" />
-            <p-button label="Help" [text]="true" severity="help" />
-            <p-button label="Danger" [text]="true" severity="danger" />
-            <p-button label="Plain" [text]="true" [plain]="true" />
-        </div>
-        <app-code [code]="code" selector="button-text-demo" />
-    `,
-    standalone: false
+  selector: "button-text-demo",
+  template: `
+    <app-docsectiontext>
+      <p>Text buttons are displayed as textual elements.</p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap gap-3 justify-content-center">
+      <p-button label="Primary" [text]="true" />
+      <p-button label="Secondary" [text]="true" severity="secondary" />
+      <p-button label="Success" [text]="true" severity="success" />
+      <p-button label="Info" [text]="true" severity="info" />
+      <p-button label="Warning" [text]="true" severity="warning" />
+      <p-button label="Help" [text]="true" severity="help" />
+      <p-button label="Danger" [text]="true" severity="danger" />
+      <p-button label="Plain" [text]="true" [plain]="true" />
+    </div>
+    <app-code [code]="code" selector="button-text-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TextDoc {
-    code: Code = {
-        basic: `<p-button label="Primary" [text]="true" />
+  code: Code = {
+    basic: `<p-button label="Primary" [text]="true" />
 <p-button label="Secondary" [text]="true" severity="secondary" />
 <p-button label="Success" [text]="true" severity="success" />
 <p-button label="Info" [text]="true" severity="info" />
@@ -32,7 +33,7 @@ export class TextDoc {
 <p-button label="Danger" [text]="true" severity="danger" />
 <p-button label="Plain" [text]="true" [plain]="true" />`,
 
-        html: `<div class="card flex flex-wrap gap-3 justify-content-center">
+    html: `<div class="card flex flex-wrap gap-3 justify-content-center">
     <p-button label="Primary" [text]="true" />
     <p-button label="Secondary" [text]="true" severity="secondary" />
     <p-button label="Success" [text]="true" severity="success" />
@@ -43,7 +44,7 @@ export class TextDoc {
     <p-button label="Plain" [text]="true" [plain]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -52,6 +53,6 @@ import { ButtonModule } from 'primeng/button';
     standalone: true,
     imports: [ButtonModule]
 })
-export class ButtonTextDemo { }`
-    };
+export class ButtonTextDemo { }`,
+  };
 }

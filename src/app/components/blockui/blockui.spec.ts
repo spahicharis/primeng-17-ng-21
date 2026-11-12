@@ -1,78 +1,81 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { BlockUI } from './blockui';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Component } from '@angular/core';
-import { Panel } from 'primeng/panel';
+import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { BlockUI } from "./blockui";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Panel } from "primeng/panel";
 
 @Component({
-    template: `
-        <p-blockUI />
-        <p-blockUI [target]="pnl" />
-        <p-panel #pnl header="Godfather I" [style]="{ 'margin-top': '20px' }" />
-    `,
-    standalone: false
+  template: `
+    <p-blockUI />
+    <p-blockUI [target]="pnl" />
+    <p-panel #pnl header="Godfather I" [style]="{ 'margin-top': '20px' }" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 class TestBlockUIComponent {}
 
-describe('BlockUI', () => {
-    let blockui: BlockUI;
-    let blockui2: BlockUI;
-    let fixture: ComponentFixture<TestBlockUIComponent>;
+describe("BlockUI", () => {
+  let blockui: BlockUI;
+  let blockui2: BlockUI;
+  let fixture: ComponentFixture<TestBlockUIComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule],
-            declarations: [BlockUI, TestBlockUIComponent, Panel]
-        });
-
-        fixture = TestBed.createComponent(TestBlockUIComponent);
-        blockui = fixture.debugElement.children[0].componentInstance;
-        blockui2 = fixture.debugElement.children[1].componentInstance;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule],
+      declarations: [BlockUI, TestBlockUIComponent, Panel],
     });
 
-    it('should display by default', () => {
-        blockui.blocked = false;
-        fixture.detectChanges();
+    fixture = TestBed.createComponent(TestBlockUIComponent);
+    blockui = fixture.debugElement.children[0].componentInstance;
+    blockui2 = fixture.debugElement.children[1].componentInstance;
+  });
 
-        const blockEl = fixture.debugElement.query(By.css('div'));
-        expect(blockEl.nativeElement).toBeTruthy();
-    });
+  it("should display by default", () => {
+    blockui.blocked = false;
+    fixture.detectChanges();
 
-    it('should block body', () => {
-        blockui.blocked = false;
-        fixture.detectChanges();
+    const blockEl = fixture.debugElement.query(By.css("div"));
+    expect(blockEl.nativeElement).toBeTruthy();
+  });
 
-        const blockSpy = spyOn(blockui, 'block').and.callThrough();
-        blockui.blocked = true;
-        fixture.detectChanges();
+  it("should block body", () => {
+    blockui.blocked = false;
+    fixture.detectChanges();
 
-        expect(blockSpy).toHaveBeenCalled();
-    });
+    const blockSpy = spyOn(blockui, "block").and.callThrough();
+    blockui.blocked = true;
+    fixture.detectChanges();
 
-    it('should unblock body', () => {
-        blockui.blocked = false;
-        fixture.detectChanges();
+    expect(blockSpy).toHaveBeenCalled();
+  });
 
-        const unBlockSpy = spyOn(blockui, 'unblock').and.callThrough();
-        blockui.blocked = true;
-        fixture.detectChanges();
+  it("should unblock body", () => {
+    blockui.blocked = false;
+    fixture.detectChanges();
 
-        blockui.blocked = false;
-        fixture.detectChanges();
+    const unBlockSpy = spyOn(blockui, "unblock").and.callThrough();
+    blockui.blocked = true;
+    fixture.detectChanges();
 
-        expect(unBlockSpy).toHaveBeenCalled();
-    });
+    blockui.blocked = false;
+    fixture.detectChanges();
 
-    it('should block element with target', () => {
-        blockui2.blocked = false;
-        fixture.detectChanges();
+    expect(unBlockSpy).toHaveBeenCalled();
+  });
 
-        const blockSpy = spyOn(blockui2, 'block').and.callThrough();
-        blockui2.blocked = true;
-        fixture.detectChanges();
+  it("should block element with target", () => {
+    blockui2.blocked = false;
+    fixture.detectChanges();
 
-        expect(blockSpy).toHaveBeenCalled();
-        expect(blockui2.target.getBlockableElement().style.position).toEqual('relative');
-    });
+    const blockSpy = spyOn(blockui2, "block").and.callThrough();
+    blockui2.blocked = true;
+    fixture.detectChanges();
+
+    expect(blockSpy).toHaveBeenCalled();
+    expect(blockui2.target.getBlockableElement().style.position).toEqual(
+      "relative",
+    );
+  });
 });

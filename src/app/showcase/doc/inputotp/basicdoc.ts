@@ -1,30 +1,35 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Two-way value binding is defined using <i>ngModel</i>. The number of characters is defined with the <i>length</i> property, which is set to 4 by default.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-inputOtp [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="input-otp-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Two-way value binding is defined using <i>ngModel</i>. The number of
+        characters is defined with the <i>length</i> property, which is set to 4
+        by default.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-inputOtp [(ngModel)]="value" />
+    </div>
+    <app-code [code]="code" selector="input-otp-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    value: any;
+  value: any;
 
-    code: Code = {
-        basic: `<p-inputOtp [(ngModel)]="value" />`,
+  code: Code = {
+    basic: `<p-inputOtp [(ngModel)]="value" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-inputOtp [(ngModel)]="value" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputOtpModule } from 'primeng/inputotp';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +41,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputOtpBasicDemo {
     value : any
-}`
-    };
+}`,
+  };
 }

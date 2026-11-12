@@ -1,71 +1,93 @@
-import { Component, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                When the <i>disabled</i> attribute is present, the element is uneditable and unfocused. Additionally, the disabled states of the button and menu button can be handled independently. The button is disabled when <i>buttonDisabled</i> is
-                present, and the menu button is disabled when <i>menuButtonDisabled</i> is present.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-toast />
-            <p-splitButton label="Save" icon="pi pi-plus" (onClick)="save('info')" [model]="items" [disabled]="true" />
-        </div>
-        <app-code [code]="code" selector="split-button-disabled-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When the <i>disabled</i> attribute is present, the element is uneditable
+        and unfocused. Additionally, the disabled states of the button and menu
+        button can be handled independently. The button is disabled when
+        <i>buttonDisabled</i> is present, and the menu button is disabled when
+        <i>menuButtonDisabled</i> is present.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-toast />
+      <p-splitButton
+        label="Save"
+        icon="pi pi-plus"
+        (onClick)="save('info')"
+        [model]="items"
+        [disabled]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="split-button-disabled-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    constructor() {
-        this.items = [
-            {
-                label: 'Update',
-                command: () => {
-                    this.update();
-                }
-            },
-            {
-                label: 'Delete',
-                command: () => {
-                    this.delete();
-                }
-            },
-            { label: 'Angular Website', url: 'http://angular.io' },
-            { separator: true },
-            { label: 'Upload', routerLink: ['/fileupload'] }
-        ];
-    }
+  constructor() {
+    this.items = [
+      {
+        label: "Update",
+        command: () => {
+          this.update();
+        },
+      },
+      {
+        label: "Delete",
+        command: () => {
+          this.delete();
+        },
+      },
+      { label: "Angular Website", url: "http://angular.io" },
+      { separator: true },
+      { label: "Upload", routerLink: ["/fileupload"] },
+    ];
+  }
 
-    items: MenuItem[];
+  items: MenuItem[];
 
-    save(severity: string) {
-        this.messageService.add({ severity: severity, summary: 'Success', detail: 'Data Saved' });
-    }
+  save(severity: string) {
+    this.messageService.add({
+      severity: severity,
+      summary: "Success",
+      detail: "Data Saved",
+    });
+  }
 
-    update() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-    }
+  update() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Updated",
+    });
+  }
 
-    delete() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Deleted' });
-    }
+  delete() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Deleted",
+    });
+  }
 
-    code: Code = {
-        basic: `<p-splitButton 
+  code: Code = {
+    basic: `<p-splitButton 
     label="Save" 
     icon="pi pi-plus" 
     (onClick)="save('info')" 
     [model]="items" 
     [disabled]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-toast />
     <p-splitButton 
         label="Save" 
@@ -96,7 +118,7 @@ export class DisabledDoc {
 </div>
 `,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
@@ -142,6 +164,6 @@ export class SplitButtonDisabledDemo {
     delete() {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Deleted' });
     }
-}`
-    };
+}`,
+  };
 }

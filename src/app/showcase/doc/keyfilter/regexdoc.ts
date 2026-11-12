@@ -1,35 +1,46 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'reg-exp-demo',
-    template: `
-        <app-docsectiontext>
-            <p>In addition to the presets, a regular expression can be configured for customization.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap gap-3">
-            <div class="flex-auto">
-                <label for="blockspace" class="font-bold block mb-2"> Block Space </label>
-                <input pInputText id="blockspace" [pKeyFilter]="blockSpace" class="w-full" />
-            </div>
-            <div class="flex-auto">
-                <label for="block" class="font-bold block mb-2"> Block < > * ! </label>
-                <input pInputText id="block" [pKeyFilter]="blockChars" class="w-full" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="key-filter-reg-exp-demo" />
-    `,
-    standalone: false
+  selector: "reg-exp-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        In addition to the presets, a regular expression can be configured for
+        customization.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap gap-3">
+      <div class="flex-auto">
+        <label for="blockspace" class="font-bold block mb-2">
+          Block Space
+        </label>
+        <input
+          pInputText
+          id="blockspace"
+          [pKeyFilter]="blockSpace"
+          class="w-full"
+        />
+      </div>
+      <div class="flex-auto">
+        <label for="block" class="font-bold block mb-2"> Block < > * ! </label>
+        <input pInputText id="block" [pKeyFilter]="blockChars" class="w-full" />
+      </div>
+    </div>
+    <app-code [code]="code" selector="key-filter-reg-exp-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RegexDoc {
-    blockSpace: RegExp = /^[^\s]+$/;
-    blockChars: RegExp = /^[^<>*!]+$/;
+  blockSpace: RegExp = /^[^\s]+$/;
+  blockChars: RegExp = /^[^<>*!]+$/;
 
-    code: Code = {
-        basic: `<input pInputText [pKeyFilter]="blockSpace" />
+  code: Code = {
+    basic: `<input pInputText [pKeyFilter]="blockSpace" />
 <input pInputText [pKeyFilter]="blockChars" />`,
 
-        html: `<div class="card flex flex-wrap gap-3">
+    html: `<div class="card flex flex-wrap gap-3">
     <div class="flex-auto">
         <label for="blockspace" class="font-bold block mb-2"> Block Space </label>
         <input pInputText id="blockspace" pKeyFilter="int" class="w-full" />
@@ -40,7 +51,7 @@ export class RegexDoc {
     </div>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -54,6 +65,6 @@ export class KeyFilterRegExpDemo {
     blockSpace: RegExp = /[^\s]/;
 
     blockChars: RegExp = /^[^<>*!]+$/;
-}`
-    };
+}`,
+  };
 }

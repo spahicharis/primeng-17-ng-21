@@ -1,66 +1,103 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { Product } from '@domain/product';
-import { ProductService } from '@service/productservice';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { Product } from "@domain/product";
+import { ProductService } from "@service/productservice";
 
 @Component({
-    selector: 'carousel-vertical-demo',
-    template: `
-        <app-docsectiontext>
-            <p>To create a vertical Carousel, <i>orientation</i> needs to be set to <i>vertical</i> along with a <i>verticalViewPortHeight</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-carousel [value]="products" [numVisible]="1" [numScroll]="1" orientation="vertical" verticalViewPortHeight="360px">
-                <ng-template let-product pTemplate="item">
-                    <div class="border-1 surface-border border-round m-2 p-3">
-                        <div class="mb-3">
-                            <div class="relative mx-auto">
-                                <img src="https://primefaces.org/cdn/primeng/images/demo/product/{{ product.image }}" [alt]="product.name" class="w-full border-round" />
-                                <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" class="absolute" [ngStyle]="{ 'left.px': 5, 'top.px': 5 }" />
-                            </div>
-                        </div>
-                        <div class="mb-3 font-medium">{{ product.name }}</div>
-                        <div class="flex justify-content-between align-items-center">
-                            <div class="mt-0 font-semibold text-xl">{{ '$' + product.price }}</div>
-                            <span>
-                                <p-button icon="pi pi-heart" severity="secondary" [outlined]="true" />
-                                <p-button icon="pi pi-shopping-cart" styleClass="ml-2" />
-                            </span>
-                        </div>
-                    </div>
-                </ng-template>
-            </p-carousel>
-        </div>
-        <app-code [code]="code" selector="carousel-vertical-demo" [extFiles]="extFiles" />
-    `,
-    standalone: false
+  selector: "carousel-vertical-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        To create a vertical Carousel, <i>orientation</i> needs to be set to
+        <i>vertical</i> along with a <i>verticalViewPortHeight</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-carousel
+        [value]="products"
+        [numVisible]="1"
+        [numScroll]="1"
+        orientation="vertical"
+        verticalViewPortHeight="360px"
+      >
+        <ng-template let-product pTemplate="item">
+          <div class="border-1 surface-border border-round m-2 p-3">
+            <div class="mb-3">
+              <div class="relative mx-auto">
+                <img
+                  src="https://primefaces.org/cdn/primeng/images/demo/product/{{
+                    product.image
+                  }}"
+                  [alt]="product.name"
+                  class="w-full border-round"
+                />
+                <p-tag
+                  [value]="product.inventoryStatus"
+                  [severity]="getSeverity(product.inventoryStatus)"
+                  class="absolute"
+                  [ngStyle]="{ 'left.px': 5, 'top.px': 5 }"
+                />
+              </div>
+            </div>
+            <div class="mb-3 font-medium">{{ product.name }}</div>
+            <div class="flex justify-content-between align-items-center">
+              <div class="mt-0 font-semibold text-xl">
+                {{ "$" + product.price }}
+              </div>
+              <span>
+                <p-button
+                  icon="pi pi-heart"
+                  severity="secondary"
+                  [outlined]="true"
+                />
+                <p-button icon="pi pi-shopping-cart" styleClass="ml-2" />
+              </span>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+    <app-code
+      [code]="code"
+      selector="carousel-vertical-demo"
+      [extFiles]="extFiles"
+    />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class VerticalDoc implements OnInit {
-    private productService = inject(ProductService);
-    private cdr = inject(ChangeDetectorRef);
+  private productService = inject(ProductService);
+  private cdr = inject(ChangeDetectorRef);
 
-    products: Product[] | undefined;
+  products: Product[] | undefined;
 
-    ngOnInit() {
-        this.productService.getProductsSmall().then((products) => {
-            this.products = products;
-            this.cdr.detectChanges();
-        });
+  ngOnInit() {
+    this.productService.getProductsSmall().then((products) => {
+      this.products = products;
+      this.cdr.detectChanges();
+    });
+  }
+
+  getSeverity(status: string) {
+    switch (status) {
+      case "INSTOCK":
+        return "success";
+      case "LOWSTOCK":
+        return "warning";
+      case "OUTOFSTOCK":
+        return "danger";
     }
+  }
 
-    getSeverity(status: string) {
-        switch (status) {
-            case 'INSTOCK':
-                return 'success';
-            case 'LOWSTOCK':
-                return 'warning';
-            case 'OUTOFSTOCK':
-                return 'danger';
-        }
-    }
-
-    code: Code = {
-        basic: `<p-carousel 
+  code: Code = {
+    basic: `<p-carousel 
     [value]="products" 
     [numVisible]="1" 
     [numScroll]="1" 
@@ -96,7 +133,7 @@ export class VerticalDoc implements OnInit {
             </div>
         </ng-template>
 </p-carousel>`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-carousel 
         [value]="products" 
         [numVisible]="1" 
@@ -132,7 +169,7 @@ export class VerticalDoc implements OnInit {
             </ng-template>
     </p-carousel>
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { Product } from '@domain/product';
 import { ProductService } from '@service/productservice';
 import { CarouselModule } from 'primeng/carousel';
@@ -188,7 +225,7 @@ export class CarouselVerticalDemo implements OnInit {
         }
     }
 }`,
-        scss: `
+    scss: `
 :host ::ng-deep {
     .product-item {
         .product-item-content {
@@ -205,7 +242,7 @@ export class CarouselVerticalDemo implements OnInit {
         }
     }
 }`,
-        data: `
+    data: `
 /* ProductService */        
 {
     id: '1000',
@@ -220,13 +257,13 @@ export class CarouselVerticalDemo implements OnInit {
     rating: 5
 },
 ...`,
-        service: ['ProductService']
-    };
+    service: ["ProductService"],
+  };
 
-    extFiles = [
-        {
-            path: 'src/domain/product.ts',
-            content: `
+  extFiles = [
+    {
+      path: "src/domain/product.ts",
+      content: `
 export interface Product {
     id?: string;
     code?: string;
@@ -238,7 +275,7 @@ export interface Product {
     category?: string;
     image?: string;
     rating?: number;
-}`
-        }
-    ];
+}`,
+    },
+  ];
 }

@@ -1,20 +1,27 @@
-import { Component, inject } from '@angular/core';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
 
 @Component({
-    selector: 'footer',
-    template: `
-        <div class="flex w-full justify-content-end mt-3">
-            <p-button type="button" label="Cancel" icon="pi pi-times" (onClick)="closeDialog({ buttonType: 'Cancel', summary: 'No Product Selected' })"></p-button>
-        </div>
-    `,
-    standalone: false
+  selector: "footer",
+  template: `
+    <div class="flex w-full justify-content-end mt-3">
+      <p-button
+        type="button"
+        label="Cancel"
+        icon="pi pi-times"
+        (onClick)="
+          closeDialog({ buttonType: 'Cancel', summary: 'No Product Selected' })
+        "
+      ></p-button>
+    </div>
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class Footer {
-    ref = inject(DynamicDialogRef);
+  ref = inject(DynamicDialogRef);
 
-
-    closeDialog(data) {
-        this.ref.close(data);
-    }
+  closeDialog(data) {
+    this.ref.close(data);
+  }
 }

@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, a visual hint is applied to indicate that the Knob cannot be interacted with.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-knob [(ngModel)]="value" [disabled]="true" />
-        </div>
-        <app-code [code]="code" selector="knob-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, a visual hint is applied to indicate
+        that the Knob cannot be interacted with.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-knob [(ngModel)]="value" [disabled]="true" />
+    </div>
+    <app-code [code]="code" selector="knob-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    value: number = 75;
+  value: number = 75;
 
-    code: Code = {
-        basic: `<p-knob [(ngModel)]="value" [disabled]="true" />`,
+  code: Code = {
+    basic: `<p-knob [(ngModel)]="value" [disabled]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-knob [(ngModel)]="value" [disabled]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { KnobModule } from 'primeng/knob';
 
@@ -36,6 +40,6 @@ import { KnobModule } from 'primeng/knob';
 })
 export class KnobDisabledDemo {
     value: number = 75;
-}`
-    };
+}`,
+  };
 }

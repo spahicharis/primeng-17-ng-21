@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Knob is an input component and used with the standard <i>ngModel</i> directive.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-knob [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="knob-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Knob is an input component and used with the standard
+        <i>ngModel</i> directive.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-knob [(ngModel)]="value" />
+    </div>
+    <app-code [code]="code" selector="knob-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-knob [(ngModel)]="value" />`,
+  code: Code = {
+    basic: `<p-knob [(ngModel)]="value" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-knob [(ngModel)]="value" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { KnobModule } from 'primeng/knob';
 
@@ -36,6 +40,6 @@ import { KnobModule } from 'primeng/knob';
 })
 export class KnobBasicDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

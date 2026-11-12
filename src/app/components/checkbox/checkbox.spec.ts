@@ -1,170 +1,175 @@
-import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Checkbox } from './checkbox';
-import { CheckIcon } from 'primeng/icons/check';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { Checkbox } from "./checkbox";
+import { CheckIcon } from "primeng/icons/check";
 
 @Component({
-    template: ` <p-checkbox [(ngModel)]="checked" /> `,
-    standalone: false
+  template: ` <p-checkbox [(ngModel)]="checked" /> `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 class TestCheckboxComponent {
-    checked: boolean = false;
+  checked: boolean = false;
 }
 
-describe('Checkbox', () => {
-    let checkbox: Checkbox;
-    let testComponent: TestCheckboxComponent;
-    let fixture: ComponentFixture<TestCheckboxComponent>;
+describe("Checkbox", () => {
+  let checkbox: Checkbox;
+  let testComponent: TestCheckboxComponent;
+  let fixture: ComponentFixture<TestCheckboxComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            imports: [NoopAnimationsModule, FormsModule, CheckIcon],
-            declarations: [Checkbox, TestCheckboxComponent]
-        });
-
-        fixture = TestBed.createComponent(TestCheckboxComponent);
-        testComponent = fixture.componentInstance;
-        checkbox = fixture.debugElement.children[0].componentInstance;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, FormsModule, CheckIcon],
+      declarations: [Checkbox, TestCheckboxComponent],
     });
 
-    it('should check the input on click', () => {
-        checkbox.binary = true;
-        fixture.detectChanges();
+    fixture = TestBed.createComponent(TestCheckboxComponent);
+    testComponent = fixture.componentInstance;
+    checkbox = fixture.debugElement.children[0].componentInstance;
+  });
 
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        boxEl.click();
-        fixture.detectChanges();
+  it("should check the input on click", () => {
+    checkbox.binary = true;
+    fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('input');
-        expect(input.checked).toBe(true);
-    });
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    boxEl.click();
+    fixture.detectChanges();
 
-    it('should disabled', () => {
-        checkbox.label = 'primeng';
-        checkbox.disabled = true;
-        checkbox.cd.detectChanges();
+    const input = fixture.nativeElement.querySelector("input");
+    expect(input.checked).toBe(true);
+  });
 
-        const onClickSpy = spyOn(checkbox, 'onClick').and.callThrough();
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        const labelEl = fixture.nativeElement.querySelector('.p-checkbox-label');
+  it("should disabled", () => {
+    checkbox.label = "primeng";
+    checkbox.disabled = true;
+    checkbox.cd.detectChanges();
 
-        boxEl.click();
-        checkbox.cd.detectChanges();
+    const onClickSpy = spyOn(checkbox, "onClick").and.callThrough();
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    const labelEl = fixture.nativeElement.querySelector(".p-checkbox-label");
 
-        const input = fixture.nativeElement.querySelector('input');
-        expect(input.checked).toBe(false);
-        expect(input.disabled).toEqual(true);
-        expect(boxEl.className).toContain('p-disabled');
-        expect(labelEl.className).toContain('p-disabled');
-        expect(onClickSpy).toHaveBeenCalled();
-        expect(checkbox.value).toEqual(undefined);
-    });
+    boxEl.click();
+    checkbox.cd.detectChanges();
 
-    it('should get a label name inputId tabindex style styleClass and labelStyleClass', () => {
-        checkbox.binary = true;
-        checkbox.label = 'Primeng ROCKS!';
-        checkbox.name = 'primeng';
-        checkbox.inputId = 'primeng';
-        checkbox.tabindex = 13;
-        checkbox.style = { height: '300px' };
-        checkbox.styleClass = 'Primeng Rocks!';
-        checkbox.labelStyleClass = 'Primeng ROCKS';
-        fixture.detectChanges();
+    const input = fixture.nativeElement.querySelector("input");
+    expect(input.checked).toBe(false);
+    expect(input.disabled).toEqual(true);
+    expect(boxEl.className).toContain("p-disabled");
+    expect(labelEl.className).toContain("p-disabled");
+    expect(onClickSpy).toHaveBeenCalled();
+    expect(checkbox.value).toEqual(undefined);
+  });
 
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        const labelEl = fixture.nativeElement.querySelector('.p-checkbox-label');
-        const containerEl = fixture.nativeElement.querySelector('div');
-        boxEl.click();
-        fixture.detectChanges();
+  it("should get a label name inputId tabindex style styleClass and labelStyleClass", () => {
+    checkbox.binary = true;
+    checkbox.label = "Primeng ROCKS!";
+    checkbox.name = "primeng";
+    checkbox.inputId = "primeng";
+    checkbox.tabindex = 13;
+    checkbox.style = { height: "300px" };
+    checkbox.styleClass = "Primeng Rocks!";
+    checkbox.labelStyleClass = "Primeng ROCKS";
+    fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('input');
-        expect(labelEl).toBeTruthy();
-        expect(labelEl.className).toContain('Primeng ROCKS');
-        expect(labelEl.className).toContain('p-checkbox-label-active');
-        expect(input.name).toEqual('primeng');
-        expect(input.id).toEqual('primeng');
-        expect(input.tabIndex).toEqual(13);
-        expect(containerEl.className).toContain('Primeng Rocks!');
-        expect(containerEl.style.height).toContain('300px');
-    });
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    const labelEl = fixture.nativeElement.querySelector(".p-checkbox-label");
+    const containerEl = fixture.nativeElement.querySelector("div");
+    boxEl.click();
+    fixture.detectChanges();
 
-    it('should uncheck when twice click', () => {
-        fixture.detectChanges();
+    const input = fixture.nativeElement.querySelector("input");
+    expect(labelEl).toBeTruthy();
+    expect(labelEl.className).toContain("Primeng ROCKS");
+    expect(labelEl.className).toContain("p-checkbox-label-active");
+    expect(input.name).toEqual("primeng");
+    expect(input.id).toEqual("primeng");
+    expect(input.tabIndex).toEqual(13);
+    expect(containerEl.className).toContain("Primeng Rocks!");
+    expect(containerEl.style.height).toContain("300px");
+  });
 
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        const onClickSpy = spyOn(checkbox, 'onClick').and.callThrough();
-        boxEl.click();
-        fixture.detectChanges();
+  it("should uncheck when twice click", () => {
+    fixture.detectChanges();
 
-        boxEl.click();
-        fixture.detectChanges();
-        const input = fixture.nativeElement.querySelector('input');
-        expect(input.checked).toBe(false);
-        expect(onClickSpy).toHaveBeenCalledTimes(2);
-    });
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    const onClickSpy = spyOn(checkbox, "onClick").and.callThrough();
+    boxEl.click();
+    fixture.detectChanges();
 
-    it('should check with binary', () => {
-        checkbox.binary = true;
-        fixture.detectChanges();
+    boxEl.click();
+    fixture.detectChanges();
+    const input = fixture.nativeElement.querySelector("input");
+    expect(input.checked).toBe(false);
+    expect(onClickSpy).toHaveBeenCalledTimes(2);
+  });
 
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        boxEl.click();
-        fixture.detectChanges();
+  it("should check with binary", () => {
+    checkbox.binary = true;
+    fixture.detectChanges();
 
-        const input = fixture.nativeElement.querySelector('input');
-        expect(input.checked).toBe(true);
-    });
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    boxEl.click();
+    fixture.detectChanges();
 
-    it('should call onBlur and onFocus', () => {
-        checkbox.label = 'primeng';
-        fixture.detectChanges();
+    const input = fixture.nativeElement.querySelector("input");
+    expect(input.checked).toBe(true);
+  });
 
-        const input = fixture.nativeElement.querySelector('input');
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        const labelEl = fixture.nativeElement.querySelector('.p-checkbox-label');
-        const onBlurSpy = spyOn(checkbox, 'onInputBlur').and.callThrough();
-        const onFocusSpy = spyOn(checkbox, 'onInputFocus').and.callThrough();
-        input.dispatchEvent(new Event('focus'));
-        fixture.detectChanges();
+  it("should call onBlur and onFocus", () => {
+    checkbox.label = "primeng";
+    fixture.detectChanges();
 
-        expect(onFocusSpy).toHaveBeenCalled();
-        expect(checkbox.focused).toEqual(true);
-        expect(boxEl.className).toContain('p-focus');
-        expect(labelEl.className).toContain('p-checkbox-label-focus');
-        input.dispatchEvent(new Event('blur'));
-        fixture.detectChanges();
+    const input = fixture.nativeElement.querySelector("input");
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    const labelEl = fixture.nativeElement.querySelector(".p-checkbox-label");
+    const onBlurSpy = spyOn(checkbox, "onInputBlur").and.callThrough();
+    const onFocusSpy = spyOn(checkbox, "onInputFocus").and.callThrough();
+    input.dispatchEvent(new Event("focus"));
+    fixture.detectChanges();
 
-        expect(onBlurSpy).toHaveBeenCalled();
-        expect(checkbox.focused).toEqual(false);
-        expect(boxEl.className).not.toContain('p-focus');
-        expect(labelEl.className).not.toContain('p-checkbox-label-focus');
-    });
+    expect(onFocusSpy).toHaveBeenCalled();
+    expect(checkbox.focused).toEqual(true);
+    expect(boxEl.className).toContain("p-focus");
+    expect(labelEl.className).toContain("p-checkbox-label-focus");
+    input.dispatchEvent(new Event("blur"));
+    fixture.detectChanges();
 
-    it('should have default checkbox icon', () => {
-        checkbox.binary = true;
-        fixture.detectChanges();
+    expect(onBlurSpy).toHaveBeenCalled();
+    expect(checkbox.focused).toEqual(false);
+    expect(boxEl.className).not.toContain("p-focus");
+    expect(labelEl.className).not.toContain("p-checkbox-label-focus");
+  });
 
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        boxEl.click();
-        fixture.detectChanges();
+  it("should have default checkbox icon", () => {
+    checkbox.binary = true;
+    fixture.detectChanges();
 
-        const iconEl = fixture.nativeElement.querySelector('.p-checkbox-box .p-checkbox-icon');
-        expect(iconEl.parentElement.tagName.toLowerCase()).toEqual('checkicon');
-    });
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    boxEl.click();
+    fixture.detectChanges();
 
-    it('should have custom checkbox icon', () => {
-        checkbox.binary = true;
-        fixture.detectChanges();
+    const iconEl = fixture.nativeElement.querySelector(
+      ".p-checkbox-box .p-checkbox-icon",
+    );
+    expect(iconEl.parentElement.tagName.toLowerCase()).toEqual("checkicon");
+  });
 
-        const boxEl = fixture.nativeElement.querySelector('.p-checkbox-box');
-        boxEl.click();
-        checkbox.checkboxIcon = 'pi pi-new-check';
-        fixture.detectChanges();
+  it("should have custom checkbox icon", () => {
+    checkbox.binary = true;
+    fixture.detectChanges();
 
-        const iconEl = fixture.nativeElement.querySelector('.p-checkbox-box .p-checkbox-icon');
+    const boxEl = fixture.nativeElement.querySelector(".p-checkbox-box");
+    boxEl.click();
+    checkbox.checkboxIcon = "pi pi-new-check";
+    fixture.detectChanges();
 
-        expect(iconEl.className).toContain('pi pi-new-check');
-    });
+    const iconEl = fixture.nativeElement.querySelector(
+      ".p-checkbox-box .p-checkbox-icon",
+    );
+
+    expect(iconEl.className).toContain("pi pi-new-check");
+  });
 });

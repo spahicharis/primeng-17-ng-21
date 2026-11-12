@@ -1,40 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { Message } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Message } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'severity-doc',
-    template: `
-        <app-docsectiontext>
-            <p>The <i>severity</i> option specifies the type of the message.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-messages [(value)]="messages" [enableService]="false" />
-        </div>
-        <app-code [code]="code" selector="messages-severity-demo" />
-    `,
-    standalone: false
+  selector: "severity-doc",
+  template: `
+    <app-docsectiontext>
+      <p>The <i>severity</i> option specifies the type of the message.</p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-messages [(value)]="messages" [enableService]="false" />
+    </div>
+    <app-code [code]="code" selector="messages-severity-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SeverityDoc implements OnInit {
-    messages: Message[] | undefined;
+  messages: Message[] | undefined;
 
-    ngOnInit() {
-        this.messages = [
-            { severity: 'info', detail: 'Info Message' },
-            { severity: 'success', detail: 'Success Message' },
-            { severity: 'warn', detail: 'Warning Message' },
-            { severity: 'error', detail: 'Error Message' },
-            { severity: 'secondary', detail: 'Secondary Message' },
-            { severity: 'contrast', detail: 'Contrast Message' }
-        ];
-    }
+  ngOnInit() {
+    this.messages = [
+      { severity: "info", detail: "Info Message" },
+      { severity: "success", detail: "Success Message" },
+      { severity: "warn", detail: "Warning Message" },
+      { severity: "error", detail: "Error Message" },
+      { severity: "secondary", detail: "Secondary Message" },
+      { severity: "contrast", detail: "Contrast Message" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-messages [(value)]="messages" [enableService]="false" />`,
-        html: `<div class="card">
+  code: Code = {
+    basic: `<p-messages [(value)]="messages" [enableService]="false" />`,
+    html: `<div class="card">
     <p-messages [(value)]="messages" [enableService]="false" />
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
@@ -57,6 +58,6 @@ export class MessagesSeverityDemo implements OnInit {
             { severity: 'contrast', detail: 'Contrast Message' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

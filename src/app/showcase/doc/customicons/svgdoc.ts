@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'svg-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Inline SVGs are embedded inside the dom.</p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    standalone: false
+  selector: "svg-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Inline SVGs are embedded inside the dom.</p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SVGDoc {
-    code: Code = {
-        basic: `<p-dropdown>
+  code: Code = {
+    basic: `<p-dropdown>
     <ng-template pTemplate="dropdownicon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g id="chevron-down">
@@ -21,6 +22,6 @@ export class SVGDoc {
             </g>
         </svg>
     </ng-template>
-</p-dropdown>`
-    };
+</p-dropdown>`,
+  };
 }

@@ -1,50 +1,60 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'basic-doc',
-    template: ` <app-docsectiontext>
-            <p>
-                AutoComplete uses <i>ngModel</i> for two-way binding, requires a list of suggestions and a <i>completeMethod</i> to query for the results. The completeMethod gets the query text as <i>event.query</i> property and should update the
-                suggestions with the search results.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions" (completeMethod)="search($event)" placeholder="Search" />
-        </div>
-        <app-code [code]="code" selector="autocomplete-basic-demo" />`,
-    standalone: false
+  selector: "basic-doc",
+  template: ` <app-docsectiontext>
+      <p>
+        AutoComplete uses <i>ngModel</i> for two-way binding, requires a list of
+        suggestions and a <i>completeMethod</i> to query for the results. The
+        completeMethod gets the query text as <i>event.query</i> property and
+        should update the suggestions with the search results.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-autoComplete
+        [(ngModel)]="selectedItem"
+        [suggestions]="suggestions"
+        (completeMethod)="search($event)"
+        placeholder="Search"
+      />
+    </div>
+    <app-code [code]="code" selector="autocomplete-basic-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    items: any[] | undefined;
+  items: any[] | undefined;
 
-    selectedItem: any;
+  selectedItem: any;
 
-    suggestions: any[] | undefined;
+  suggestions: any[] | undefined;
 
-    search(event: AutoCompleteCompleteEvent) {
-        this.suggestions = [...Array(10).keys()].map((item) => event.query + '-' + item);
-    }
+  search(event: AutoCompleteCompleteEvent) {
+    this.suggestions = [...Array(10).keys()].map(
+      (item) => event.query + "-" + item,
+    );
+  }
 
-    code: Code = {
-        basic: `<p-autoComplete 
+  code: Code = {
+    basic: `<p-autoComplete 
     [(ngModel)]="selectedItem" 
     [suggestions]="suggestions" 
     (completeMethod)="search($event)" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-autoComplete 
         [(ngModel)]="selectedItem"
         [suggestions]="suggestions"
         (completeMethod)="search($event)" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
@@ -69,6 +79,6 @@ export class AutocompleteBasicDemo {
     search(event: AutoCompleteCompleteEvent) {
         this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
     }
-}`
-    };
+}`,
+  };
 }

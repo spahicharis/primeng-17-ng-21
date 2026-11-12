@@ -1,44 +1,64 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'multiple-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                More than one node is selectable by setting <i>selectionMode</i> to <i>multiple</i>. By default in multiple selection mode, metaKey press (e.g. <i>⌘</i>) is necessary to add to existing selections however this can be configured with
-                disabling the <i>metaKeySelection</i> property. Note that in touch enabled devices, Tree always ignores metaKey.
-            </p>
-            <p>In multiple selection mode, value binding should be a key-value pair where key is the node key and value is a boolean to indicate selection.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column align-items-center justify-content-center">
-            <div class="flex align-items-center mb-4 gap-2">
-                <p-inputSwitch inputId="input-metakey" [(ngModel)]="metaKeySelection" />
-                <label for="input-metakey">MetaKey</label>
-            </div>
-            <p-tree [metaKeySelection]="metaKeySelection" [value]="files" class="w-full md:w-30rem" selectionMode="multiple" [(selection)]="selectedFiles" />
-        </div>
-        <app-code [code]="code" selector="tree-multiple-demo" />
-    `,
-    standalone: false
+  selector: "multiple-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        More than one node is selectable by setting <i>selectionMode</i> to
+        <i>multiple</i>. By default in multiple selection mode, metaKey press
+        (e.g. <i>⌘</i>) is necessary to add to existing selections however this
+        can be configured with disabling the <i>metaKeySelection</i> property.
+        Note that in touch enabled devices, Tree always ignores metaKey.
+      </p>
+      <p>
+        In multiple selection mode, value binding should be a key-value pair
+        where key is the node key and value is a boolean to indicate selection.
+      </p>
+    </app-docsectiontext>
+    <div
+      class="card flex flex-column align-items-center justify-content-center"
+    >
+      <div class="flex align-items-center mb-4 gap-2">
+        <p-inputSwitch inputId="input-metakey" [(ngModel)]="metaKeySelection" />
+        <label for="input-metakey">MetaKey</label>
+      </div>
+      <p-tree
+        [metaKeySelection]="metaKeySelection"
+        [value]="files"
+        class="w-full md:w-30rem"
+        selectionMode="multiple"
+        [(selection)]="selectedFiles"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-multiple-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MultipleDoc implements OnInit {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    metaKeySelection: boolean = false;
+  metaKeySelection: boolean = false;
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    selectedFiles!: TreeNode[];
+  selectedFiles!: TreeNode[];
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((data) => (this.files = data));
-    }
+  ngOnInit() {
+    this.nodeService.getFiles().then((data) => (this.files = data));
+  }
 
-    code: Code = {
-        basic: `<div class="flex align-items-center mb-4 gap-2">
+  code: Code = {
+    basic: `<div class="flex align-items-center mb-4 gap-2">
     <p-inputSwitch inputId="input-metakey" [(ngModel)]="metaKeySelection" />
     <label for="input-metakey">MetaKey</label>
 </div>
@@ -49,7 +69,7 @@ export class MultipleDoc implements OnInit {
     selectionMode="multiple" 
     [(selection)]="selectedFiles" />`,
 
-        html: `<div class="card flex flex-column align-items-center justify-content-center">
+    html: `<div class="card flex flex-column align-items-center justify-content-center">
     <div class="flex align-items-center mb-4 gap-2">
         <p-inputSwitch inputId="input-metakey" [(ngModel)]="metaKeySelection" />
         <label for="input-metakey">MetaKey</label>
@@ -62,7 +82,7 @@ export class MultipleDoc implements OnInit {
         [(selection)]="selectedFiles" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -90,9 +110,9 @@ export class TreeMultipleDemo implements OnInit {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -119,6 +139,6 @@ export class TreeMultipleDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

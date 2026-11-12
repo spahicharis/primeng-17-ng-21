@@ -1,25 +1,32 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'chip-template-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Content can easily be customized with the dynamic content instead of using the built-in modes.</p>
-        </app-docsectiontext>
-        <div class="card flex align-items-center">
-            <p-chip styleClass="pl-0 pr-3">
-                <span class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center">P</span>
-                <span class="ml-2 font-medium">PRIME</span>
-            </p-chip>
-        </div>
-        <app-code [code]="code" selector="chip-template-demo" />
-    `,
-    standalone: false
+  selector: "chip-template-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Content can easily be customized with the dynamic content instead of
+        using the built-in modes.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex align-items-center">
+      <p-chip styleClass="pl-0 pr-3">
+        <span
+          class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center"
+          >P</span
+        >
+        <span class="ml-2 font-medium">PRIME</span>
+      </p-chip>
+    </div>
+    <app-code [code]="code" selector="chip-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc {
-    code: Code = {
-        basic: `<p-chip styleClass="pl-0 pr-3">
+  code: Code = {
+    basic: `<p-chip styleClass="pl-0 pr-3">
     <span class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center">
         P
     </span>
@@ -27,7 +34,7 @@ export class TemplateDoc {
         PRIME
     </span>
 </p-chip>`,
-        html: `<div class="card flex align-items-center">
+    html: `<div class="card flex align-items-center">
     <p-chip styleClass="pl-0 pr-3">
         <span class="bg-primary border-circle w-2rem h-2rem flex align-items-center justify-content-center">
             P
@@ -37,7 +44,7 @@ export class TemplateDoc {
         </span>
     </p-chip>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ChipModule } from 'primeng/chip';
 
 @Component({
@@ -46,6 +53,6 @@ import { ChipModule } from 'primeng/chip';
     standalone: true,
     imports: [ChipModule]
 })
-export class ChipTemplateDemo {}`
-    };
+export class ChipTemplateDemo {}`,
+  };
 }

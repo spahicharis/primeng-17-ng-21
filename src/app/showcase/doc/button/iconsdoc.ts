@@ -1,34 +1,38 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'button-icons-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Icon of a button is specified with <i>icon</i> property and position is configured using <i>iconPos</i> attribute.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <p-button icon="pi pi-check" />
-            <p-button label="Submit" icon="pi pi-check" />
-            <p-button label="Submit" icon="pi pi-check" iconPos="right" />
-        </div>
-        <app-code [code]="code" selector="button-icons-demo" />
-    `,
-    standalone: false
+  selector: "button-icons-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Icon of a button is specified with <i>icon</i> property and position is
+        configured using <i>iconPos</i> attribute.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap justify-content-center gap-3">
+      <p-button icon="pi pi-check" />
+      <p-button label="Submit" icon="pi pi-check" />
+      <p-button label="Submit" icon="pi pi-check" iconPos="right" />
+    </div>
+    <app-code [code]="code" selector="button-icons-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class IconsDoc {
-    code: Code = {
-        basic: `<p-button icon="pi pi-check" />
+  code: Code = {
+    basic: `<p-button icon="pi pi-check" />
 <p-button label="Submit" icon="pi pi-check" />
 <p-button label="Submit" icon="pi pi-check" iconPos="right" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-button icon="pi pi-check" />
     <p-button label="Submit" icon="pi pi-check" />
     <p-button label="Submit" icon="pi pi-check" iconPos="right" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -37,6 +41,6 @@ import { ButtonModule } from 'primeng/button';
     standalone: true,
     imports: [ButtonModule]
 })
-export class ButtonIconsDemo { }`
-    };
+export class ButtonIconsDemo { }`,
+  };
 }

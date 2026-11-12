@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { MegaMenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MegaMenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'router-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Items with navigation are defined with templating to be able to use a routerLink directive, an external link or programmatic navigation.</p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" [hideStackBlitz]="true" />
-    `,
-    standalone: false
+  selector: "router-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Items with navigation are defined with templating to be able to use a
+        routerLink directive, an external link or programmatic navigation.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" [hideStackBlitz]="true" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RouterDoc {
-    code: Code = {
-        basic: `<p-megaMenu [model]="items">
+  code: Code = {
+    basic: `<p-megaMenu [model]="items">
     <ng-template pTemplate="item" let-item>
         <ng-container *ngIf="item.route; else elseBlock">
             <a [routerLink]="item.route" class="p-menuitem-link">
@@ -29,6 +33,6 @@ export class RouterDoc {
             </a>
         </ng-template>
     </ng-template>
-</p-megaMenu>`
-    };
+</p-megaMenu>`,
+  };
 }

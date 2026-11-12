@@ -1,30 +1,39 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-month-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Month only picker is enabled by specifying <i>view</i> as <i>month</i> in addition to a suitable <i>dateFormat</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-calendar [(ngModel)]="date" view="month" dateFormat="mm/yy" [readonlyInput]="true" />
-        </div>
-        <app-code [code]="code" selector="calendar-month-demo" />
-    `,
-    standalone: false
+  selector: "calendar-month-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Month only picker is enabled by specifying <i>view</i> as
+        <i>month</i> in addition to a suitable <i>dateFormat</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-calendar
+        [(ngModel)]="date"
+        view="month"
+        dateFormat="mm/yy"
+        [readonlyInput]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="calendar-month-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MonthDoc {
-    date: Date[] | undefined;
+  date: Date[] | undefined;
 
-    code: Code = {
-        basic: `<p-calendar 
+  code: Code = {
+    basic: `<p-calendar 
     [(ngModel)]="date" 
     view="month" 
     dateFormat="mm/yy" 
     [readonlyInput]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-calendar 
         [(ngModel)]="date" 
         view="month" 
@@ -32,7 +41,7 @@ export class MonthDoc {
         [readonlyInput]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -44,6 +53,6 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class CalendarMonthDemo {
     date: Date[] | undefined;
-}`
-    };
+}`,
+  };
 }

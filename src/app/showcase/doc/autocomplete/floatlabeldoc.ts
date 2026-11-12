@@ -1,38 +1,50 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'float-label-doc',
-    template: ` <app-docsectiontext>
-            <p>A floating label appears on top of the input field when focused. Visit <a routerLink="/floatlabel">FloatLabel</a> documentation for more information.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-floatLabel>
-                <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions" (completeMethod)="search($event)" inputId="float-label" />
-                <label for="float-label">Float Label</label>
-            </p-floatLabel>
-        </div>
-        <app-code [code]="code" selector="autocomplete-float-label-demo" />`,
-    standalone: false
+  selector: "float-label-doc",
+  template: ` <app-docsectiontext>
+      <p>
+        A floating label appears on top of the input field when focused. Visit
+        <a routerLink="/floatlabel">FloatLabel</a> documentation for more
+        information.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-floatLabel>
+        <p-autoComplete
+          [(ngModel)]="selectedItem"
+          [suggestions]="suggestions"
+          (completeMethod)="search($event)"
+          inputId="float-label"
+        />
+        <label for="float-label">Float Label</label>
+      </p-floatLabel>
+    </div>
+    <app-code [code]="code" selector="autocomplete-float-label-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FloatLabelDoc {
-    items: any[] | undefined;
+  items: any[] | undefined;
 
-    selectedItem: any;
+  selectedItem: any;
 
-    suggestions: any[] | undefined;
+  suggestions: any[] | undefined;
 
-    search(event: AutoCompleteCompleteEvent) {
-        this.suggestions = [...Array(10).keys()].map((item) => event.query + '-' + item);
-    }
+  search(event: AutoCompleteCompleteEvent) {
+    this.suggestions = [...Array(10).keys()].map(
+      (item) => event.query + "-" + item,
+    );
+  }
 
-    code: Code = {
-        basic: `<p-floatLabel>
+  code: Code = {
+    basic: `<p-floatLabel>
     <p-autoComplete 
         [(ngModel)]="selectedItem" 
         [suggestions]="suggestions" 
@@ -41,7 +53,7 @@ export class FloatLabelDoc {
     <label for="float-label">Float Label</label>
 </p-floatLabel>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-floatLabel>
         <p-autoComplete 
             [(ngModel)]="selectedItem" 
@@ -52,7 +64,7 @@ export class FloatLabelDoc {
     </p-floatLabel>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -78,6 +90,6 @@ export class AutocompleteFloatLabelDemo {
     search(event: AutoCompleteCompleteEvent) {
         this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
     }
-}`
-    };
+}`,
+  };
 }

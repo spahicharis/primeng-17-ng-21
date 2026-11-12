@@ -1,38 +1,43 @@
-import { Component, inject } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Code } from '@domain/code';
-import { ProductListDemo } from './productlistdemo';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { Code } from "@domain/code";
+import { ProductListDemo } from "./productlistdemo";
 
 @Component({
-    selector: 'passingdata-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                In case you need to pass data to the component that is dynamically loaded, use the <i>data</i> property that can be access using the DynamicDialogConfig class. In additon, the loaded component can also control the Dialog using the
-                DynamicDialogRef API. Both the DynamicDialogConfig and DynamicDialogRef are injectable using the constructor.
-            </p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    providers: [DialogService],
-    standalone: false
+  selector: "passingdata-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        In case you need to pass data to the component that is dynamically
+        loaded, use the <i>data</i> property that can be access using the
+        DynamicDialogConfig class. In additon, the loaded component can also
+        control the Dialog using the DynamicDialogRef API. Both the
+        DynamicDialogConfig and DynamicDialogRef are injectable using the
+        constructor.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  providers: [DialogService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PassingDataDoc {
-    dialogService = inject(DialogService);
+  dialogService = inject(DialogService);
 
-    ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | undefined;
 
-    show() {
-        this.ref = this.dialogService.open(ProductListDemo, {
-            data: {
-                id: '51gF3'
-            },
-            header: 'Select a Product'
-        });
-    }
+  show() {
+    this.ref = this.dialogService.open(ProductListDemo, {
+      data: {
+        id: "51gF3",
+      },
+      header: "Select a Product",
+    });
+  }
 
-    code: Code = {
-        typescript: `
+  code: Code = {
+    typescript: `
 import { Component } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ProductListDemo } from './productlistdemo';
@@ -55,6 +60,6 @@ export class DynamicDialogDemo {
             header: 'Select a Product'
         });
     }
-}`
-    };
+}`,
+  };
 }

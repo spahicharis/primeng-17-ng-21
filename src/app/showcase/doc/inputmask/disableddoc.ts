@@ -1,36 +1,40 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-inputMask mask="999-99-9999" [(ngModel)]="value" [disabled]="true" />
-        </div>
-        <app-code [code]="code" selector="input-mask-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-inputMask mask="999-99-9999" [(ngModel)]="value" [disabled]="true" />
+    </div>
+    <app-code [code]="code" selector="input-mask-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    value: string | undefined;
+  value: string | undefined;
 
-    code: Code = {
-        basic: `<p-inputMask 
+  code: Code = {
+    basic: `<p-inputMask 
     mask="999-99-9999" 
     [(ngModel)]="value" 
     [disabled]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-inputMask 
         mask="999-99-9999" 
         [(ngModel)]="value" 
         [disabled]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputMaskModule } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 
@@ -42,6 +46,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputMaskDisabledDemo {
     value: string | undefined;
-}`
-    };
+}`,
+  };
 }

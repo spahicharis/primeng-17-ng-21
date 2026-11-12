@@ -1,35 +1,45 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'autocomplete-multiple-demo',
-    template: ` <app-docsectiontext>
-            <p>Multiple mode is enabled using <i>multiple</i> property used to select more than one value from the autocomplete. In this case, value reference should be an array.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <span class="p-fluid">
-                <p-autoComplete [(ngModel)]="selectedItems" [suggestions]="items" (completeMethod)="search($event)" [multiple]="true" />
-            </span>
-        </div>
-        <app-code [code]="code" selector="autocomplete-multiple-demo" />`,
-    standalone: false
+  selector: "autocomplete-multiple-demo",
+  template: ` <app-docsectiontext>
+      <p>
+        Multiple mode is enabled using <i>multiple</i> property used to select
+        more than one value from the autocomplete. In this case, value reference
+        should be an array.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <span class="p-fluid">
+        <p-autoComplete
+          [(ngModel)]="selectedItems"
+          [suggestions]="items"
+          (completeMethod)="search($event)"
+          [multiple]="true"
+        />
+      </span>
+    </div>
+    <app-code [code]="code" selector="autocomplete-multiple-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MultipleDoc {
-    selectedItems: any[] | undefined;
+  selectedItems: any[] | undefined;
 
-    items: any[] | undefined;
+  items: any[] | undefined;
 
-    search(event: AutoCompleteCompleteEvent) {
-        this.items = [...Array(10).keys()].map((item) => event.query + '-' + item);
-    }
+  search(event: AutoCompleteCompleteEvent) {
+    this.items = [...Array(10).keys()].map((item) => event.query + "-" + item);
+  }
 
-    code: Code = {
-        basic: `<span class="p-fluid">
+  code: Code = {
+    basic: `<span class="p-fluid">
     <p-autoComplete 
         [(ngModel)]="selectedItems" 
         [suggestions]="items" 
@@ -37,7 +47,7 @@ export class MultipleDoc {
         [multiple]="true" />
 </span>`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <span class="p-fluid">
         <p-autoComplete 
             [(ngModel)]="selectedItems" 
@@ -47,7 +57,7 @@ export class MultipleDoc {
     </span>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
@@ -70,6 +80,6 @@ export class AutocompleteMultipleDemo {
     search(event: AutoCompleteCompleteEvent) {
         this.items = [...Array(10).keys()].map((item) => event.query + '-' + item);
     }
-}`
-    };
+}`,
+  };
 }

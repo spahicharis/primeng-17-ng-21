@@ -1,47 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface City {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-multiSelect [options]="cities" [(ngModel)]="selectedCities" [disabled]="true" optionLabel="name" placeholder="Select Cities" />
-        </div>
-        <app-code [code]="code" selector="multi-select-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-multiSelect
+        [options]="cities"
+        [(ngModel)]="selectedCities"
+        [disabled]="true"
+        optionLabel="name"
+        placeholder="Select Cities"
+      />
+    </div>
+    <app-code [code]="code" selector="multi-select-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc implements OnInit {
-    cities!: City[];
+  cities!: City[];
 
-    selectedCities!: City[];
+  selectedCities!: City[];
 
-    ngOnInit() {
-        this.cities = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ];
-    }
+  ngOnInit() {
+    this.cities = [
+      { name: "New York", code: "NY" },
+      { name: "Rome", code: "RM" },
+      { name: "London", code: "LDN" },
+      { name: "Istanbul", code: "IST" },
+      { name: "Paris", code: "PRS" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-multiSelect 
+  code: Code = {
+    basic: `<p-multiSelect 
         [options]="cities" 
         [(ngModel)]="selectedCities" 
         [disabled]="true" 
         optionLabel="name" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-multiSelect 
         [options]="cities" 
         [(ngModel)]="selectedCities" 
@@ -49,7 +59,7 @@ export class DisabledDoc implements OnInit {
         optionLabel="name" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 
@@ -78,6 +88,6 @@ export class MultiSelectDisabledDemo implements OnInit {
             { name: 'Paris', code: 'PRS' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

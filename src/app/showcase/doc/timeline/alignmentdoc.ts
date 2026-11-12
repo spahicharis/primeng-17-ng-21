@@ -1,57 +1,82 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface EventItem {
-    status?: string;
-    date?: string;
-    icon?: string;
-    color?: string;
-    image?: string;
+  status?: string;
+  date?: string;
+  icon?: string;
+  color?: string;
+  image?: string;
 }
 
 @Component({
-    selector: 'alignment-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Content location relative the line is defined with the <i>align</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap gap-6">
-            <p-timeline [value]="events" class="w-full md:w-20rem">
-                <ng-template pTemplate="content" let-event>
-                    {{ event.status }}
-                </ng-template>
-            </p-timeline>
+  selector: "alignment-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Content location relative the line is defined with the
+        <i>align</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap gap-6">
+      <p-timeline [value]="events" class="w-full md:w-20rem">
+        <ng-template pTemplate="content" let-event>
+          {{ event.status }}
+        </ng-template>
+      </p-timeline>
 
-            <p-timeline [value]="events" class="w-full md:w-20rem" align="right">
-                <ng-template pTemplate="content" let-event>
-                    {{ event.status }}
-                </ng-template>
-            </p-timeline>
+      <p-timeline [value]="events" class="w-full md:w-20rem" align="right">
+        <ng-template pTemplate="content" let-event>
+          {{ event.status }}
+        </ng-template>
+      </p-timeline>
 
-            <p-timeline [value]="events" class="w-full md:w-20rem" align="alternate">
-                <ng-template pTemplate="content" let-event>
-                    {{ event.status }}
-                </ng-template>
-            </p-timeline>
-        </div>
-        <app-code [code]="code" selector="timeline-alignment-demo" />
-    `,
-    standalone: false
+      <p-timeline [value]="events" class="w-full md:w-20rem" align="alternate">
+        <ng-template pTemplate="content" let-event>
+          {{ event.status }}
+        </ng-template>
+      </p-timeline>
+    </div>
+    <app-code [code]="code" selector="timeline-alignment-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AlignmentDoc {
-    events: EventItem[];
+  events: EventItem[];
 
-    constructor() {
-        this.events = [
-            { status: 'Ordered', date: '15/10/2020 10:30', icon: 'pi pi-shopping-cart', color: '#9C27B0', image: 'game-controller.jpg' },
-            { status: 'Processing', date: '15/10/2020 14:00', icon: 'pi pi-cog', color: '#673AB7' },
-            { status: 'Shipped', date: '15/10/2020 16:15', icon: 'pi pi-shopping-cart', color: '#FF9800' },
-            { status: 'Delivered', date: '16/10/2020 10:00', icon: 'pi pi-check', color: '#607D8B' }
-        ];
-    }
+  constructor() {
+    this.events = [
+      {
+        status: "Ordered",
+        date: "15/10/2020 10:30",
+        icon: "pi pi-shopping-cart",
+        color: "#9C27B0",
+        image: "game-controller.jpg",
+      },
+      {
+        status: "Processing",
+        date: "15/10/2020 14:00",
+        icon: "pi pi-cog",
+        color: "#673AB7",
+      },
+      {
+        status: "Shipped",
+        date: "15/10/2020 16:15",
+        icon: "pi pi-shopping-cart",
+        color: "#FF9800",
+      },
+      {
+        status: "Delivered",
+        date: "16/10/2020 10:00",
+        icon: "pi pi-check",
+        color: "#607D8B",
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-timeline [value]="events" class="w-full md:w-20rem">
+  code: Code = {
+    basic: `<p-timeline [value]="events" class="w-full md:w-20rem">
     <ng-template pTemplate="content" let-event>
         {{ event.status }}
     </ng-template>
@@ -69,7 +94,7 @@ export class AlignmentDoc {
     </ng-template>
 </p-timeline>`,
 
-        html: `<div class="card flex flex-wrap gap-6">
+    html: `<div class="card flex flex-wrap gap-6">
     <p-timeline [value]="events" class="w-full md:w-20rem">
         <ng-template pTemplate="content" let-event>
             {{ event.status }}
@@ -87,7 +112,7 @@ export class AlignmentDoc {
     </p-timeline>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TimelineModule } from 'primeng/timeline';
 
 interface EventItem {
@@ -115,6 +140,6 @@ export class TimelineAlignmentDemo {
             { status: 'Delivered', date: '16/10/2020 10:00', icon: 'pi pi-check', color: '#607D8B' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

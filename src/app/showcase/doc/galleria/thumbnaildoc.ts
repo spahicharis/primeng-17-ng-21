@@ -1,81 +1,105 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { PhotoService } from '@service/photoservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { PhotoService } from "@service/photoservice";
 
 @Component({
-    selector: 'galleria-thumbnail-demo',
-    template: `
-        <app-docsectiontext>
-          <p>Galleria can be controlled programmatically using the <i>activeIndex</i> property.</p>
-        </app-docsectiontext>
-        <div class="card">
-          <div class="flex flex-wrap gap-3 mb-5">
-            @for (option of positionOptions; track option) {
-              <p-radioButton [name]="option.label" [value]="option.value" [label]="option.label" [(ngModel)]="position" [inputId]="label" />
-            }
+  selector: "galleria-thumbnail-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Galleria can be controlled programmatically using the
+        <i>activeIndex</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div class="flex flex-wrap gap-3 mb-5">
+        @for (option of positionOptions; track option) {
+          <p-radioButton
+            [name]="option.label"
+            [value]="option.value"
+            [label]="option.label"
+            [(ngModel)]="position"
+            [inputId]="label"
+          />
+        }
+      </div>
+      <p-galleria
+        [(value)]="images"
+        [thumbnailsPosition]="position"
+        [responsiveOptions]="responsiveOptions"
+        [containerStyle]="{ 'max-width': '640px' }"
+        [numVisible]="5"
+      >
+        <ng-template pTemplate="item" let-item>
+          <img
+            [src]="item.itemImageSrc"
+            style="width: 100%; min-height: 420px; display: block;"
+          />
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-item>
+          <div class="grid grid-nogutter justify-content-center">
+            <img [src]="item.thumbnailImageSrc" />
           </div>
-          <p-galleria [(value)]="images" [thumbnailsPosition]="position" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5">
-            <ng-template pTemplate="item" let-item>
-              <img [src]="item.itemImageSrc" style="width: 100%; min-height: 420px; display: block;" />
-            </ng-template>
-            <ng-template pTemplate="thumbnail" let-item>
-              <div class="grid grid-nogutter justify-content-center">
-                <img [src]="item.thumbnailImageSrc" />
-              </div>
-            </ng-template>
-          </p-galleria>
-        </div>
-        <app-code [code]="code" selector="galleria-thumbnail-demo" />
-        `,
-    standalone: false
+        </ng-template>
+      </p-galleria>
+    </div>
+    <app-code [code]="code" selector="galleria-thumbnail-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ThumbnailDoc implements OnInit {
-    private photoService = inject(PhotoService);
+  private photoService = inject(PhotoService);
 
-    images: any[] | undefined;
+  images: any[] | undefined;
 
-    position: string = 'bottom';
+  position: string = "bottom";
 
-    positionOptions = [
-        {
-            label: 'Bottom',
-            value: 'bottom'
-        },
-        {
-            label: 'Top',
-            value: 'top'
-        },
-        {
-            label: 'Left',
-            value: 'left'
-        },
-        {
-            label: 'Right',
-            value: 'right'
-        }
-    ];
+  positionOptions = [
+    {
+      label: "Bottom",
+      value: "bottom",
+    },
+    {
+      label: "Top",
+      value: "top",
+    },
+    {
+      label: "Left",
+      value: "left",
+    },
+    {
+      label: "Right",
+      value: "right",
+    },
+  ];
 
-    responsiveOptions: any[] = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
+  responsiveOptions: any[] = [
+    {
+      breakpoint: "1024px",
+      numVisible: 5,
+    },
+    {
+      breakpoint: "768px",
+      numVisible: 3,
+    },
+    {
+      breakpoint: "560px",
+      numVisible: 1,
+    },
+  ];
 
-    ngOnInit() {
-        this.photoService.getImages().then((images) => (this.images = images));
-    }
+  ngOnInit() {
+    this.photoService.getImages().then((images) => (this.images = images));
+  }
 
-    code: Code = {
-        basic: `<p-galleria 
+  code: Code = {
+    basic: `<p-galleria 
     [(value)]="images" 
     [thumbnailsPosition]="position" 
     [responsiveOptions]="responsiveOptions" 
@@ -92,7 +116,7 @@ export class ThumbnailDoc implements OnInit {
             </div>
         </ng-template>
 </p-galleria>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <div class="flex flex-wrap gap-3 mb-5">
         <p-radioButton 
             *ngFor="let option of positionOptions;" 
@@ -120,7 +144,7 @@ export class ThumbnailDoc implements OnInit {
             </ng-template>
     </p-galleria>
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '@service/photoservice';
 import { GalleriaModule } from 'primeng/galleria';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -178,7 +202,7 @@ export class GalleriaThumbnailDemo implements OnInit {
         this.photoService.getImages().then((images) => (this.images = images));
     }
 }`,
-        data: `
+    data: `
 /* PhotoService */
 {
     itemImageSrc: 'https://primeng.org/images/galleria/galleria1.jpg',
@@ -187,6 +211,6 @@ export class GalleriaThumbnailDemo implements OnInit {
     title: 'Title 1'
 },
 ...`,
-        service: ['PhotoService']
-    };
+    service: ["PhotoService"],
+  };
 }

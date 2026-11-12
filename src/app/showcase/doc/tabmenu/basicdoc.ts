@@ -1,40 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>TabMenu requires a collection of menuitems as its model.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-tabMenu [model]="items" />
-        </div>
-        <app-code [code]="code" selector="tab-menu-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>TabMenu requires a collection of menuitems as its model.</p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-tabMenu [model]="items" />
+    </div>
+    <app-code [code]="code" selector="tab-menu-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc implements OnInit {
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            { label: 'Dashboard', icon: 'pi pi-home' },
-            { label: 'Transactions', icon: 'pi pi-chart-line' },
-            { label: 'Products', icon: 'pi pi-list' },
-            { label: 'Messages', icon: 'pi pi-inbox' }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      { label: "Dashboard", icon: "pi pi-home" },
+      { label: "Transactions", icon: "pi pi-chart-line" },
+      { label: "Products", icon: "pi pi-list" },
+      { label: "Messages", icon: "pi pi-inbox" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-tabMenu [model]="items" />`,
+  code: Code = {
+    basic: `<p-tabMenu [model]="items" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-tabMenu [model]="items" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { TabMenuModule } from 'primeng/tabmenu';
 
@@ -55,6 +56,6 @@ export class TabMenuBasicDemo implements OnInit {
             { label: 'Messages', icon: 'pi pi-inbox' }
         ]
     }
-}`
-    };
+}`,
+  };
 }

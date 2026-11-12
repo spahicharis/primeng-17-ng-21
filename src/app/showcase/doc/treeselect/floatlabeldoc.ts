@@ -1,36 +1,46 @@
-import { Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'floatlabel-doc',
-    template: `
-        <app-docsectiontext>
-            <p>A floating label appears on top of the input field when focused. Visit <a routerLink="/floatlabel">FloatLabel</a> documentation for more information.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-floatLabel class="md:w-20rem w-full">
-                <p-treeSelect containerStyleClass="w-full" [(ngModel)]="selectedNodes" [options]="nodes" placeholder="Select Item" />
-                <label for="treeselect">Tree Select</label>
-            </p-floatLabel>
-        </div>
-        <app-code [code]="code" selector="tree-select-floatlabel-demo" />
-    `,
-    standalone: false
+  selector: "floatlabel-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A floating label appears on top of the input field when focused. Visit
+        <a routerLink="/floatlabel">FloatLabel</a> documentation for more
+        information.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-floatLabel class="md:w-20rem w-full">
+        <p-treeSelect
+          containerStyleClass="w-full"
+          [(ngModel)]="selectedNodes"
+          [options]="nodes"
+          placeholder="Select Item"
+        />
+        <label for="treeselect">Tree Select</label>
+      </p-floatLabel>
+    </div>
+    <app-code [code]="code" selector="tree-select-floatlabel-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FloatLabelDoc {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    nodes!: any[];
+  nodes!: any[];
 
-    selectedNodes: any;
+  selectedNodes: any;
 
-    constructor() {
-        this.nodeService.getFiles().then((files) => (this.nodes = files));
-    }
+  constructor() {
+    this.nodeService.getFiles().then((files) => (this.nodes = files));
+  }
 
-    code: Code = {
-        basic: `<p-floatLabel class="md:w-20rem w-full">
+  code: Code = {
+    basic: `<p-floatLabel class="md:w-20rem w-full">
     <p-treeSelect 
         containerStyleClass="w-full" 
         [(ngModel)]="selectedNodes" 
@@ -41,7 +51,7 @@ export class FloatLabelDoc {
     </label>
 </p-floatLabel>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-floatLabel class="md:w-20rem w-full">
         <p-treeSelect 
             containerStyleClass="w-full" 
@@ -54,7 +64,7 @@ export class FloatLabelDoc {
     </p-floatLabel>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { NodeService } from '@service/nodeservice';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -77,9 +87,9 @@ export class TreeSelectFloatlabelDemo {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -106,6 +116,6 @@ export class TreeSelectFloatlabelDemo {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

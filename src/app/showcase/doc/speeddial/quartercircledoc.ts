@@ -1,66 +1,114 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'quarter-circle-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>type</i> is defined as <i>quarter-circle</i>, items are displayed in a half-circle around the button.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <div style="height: 500px; position: relative;" class="speeddial-circle-demo">
-                <p-toast />
-                <p-speedDial [model]="items" radius="120" direction="up-left" type="quarter-circle" buttonClassName="p-button-success" />
-                <p-speedDial [model]="items" radius="120" direction="up-right" type="quarter-circle" buttonClassName="p-button-success" />
-                <p-speedDial [model]="items" radius="120" direction="down-left" type="quarter-circle" buttonClassName="p-button-success" />
-                <p-speedDial [model]="items" radius="120" direction="down-right" type="quarter-circle" buttonClassName="p-button-success" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="speed-dial-quarter-circle-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "quarter-circle-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>type</i> is defined as <i>quarter-circle</i>, items are
+        displayed in a half-circle around the button.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div
+        style="height: 500px; position: relative;"
+        class="speeddial-circle-demo"
+      >
+        <p-toast />
+        <p-speedDial
+          [model]="items"
+          radius="120"
+          direction="up-left"
+          type="quarter-circle"
+          buttonClassName="p-button-success"
+        />
+        <p-speedDial
+          [model]="items"
+          radius="120"
+          direction="up-right"
+          type="quarter-circle"
+          buttonClassName="p-button-success"
+        />
+        <p-speedDial
+          [model]="items"
+          radius="120"
+          direction="down-left"
+          type="quarter-circle"
+          buttonClassName="p-button-success"
+        />
+        <p-speedDial
+          [model]="items"
+          radius="120"
+          direction="down-right"
+          type="quarter-circle"
+          buttonClassName="p-button-success"
+        />
+      </div>
+    </div>
+    <app-code [code]="code" selector="speed-dial-quarter-circle-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class QuarterCircleDoc implements OnInit {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            {
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
-                }
-            },
-            {
-                icon: 'pi pi-refresh',
-                command: () => {
-                    this.messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
-                }
-            },
-            {
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
-                }
-            },
-            {
-                icon: 'pi pi-upload',
-                routerLink: ['/fileupload']
-            },
-            {
-                icon: 'pi pi-external-link',
-                target: '_blank',
-                url: 'http://angular.io'
-            }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      {
+        icon: "pi pi-pencil",
+        command: () => {
+          this.messageService.add({
+            severity: "info",
+            summary: "Add",
+            detail: "Data Added",
+          });
+        },
+      },
+      {
+        icon: "pi pi-refresh",
+        command: () => {
+          this.messageService.add({
+            severity: "success",
+            summary: "Update",
+            detail: "Data Updated",
+          });
+        },
+      },
+      {
+        icon: "pi pi-trash",
+        command: () => {
+          this.messageService.add({
+            severity: "error",
+            summary: "Delete",
+            detail: "Data Deleted",
+          });
+        },
+      },
+      {
+        icon: "pi pi-upload",
+        routerLink: ["/fileupload"],
+      },
+      {
+        icon: "pi pi-external-link",
+        target: "_blank",
+        url: "http://angular.io",
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-speedDial 
+  code: Code = {
+    basic: `<p-speedDial 
     [model]="items" 
     radius="120"
     direction="up-left" 
@@ -85,7 +133,7 @@ export class QuarterCircleDoc implements OnInit {
     type="quarter-circle" 
     buttonClassName="p-button-success" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <div style="height: 500px; position: relative;" class="speeddial-circle-demo">
         <p-toast />
         <p-speedDial 
@@ -115,7 +163,7 @@ export class QuarterCircleDoc implements OnInit {
     </div>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { ToastModule } from 'primeng/toast';
@@ -192,7 +240,7 @@ export class SpeedDialQuarterCircleDemo implements OnInit {
     }
 }`,
 
-        scss: `:host ::ng-deep {
+    scss: `:host ::ng-deep {
     .speeddial-circle-demo {
         .p-speeddial-quarter-circle {
             &.p-speeddial-direction-up-left {
@@ -216,6 +264,6 @@ export class SpeedDialQuarterCircleDemo implements OnInit {
             }
         }
     }
-}`
-    };
+}`,
+  };
 }

@@ -1,29 +1,38 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'filled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Specify the <i>variant</i> property as <i>filled</i> to display the component with a higher visual emphasis than the default <i>outlined</i> style.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-column gap-3 align-items-center">
-            <p-triStateCheckbox [(ngModel)]="value" variant="filled" inputId="tricheckbox" />
-        </div>
-        <app-code [code]="code" selector="tri-state-checkbox-filled-demo" />
-    `,
-    standalone: false
+  selector: "filled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Specify the <i>variant</i> property as <i>filled</i> to display the
+        component with a higher visual emphasis than the default
+        <i>outlined</i> style.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-column gap-3 align-items-center">
+      <p-triStateCheckbox
+        [(ngModel)]="value"
+        variant="filled"
+        inputId="tricheckbox"
+      />
+    </div>
+    <app-code [code]="code" selector="tri-state-checkbox-filled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilledDoc {
-    value: boolean | null = null;
+  value: boolean | null = null;
 
-    code: Code = {
-        basic: `<p-triStateCheckbox 
+  code: Code = {
+    basic: `<p-triStateCheckbox 
     [(ngModel)]="value" 
     variant="filled" 
     inputId="tricheckbox" />`,
 
-        html: `<div class="card flex flex-column gap-3 align-items-center">
+    html: `<div class="card flex flex-column gap-3 align-items-center">
     <p-triStateCheckbox 
         [(ngModel)]="value"
         variant="filled" 
@@ -33,7 +42,7 @@ export class FilledDoc {
     </label>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { FormsModule } from '@angular/forms';
 
@@ -45,6 +54,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class TriStateCheckboxFilledDemo {
     value: boolean | null = null;
-}`
-    };
+}`,
+  };
 }

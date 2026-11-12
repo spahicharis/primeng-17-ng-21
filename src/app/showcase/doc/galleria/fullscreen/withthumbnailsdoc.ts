@@ -1,62 +1,84 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { PhotoService } from '@service/photoservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { PhotoService } from "@service/photoservice";
 
 @Component({
-    selector: 'with-thumbnails-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Full screen mode is enabled by adding <i>fullScreen</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-button icon="pi pi-external-link" label="Show" (onClick)="displayBasic = true" />
-            <p-galleria [(value)]="images" [(visible)]="displayBasic" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '50%' }" [numVisible]="9" [circular]="true" [fullScreen]="true" [showItemNavigators]="true">
-                <ng-template pTemplate="item" let-item>
-                    <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
-                </ng-template>
-                <ng-template pTemplate="thumbnail" let-item>
-                    <div class="grid grid-nogutter justify-content-center">
-                        <img [src]="item.thumbnailImageSrc" style="display: block;" />
-                    </div>
-                </ng-template>
-            </p-galleria>
-        </div>
-        <app-code [code]="code" selector="galleria-full-screen-with-thumbnails-demo" />
-    `,
-    standalone: false
+  selector: "with-thumbnails-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Full screen mode is enabled by adding <i>fullScreen</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-button
+        icon="pi pi-external-link"
+        label="Show"
+        (onClick)="displayBasic = true"
+      />
+      <p-galleria
+        [(value)]="images"
+        [(visible)]="displayBasic"
+        [responsiveOptions]="responsiveOptions"
+        [containerStyle]="{ 'max-width': '50%' }"
+        [numVisible]="9"
+        [circular]="true"
+        [fullScreen]="true"
+        [showItemNavigators]="true"
+      >
+        <ng-template pTemplate="item" let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-item>
+          <div class="grid grid-nogutter justify-content-center">
+            <img [src]="item.thumbnailImageSrc" style="display: block;" />
+          </div>
+        </ng-template>
+      </p-galleria>
+    </div>
+    <app-code
+      [code]="code"
+      selector="galleria-full-screen-with-thumbnails-demo"
+    />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class WithThumbnailsDoc implements OnInit {
-    private photoService = inject(PhotoService);
+  private photoService = inject(PhotoService);
 
-    displayBasic: boolean | undefined;
+  displayBasic: boolean | undefined;
 
-    images: any[] | undefined;
+  images: any[] | undefined;
 
-    responsiveOptions: any[] = [
-        {
-            breakpoint: '1500px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '1024px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 2
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
+  responsiveOptions: any[] = [
+    {
+      breakpoint: "1500px",
+      numVisible: 5,
+    },
+    {
+      breakpoint: "1024px",
+      numVisible: 3,
+    },
+    {
+      breakpoint: "768px",
+      numVisible: 2,
+    },
+    {
+      breakpoint: "560px",
+      numVisible: 1,
+    },
+  ];
 
-    ngOnInit() {
-        this.photoService.getImages().then((images) => (this.images = images));
-    }
+  ngOnInit() {
+    this.photoService.getImages().then((images) => (this.images = images));
+  }
 
-    code: Code = {
-        basic: `<p-galleria 
+  code: Code = {
+    basic: `<p-galleria 
     [(value)]="images" 
     [(visible)]="displayBasic"
     [responsiveOptions]="responsiveOptions" 
@@ -78,7 +100,7 @@ export class WithThumbnailsDoc implements OnInit {
             </div>
         </ng-template>
 </p-galleria>`,
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-button 
         icon="pi pi-external-link" 
         label="Show" 
@@ -102,7 +124,7 @@ export class WithThumbnailsDoc implements OnInit {
             </ng-template>
     </p-galleria>
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '@service/photoservice';
 import { GalleriaModule } from 'primeng/galleria';
 import { ButtonModule } from 'primeng/button';
@@ -144,7 +166,7 @@ export class GalleriaFullScreenWithThumbnailsDemo implements OnInit {
         this.photoService.getImages().then((images) => (this.images = images));
     }
 }`,
-        data: `
+    data: `
 /* PhotoService */
 {
     itemImageSrc: 'https://primeng.org/images/galleria/galleria1.jpg',
@@ -153,6 +175,6 @@ export class GalleriaFullScreenWithThumbnailsDemo implements OnInit {
     title: 'Title 1'
 },
 ...`,
-        service: ['PhotoService']
-    };
+    service: ["PhotoService"],
+  };
 }

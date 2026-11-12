@@ -1,64 +1,121 @@
-import { Component, inject } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'confirm-dialog-position-demo',
-    template: `
-        <app-docsectiontext>
-            <p>The <i>position</i> property of the confirm options is used to display a Dialog at all edges and corners of the screen.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap flex-column align-items-center gap-2">
-            <p-toast />
-            <p-confirmDialog key="positionDialog" [position]="position" rejectButtonStyleClass="p-button-outlined" />
-            <div class="flex flex-wrap justify-content-center gap-2">
-                <p-button (onClick)="confirmPosition('left')" icon="pi pi-arrow-right" label="Left" severity="secondary" />
-                <p-button (onClick)="confirmPosition('right')" icon="pi pi-arrow-left" label="Right" severity="secondary" />
-            </div>
-            <div class="flex flex-wrap justify-content-center gap-2">
-                <p-button (onClick)="confirmPosition('top-left')" icon="pi pi-arrow-down" label="TopLeft" severity="secondary" />
-                <p-button (onClick)="confirmPosition('top')" icon="pi pi-arrow-down" label="Top" severity="secondary" />
-                <p-button (onClick)="confirmPosition('top-right')" icon="pi pi-arrow-down" label="TopRight" severity="secondary" />
-            </div>
-            <div class="flex flex-wrap justify-content-center gap-2">
-                <p-button (onClick)="confirmPosition('bottom-left')" icon="pi pi-arrow-up" label="BottomLeft" severity="secondary" />
-                <p-button (onClick)="confirmPosition('bottom')" icon="pi pi-arrow-up" label="Bottom" severity="secondary" />
-                <p-button (onClick)="confirmPosition('bottom-right')" icon="pi pi-arrow-up" label="BottomRight" severity="secondary" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="confirm-dialog-position-demo" />
-    `,
-    providers: [ConfirmationService, MessageService],
-    standalone: false
+  selector: "confirm-dialog-position-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        The <i>position</i> property of the confirm options is used to display a
+        Dialog at all edges and corners of the screen.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap flex-column align-items-center gap-2">
+      <p-toast />
+      <p-confirmDialog
+        key="positionDialog"
+        [position]="position"
+        rejectButtonStyleClass="p-button-outlined"
+      />
+      <div class="flex flex-wrap justify-content-center gap-2">
+        <p-button
+          (onClick)="confirmPosition('left')"
+          icon="pi pi-arrow-right"
+          label="Left"
+          severity="secondary"
+        />
+        <p-button
+          (onClick)="confirmPosition('right')"
+          icon="pi pi-arrow-left"
+          label="Right"
+          severity="secondary"
+        />
+      </div>
+      <div class="flex flex-wrap justify-content-center gap-2">
+        <p-button
+          (onClick)="confirmPosition('top-left')"
+          icon="pi pi-arrow-down"
+          label="TopLeft"
+          severity="secondary"
+        />
+        <p-button
+          (onClick)="confirmPosition('top')"
+          icon="pi pi-arrow-down"
+          label="Top"
+          severity="secondary"
+        />
+        <p-button
+          (onClick)="confirmPosition('top-right')"
+          icon="pi pi-arrow-down"
+          label="TopRight"
+          severity="secondary"
+        />
+      </div>
+      <div class="flex flex-wrap justify-content-center gap-2">
+        <p-button
+          (onClick)="confirmPosition('bottom-left')"
+          icon="pi pi-arrow-up"
+          label="BottomLeft"
+          severity="secondary"
+        />
+        <p-button
+          (onClick)="confirmPosition('bottom')"
+          icon="pi pi-arrow-up"
+          label="Bottom"
+          severity="secondary"
+        />
+        <p-button
+          (onClick)="confirmPosition('bottom-right')"
+          icon="pi pi-arrow-up"
+          label="BottomRight"
+          severity="secondary"
+        />
+      </div>
+    </div>
+    <app-code [code]="code" selector="confirm-dialog-position-demo" />
+  `,
+  providers: [ConfirmationService, MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class PositionDoc {
-    private confirmationService = inject(ConfirmationService);
-    private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
 
-    position: string = 'center';
+  position: string = "center";
 
-    confirmPosition(position: string) {
-        this.position = position;
+  confirmPosition(position: string) {
+    this.position = position;
 
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to proceed?',
-            header: 'Confirmation',
-            icon: 'pi pi-info-circle',
-            acceptIcon: 'none',
-            rejectIcon: 'none',
-            rejectButtonStyleClass: 'p-button-text',
-            accept: () => {
-                this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Request submitted' });
-            },
-            reject: () => {
-                this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Process incomplete', life: 3000 });
-            },
-            key: 'positionDialog'
+    this.confirmationService.confirm({
+      message: "Are you sure you want to proceed?",
+      header: "Confirmation",
+      icon: "pi pi-info-circle",
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.messageService.add({
+          severity: "info",
+          summary: "Confirmed",
+          detail: "Request submitted",
         });
-    }
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: "error",
+          summary: "Rejected",
+          detail: "Process incomplete",
+          life: 3000,
+        });
+      },
+      key: "positionDialog",
+    });
+  }
 
-    code: Code = {
-        basic: `<p-toast />
+  code: Code = {
+    basic: `<p-toast />
 <p-confirmDialog 
     key="positionDialog" 
     [position]="position" 
@@ -111,7 +168,7 @@ export class PositionDoc {
         severity="secondary" />
 </div>`,
 
-        html: `<div class="card flex flex-wrap flex-column align-items-center gap-2">
+    html: `<div class="card flex flex-wrap flex-column align-items-center gap-2">
     <p-toast />
     <p-confirmDialog 
         key="positionDialog" 
@@ -166,7 +223,7 @@ export class PositionDoc {
     </div>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
@@ -203,6 +260,6 @@ export class ConfirmDialogPositionDemo {
             key: 'positionDialog'
         });
     }
-}`
-    };
+}`,
+  };
 }

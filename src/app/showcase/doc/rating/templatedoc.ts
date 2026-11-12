@@ -1,34 +1,50 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'template-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Templating allows customizing the content where the icon instance is available as the implicit variable.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-rating [(ngModel)]="value" stars="5">
-                <ng-template pTemplate="cancelicon">
-                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/cancel.png" width="25px" height="25px" />
-                </ng-template>
-                <ng-template pTemplate="onicon">
-                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon-active.png" width="25px" height="25px" />
-                </ng-template>
-                <ng-template pTemplate="officon">
-                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon.png" width="25px" height="25px" />
-                </ng-template>
-            </p-rating>
-        </div>
-        <app-code [code]="code" selector="rating-template-demo" />
-    `,
-    standalone: false
+  selector: "template-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Templating allows customizing the content where the icon instance is
+        available as the implicit variable.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-rating [(ngModel)]="value" stars="5">
+        <ng-template pTemplate="cancelicon">
+          <img
+            src="https://primefaces.org/cdn/primeng/images/demo/rating/cancel.png"
+            width="25px"
+            height="25px"
+          />
+        </ng-template>
+        <ng-template pTemplate="onicon">
+          <img
+            src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon-active.png"
+            width="25px"
+            height="25px"
+          />
+        </ng-template>
+        <ng-template pTemplate="officon">
+          <img
+            src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon.png"
+            width="25px"
+            height="25px"
+          />
+        </ng-template>
+      </p-rating>
+    </div>
+    <app-code [code]="code" selector="rating-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc {
-    value!: number;
+  value!: number;
 
-    code: Code = {
-        basic: `<p-rating [(ngModel)]="value" stars="5">
+  code: Code = {
+    basic: `<p-rating [(ngModel)]="value" stars="5">
         <ng-template pTemplate="cancelicon">
             <img 
                 src="https://primefaces.org/cdn/primeng/images/demo/rating/cancel.png" 
@@ -49,7 +65,7 @@ export class TemplateDoc {
         </ng-template>
 </p-rating>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-rating [(ngModel)]="value" stars="5">
     <ng-template pTemplate="cancelicon">
         <img 
@@ -72,7 +88,7 @@ export class TemplateDoc {
     </p-rating>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 
@@ -84,6 +100,6 @@ import { RatingModule } from 'primeng/rating';
 })
 export class RatingTemplateDemo {
     value!: number;
-}`
-    };
+}`,
+  };
 }

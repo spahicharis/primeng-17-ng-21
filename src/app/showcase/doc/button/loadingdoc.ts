@@ -1,41 +1,52 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'button-loading-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Busy state is controlled with the <i>loading</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center gap-3">
-            <p-button label="Search" icon="pi pi-check" [loading]="loading" (onClick)="load()" />
-        </div>
-        <app-code [code]="code" selector="button-loading-demo" />
-    `,
-    standalone: false
+  selector: "button-loading-demo",
+  template: `
+    <app-docsectiontext>
+      <p>Busy state is controlled with the <i>loading</i> property.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center gap-3">
+      <p-button
+        label="Search"
+        icon="pi pi-check"
+        [loading]="loading"
+        (onClick)="load()"
+      />
+    </div>
+    <app-code [code]="code" selector="button-loading-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LoadingDoc {
-    private readonly cdr = inject(ChangeDetectorRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-    loading: boolean = false;
+  loading: boolean = false;
 
-    load() {
-        this.loading = true;
+  load() {
+    this.loading = true;
 
-        setTimeout(() => {
-            this.loading = false;
-            this.cdr.markForCheck();
-        }, 2000);
-    }
+    setTimeout(() => {
+      this.loading = false;
+      this.cdr.markForCheck();
+    }, 2000);
+  }
 
-    code: Code = {
-        basic: `<p-button 
+  code: Code = {
+    basic: `<p-button 
     label="Search" 
     icon="pi pi-check" 
     [loading]="loading" 
     (onClick)="load()" />`,
 
-        html: `<div class="card flex justify-content-center gap-3">
+    html: `<div class="card flex justify-content-center gap-3">
     <p-button 
         label="Search" 
         icon="pi pi-check" 
@@ -43,7 +54,7 @@ export class LoadingDoc {
         (onClick)="load()" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -62,6 +73,6 @@ export class ButtonLoadingDemo {
             this.loading = false
         }, 2000);
     }
-}`
-    };
+}`,
+  };
 }

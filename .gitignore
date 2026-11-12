@@ -52,3 +52,4 @@ api-generator/themedoc.json
 # primeng packages
 packages/primeng/src/package.json
 primeng-*.tgz
+/primeng-17.20.0-ng-21.tar.gz

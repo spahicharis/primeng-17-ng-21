@@ -1,26 +1,27 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>An infinite spin animation is displayed by default.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-progressSpinner ariaLabel="loading" />
-        </div>
-        <app-code [code]="code" selector="progress-spinner-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>An infinite spin animation is displayed by default.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-progressSpinner ariaLabel="loading" />
+    </div>
+    <app-code [code]="code" selector="progress-spinner-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    code: Code = {
-        basic: `<p-progressSpinner ariaLabel="loading" />`,
-        html: `<div class="card flex justify-content-center">
+  code: Code = {
+    basic: `<p-progressSpinner ariaLabel="loading" />`,
+    html: `<div class="card flex justify-content-center">
     <p-progressSpinner ariaLabel="loading" />
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
@@ -29,6 +30,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     standalone: true,
     imports: [ProgressSpinnerModule]
 })
-export class ProgressSpinnerBasicDemo {}`
-    };
+export class ProgressSpinnerBasicDemo {}`,
+  };
 }

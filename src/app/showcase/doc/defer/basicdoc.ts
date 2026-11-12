@@ -1,37 +1,50 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Defer is applied to a container element with pDefer directive where content needs to be placed inside an ng-template.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p style="margin-bottom: 70rem;">Content is not loaded yet, scroll down to initialize it.</p>
-            <p-toast />
-            <div pDefer (onLoad)="onLoad()">
-                <ng-template>
-                    <img class="w-full md:w-30rem md:block md:mx-auto" src="https://primefaces.org/cdn/primeng/images/demo/nature/nature1.jpg" alt="Prime" />
-                </ng-template>
-            </div>
-        </div>
-        <app-code [code]="code" selector="defer-basic-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Defer is applied to a container element with pDefer directive where
+        content needs to be placed inside an ng-template.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p style="margin-bottom: 70rem;">
+        Content is not loaded yet, scroll down to initialize it.
+      </p>
+      <p-toast />
+      <div pDefer (onLoad)="onLoad()">
+        <ng-template>
+          <img
+            class="w-full md:w-30rem md:block md:mx-auto"
+            src="https://primefaces.org/cdn/primeng/images/demo/nature/nature1.jpg"
+            alt="Prime"
+          />
+        </ng-template>
+      </div>
+    </div>
+    <app-code [code]="code" selector="defer-basic-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
+  onLoad() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Data Initialized",
+      detail: "Render Completed",
+    });
+  }
 
-    onLoad() {
-        this.messageService.add({ severity: 'success', summary: 'Data Initialized', detail: 'Render Completed' });
-    }
-
-    code: Code = {
-        basic: `<div pDefer (onLoad)="onLoad()">
+  code: Code = {
+    basic: `<div pDefer (onLoad)="onLoad()">
     <ng-template>
         <img 
             class="w-full md:w-30rem md:block md:mx-auto" 
@@ -39,7 +52,7 @@ export class BasicDoc {
             alt="Prime" />
     </ng-template>
 </div>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <p style="margin-bottom: 70rem;">
         Content is not loaded yet, scroll down to initialize it.
     </p>
@@ -53,7 +66,7 @@ export class BasicDoc {
         </ng-template>
     </div>
 </div>`,
-        typescript: `import { Component, Input } from '@angular/core';
+    typescript: `import { Component, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DeferModule } from 'primeng/defer';
 import { ToastModule } from 'primeng/toast';
@@ -71,6 +84,6 @@ export class DeferBasicDemo {
     onLoad() {
         this.messageService.add({ severity: 'success', summary: 'Data Initialized', detail: 'Render Completed' });
     }
-}`
-    };
+}`,
+  };
 }

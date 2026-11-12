@@ -1,30 +1,35 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'chips-filled-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Specify the <i>variant</i> property as <i>filled</i> to display the component with a higher visual emphasis than the default <i>outlined</i> style.</p>
-        </app-docsectiontext>
-        <div class="card p-fluid">
-            <p-chips [(ngModel)]="value" variant="filled" />
-        </div>
-        <app-code [code]="code" selector="chips-filled-demo" />
-    `,
-    standalone: false
+  selector: "chips-filled-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Specify the <i>variant</i> property as <i>filled</i> to display the
+        component with a higher visual emphasis than the default
+        <i>outlined</i> style.
+      </p>
+    </app-docsectiontext>
+    <div class="card p-fluid">
+      <p-chips [(ngModel)]="value" variant="filled" />
+    </div>
+    <app-code [code]="code" selector="chips-filled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilledDoc {
-    value: string[] | undefined;
+  value: string[] | undefined;
 
-    code: Code = {
-        basic: `<p-chips [(ngModel)]="value" variant="filled" />`,
+  code: Code = {
+    basic: `<p-chips [(ngModel)]="value" variant="filled" />`,
 
-        html: `<div class="card p-fluid">
+    html: `<div class="card p-fluid">
     <p-chips [(ngModel)]="value" variant="filled" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChipsModule } from 'primeng/chips';
 
@@ -36,6 +41,6 @@ import { ChipsModule } from 'primeng/chips';
 })
 export class ChipsFilledDemo {
     value: string[] | undefined;
-}`
-    };
+}`,
+  };
 }

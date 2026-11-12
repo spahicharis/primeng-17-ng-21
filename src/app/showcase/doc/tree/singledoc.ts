@@ -1,40 +1,55 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'single-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Single node selection is configured by setting <i>selectionMode</i> as <i>single</i> along with <i>selection</i> properties to manage the selection value binding.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-tree [value]="files" class="w-full md:w-30rem" selectionMode="single" [(selection)]="selectedFile" />
-        </div>
-        <app-code [code]="code" selector="tree-single-demo" />
-    `,
-    standalone: false
+  selector: "single-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Single node selection is configured by setting <i>selectionMode</i> as
+        <i>single</i> along with <i>selection</i> properties to manage the
+        selection value binding.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-tree
+        [value]="files"
+        class="w-full md:w-30rem"
+        selectionMode="single"
+        [(selection)]="selectedFile"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-single-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class SingleDoc implements OnInit {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    selectedFile!: TreeNode;
+  selectedFile!: TreeNode;
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((data) => (this.files = data));
-    }
+  ngOnInit() {
+    this.nodeService.getFiles().then((data) => (this.files = data));
+  }
 
-    code: Code = {
-        basic: `<p-tree 
+  code: Code = {
+    basic: `<p-tree 
     [value]="files" 
     class="w-full md:w-30rem" 
     selectionMode="single" 
     [(selection)]="selectedFile" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-tree 
         [value]="files" 
         class="w-full md:w-30rem" 
@@ -42,7 +57,7 @@ export class SingleDoc implements OnInit {
         [(selection)]="selectedFile" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -66,9 +81,9 @@ export class TreeSingleDemo implements OnInit {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -95,6 +110,6 @@ export class TreeSingleDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

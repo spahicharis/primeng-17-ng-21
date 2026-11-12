@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'options-doc',
-    template: `
-        <app-docsectiontext>
-            <p>The properties of scroller component can be used like an object in it.</p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    standalone: false
+  selector: "options-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        The properties of scroller component can be used like an object in it.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ScrollOptionsDoc {
-    code: Code = {
-        html: `
+  code: Code = {
+    html: `
 <ng-template pTemplate="item" let-item let-scrollOptions="options">
     // item: Current item.
     // scrollOptions.index: Index of the item.
@@ -34,6 +37,6 @@ export class ScrollOptionsDoc {
 </ng-template>
 <ng-template pTemplate="loadericon" let-scrollOptions="options">
     // scrollOptions.styleClass: Style class of the default icon.
-</ng-template>`
-    };
+</ng-template>`,
+  };
 }

@@ -1,43 +1,50 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'label-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                The position of the labels relative to the meters is defined using the <i>labelPosition</i> property. The default orientation of the labels is horizontal, and the vertical alternative is available through the
-                <i>labelOrientation</i> option.
-            </p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-meterGroup [value]="value" labelPosition="start" labelOrientation="vertical" />
-        </div>
-        <app-code [code]="code" selector="meter-group-label-demo" />
-    `,
-    standalone: false
+  selector: "label-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        The position of the labels relative to the meters is defined using the
+        <i>labelPosition</i> property. The default orientation of the labels is
+        horizontal, and the vertical alternative is available through the
+        <i>labelOrientation</i> option.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-meterGroup
+        [value]="value"
+        labelPosition="start"
+        labelOrientation="vertical"
+      />
+    </div>
+    <app-code [code]="code" selector="meter-group-label-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LabelDoc {
-    value = [
-        { label: 'Apps', color: '#34d399', value: 16 },
-        { label: 'Messages', color: '#fbbf24', value: 8 },
-        { label: 'Media', color: '#60a5fa', value: 24 },
-        { label: 'System', color: '#c084fc', value: 10 }
-    ];
-    code: Code = {
-        basic: `<p-meterGroup 
+  value = [
+    { label: "Apps", color: "#34d399", value: 16 },
+    { label: "Messages", color: "#fbbf24", value: 8 },
+    { label: "Media", color: "#60a5fa", value: 24 },
+    { label: "System", color: "#c084fc", value: 10 },
+  ];
+  code: Code = {
+    basic: `<p-meterGroup 
     [value]="value" 
     labelPosition="start" 
     labelOrientation="vertical" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-meterGroup 
         [value]="value" 
         labelPosition="start" 
         labelOrientation="vertical" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MeterGroupModule } from 'primeng/metergroup';
 
 @Component({
@@ -53,6 +60,6 @@ export class MeterGroupLabelDemo {
         { label: 'Media', color: '#60a5fa', value: 24 },
         { label: 'System', color: '#c084fc', value: 10 }
     ];
-}`
-    };
+}`,
+  };
 }

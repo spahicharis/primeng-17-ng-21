@@ -1,63 +1,98 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'interactive-doc',
-    template: `
-        <app-docsectiontext>
-            <p>In order to add interactivity to the component, disable <i>readonly</i> and use a binding to <i>activeIndex</i> along with <i>activeIndexChange</i> to control the Steps.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-toast />
-            <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex" (activeIndexChange)="onActiveIndexChange($event)" />
-        </div>
-        <app-code [code]="code" selector="steps-interactive-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "interactive-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        In order to add interactivity to the component, disable
+        <i>readonly</i> and use a binding to <i>activeIndex</i> along with
+        <i>activeIndexChange</i> to control the Steps.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-toast />
+      <p-steps
+        [model]="items"
+        [readonly]="false"
+        [activeIndex]="activeIndex"
+        (activeIndexChange)="onActiveIndexChange($event)"
+      />
+    </div>
+    <app-code [code]="code" selector="steps-interactive-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InteractiveDoc implements OnInit {
-    messageService = inject(MessageService);
+  messageService = inject(MessageService);
 
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    activeIndex: number = 0;
+  activeIndex: number = 0;
 
-    onActiveIndexChange(event: number) {
-        this.activeIndex = event;
-    }
+  onActiveIndexChange(event: number) {
+    this.activeIndex = event;
+  }
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'Personal',
-                command: (event: any) => this.messageService.add({ severity: 'info', summary: 'First Step', detail: event.item.label })
-            },
-            {
-                label: 'Seat',
-                command: (event: any) => this.messageService.add({ severity: 'info', summary: 'Second Step', detail: event.item.label })
-            },
-            {
-                label: 'Payment',
-                command: (event: any) => this.messageService.add({ severity: 'info', summary: 'Third Step', detail: event.item.label })
-            },
-            {
-                label: 'Confirmation',
-                command: (event: any) => this.messageService.add({ severity: 'info', summary: 'Last Step', detail: event.item.label })
-            }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      {
+        label: "Personal",
+        command: (event: any) =>
+          this.messageService.add({
+            severity: "info",
+            summary: "First Step",
+            detail: event.item.label,
+          }),
+      },
+      {
+        label: "Seat",
+        command: (event: any) =>
+          this.messageService.add({
+            severity: "info",
+            summary: "Second Step",
+            detail: event.item.label,
+          }),
+      },
+      {
+        label: "Payment",
+        command: (event: any) =>
+          this.messageService.add({
+            severity: "info",
+            summary: "Third Step",
+            detail: event.item.label,
+          }),
+      },
+      {
+        label: "Confirmation",
+        command: (event: any) =>
+          this.messageService.add({
+            severity: "info",
+            summary: "Last Step",
+            detail: event.item.label,
+          }),
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-toast />
+  code: Code = {
+    basic: `<p-toast />
 <p-steps 
     [model]="items" 
     [readonly]="false" 
     [activeIndex]="activeIndex" 
     (activeIndexChange)="onActiveIndexChange($event)" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-toast />
     <p-steps 
         [model]="items" 
@@ -66,7 +101,7 @@ export class InteractiveDoc implements OnInit {
         (activeIndexChange)="onActiveIndexChange($event)" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { StepsModule } from 'primeng/steps';
 import { ToastModule } from 'primeng/toast';
@@ -109,6 +144,6 @@ export class StepsInteractiveDemo implements OnInit {
             }
         ];
     }
-}`
-    };
+}`,
+  };
 }

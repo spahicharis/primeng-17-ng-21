@@ -1,55 +1,61 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface PageEvent {
-    first: number;
-    rows: number;
-    page: number;
-    pageCount: number;
+  first: number;
+  rows: number;
+  page: number;
+  pageCount: number;
 }
 
 @Component({
-    selector: 'current-page-report-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Current page report item in the template displays information about the pagination state. Default value is ({{ '{' }}currentPage{{ '}' }} of {{ '{' }}totalPages{{ '}' }}) whereas available placeholders are the following;</p>
-            <ul class="mb-4 line-height-4">
-                <li>{{ '{' }}currentPage{{ '}' }}</li>
-                <li>{{ '{' }}totalPages{{ '}' }}</li>
-                <li>{{ '{' }}rows{{ '}' }}</li>
-                <li>{{ '{' }}first{{ '}' }}</li>
-                <li>{{ '{' }}last{{ '}' }}</li>
-                <li>{{ '{' }}totalRecords{{ '}' }}</li>
-            </ul>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-paginator
-                (onPageChange)="onPageChange($event)"
-                [first]="first"
-                [rows]="rows"
-                [totalRecords]="120"
-                [showCurrentPageReport]="true"
-                [showPageLinks]="false"
-                [showJumpToPageDropdown]="false"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-            />
-        </div>
-        <app-code [code]="code" selector="paginator-current-page-report-demo" />
-    `,
-    standalone: false
+  selector: "current-page-report-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Current page report item in the template displays information about the
+        pagination state. Default value is ({{ "{" }}currentPage{{ "}" }} of
+        {{ "{" }}totalPages{{ "}" }}) whereas available placeholders are the
+        following;
+      </p>
+      <ul class="mb-4 line-height-4">
+        <li>{{ "{" }}currentPage{{ "}" }}</li>
+        <li>{{ "{" }}totalPages{{ "}" }}</li>
+        <li>{{ "{" }}rows{{ "}" }}</li>
+        <li>{{ "{" }}first{{ "}" }}</li>
+        <li>{{ "{" }}last{{ "}" }}</li>
+        <li>{{ "{" }}totalRecords{{ "}" }}</li>
+      </ul>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-paginator
+        (onPageChange)="onPageChange($event)"
+        [first]="first"
+        [rows]="rows"
+        [totalRecords]="120"
+        [showCurrentPageReport]="true"
+        [showPageLinks]="false"
+        [showJumpToPageDropdown]="false"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+      />
+    </div>
+    <app-code [code]="code" selector="paginator-current-page-report-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CurrentPageReportDoc {
-    first: number = 0;
+  first: number = 0;
 
-    rows: number = 10;
+  rows: number = 10;
 
-    onPageChange(event: PageEvent) {
-        this.first = event.first;
-        this.rows = event.rows;
-    }
+  onPageChange(event: PageEvent) {
+    this.first = event.first;
+    this.rows = event.rows;
+  }
 
-    code: Code = {
-        basic: `<p-paginator
+  code: Code = {
+    basic: `<p-paginator
     (onPageChange)="onPageChange($event)"
     [first]="first"
     [rows]="rows"
@@ -59,7 +65,7 @@ export class CurrentPageReportDoc {
     [showJumpToPageDropdown]="false"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-paginator
         (onPageChange)="onPageChange($event)"
         [first]="first"
@@ -71,7 +77,7 @@ export class CurrentPageReportDoc {
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { PaginatorModule } from 'primeng/paginator';
 
 interface PageEvent {
@@ -96,6 +102,6 @@ export class PaginatorCurrentPageReportDemo {
         this.first = event.first;
         this.rows = event.rows;
     }
-}`
-    };
+}`,
+  };
 }

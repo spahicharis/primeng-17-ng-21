@@ -1,34 +1,44 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'locale-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Labels are translated at component level by <i>promptLabel</i>, <i>weakLabel</i>, <i>mediumLabel</i> and <i>strongLabel</i> properties. In order to apply global translations for all Password components in the application, refer to the
-                <a href="/configuration/#locale">locale</a>
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-password [(ngModel)]="value" promptLabel="Choose a password" weakLabel="Too simple" mediumLabel="Average complexity" strongLabel="Complex password" />
-        </div>
-        <app-code [code]="code" selector="password-locale-demo" />
-    `,
-    standalone: false
+  selector: "locale-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Labels are translated at component level by <i>promptLabel</i>,
+        <i>weakLabel</i>, <i>mediumLabel</i> and <i>strongLabel</i> properties.
+        In order to apply global translations for all Password components in the
+        application, refer to the
+        <a href="/configuration/#locale">locale</a>
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-password
+        [(ngModel)]="value"
+        promptLabel="Choose a password"
+        weakLabel="Too simple"
+        mediumLabel="Average complexity"
+        strongLabel="Complex password"
+      />
+    </div>
+    <app-code [code]="code" selector="password-locale-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LocaleDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<p-password 
+  code: Code = {
+    basic: `<p-password 
     [(ngModel)]="value" 
     promptLabel="Choose a password"
     weakLabel="Too simple" 
     mediumLabel="Average complexity" 
     strongLabel="Complex password" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-password 
         [(ngModel)]="value"
         promptLabel="Choose a password" 
@@ -37,7 +47,7 @@ export class LocaleDoc {
         strongLabel="Complex password" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 
@@ -49,6 +59,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class PasswordLocaleDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

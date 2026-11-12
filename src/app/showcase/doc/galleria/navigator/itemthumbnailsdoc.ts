@@ -1,58 +1,77 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { PhotoService } from '@service/photoservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { PhotoService } from "@service/photoservice";
 
 @Component({
-    selector: 'itemthumbnails-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Add <i>showItemNavigators</i> to display navigator elements and the left and right side.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-galleria [(value)]="images" [showItemNavigators]="true" [responsiveOptions]="responsiveOptions" [circular]="true" [numVisible]="5" [containerStyle]="{ 'max-width': '640px' }">
-                <ng-template pTemplate="item" let-item>
-                    <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
-                </ng-template>
-                <ng-template pTemplate="thumbnail" let-item>
-                    <div class="grid grid-nogutter justify-content-center">
-                        <img [src]="item.thumbnailImageSrc" style="display: block;" />
-                    </div>
-                </ng-template>
-            </p-galleria>
-        </div>
-        <app-code [code]="code" selector="galleria-navigator-item-thumbnails-demo" />
-    `,
-    providers: [PhotoService],
-    standalone: false
+  selector: "itemthumbnails-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Add <i>showItemNavigators</i> to display navigator elements and the left
+        and right side.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-galleria
+        [(value)]="images"
+        [showItemNavigators]="true"
+        [responsiveOptions]="responsiveOptions"
+        [circular]="true"
+        [numVisible]="5"
+        [containerStyle]="{ 'max-width': '640px' }"
+      >
+        <ng-template pTemplate="item" let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-item>
+          <div class="grid grid-nogutter justify-content-center">
+            <img [src]="item.thumbnailImageSrc" style="display: block;" />
+          </div>
+        </ng-template>
+      </p-galleria>
+    </div>
+    <app-code
+      [code]="code"
+      selector="galleria-navigator-item-thumbnails-demo"
+    />
+  `,
+  providers: [PhotoService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ItemThumbnailsDoc implements OnInit {
-    private photoService = inject(PhotoService);
+  private photoService = inject(PhotoService);
 
-    images: any[] | undefined;
+  images: any[] | undefined;
 
-    responsiveOptions: any[] = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
+  responsiveOptions: any[] = [
+    {
+      breakpoint: "1024px",
+      numVisible: 5,
+    },
+    {
+      breakpoint: "768px",
+      numVisible: 3,
+    },
+    {
+      breakpoint: "560px",
+      numVisible: 1,
+    },
+  ];
 
-    ngOnInit() {
-        this.photoService.getImages().then((images) => {
-            this.images = images;
-        });
-    }
+  ngOnInit() {
+    this.photoService.getImages().then((images) => {
+      this.images = images;
+    });
+  }
 
-    code: Code = {
-        basic: `<p-galleria 
+  code: Code = {
+    basic: `<p-galleria 
     [(value)]="images" 
     [showItemNavigators]="true" 
     [responsiveOptions]="responsiveOptions" 
@@ -68,7 +87,7 @@ export class ItemThumbnailsDoc implements OnInit {
             </div>
         </ng-template>
 </p-galleria>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <p-galleria 
         [(value)]="images" 
         [showItemNavigators]="true" 
@@ -86,7 +105,7 @@ export class ItemThumbnailsDoc implements OnInit {
             </ng-template>
     </p-galleria>
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '@service/photoservice';
 import { GalleriaModule } from 'primeng/galleria';
 
@@ -123,7 +142,7 @@ export class GalleriaNavigatorItemThumbnailsDemo implements OnInit {
         });
     }
 }`,
-        data: `
+    data: `
 /* PhotoService */
 {
     itemImageSrc: 'https://primeng.org/images/galleria/galleria1.jpg',
@@ -131,6 +150,6 @@ export class GalleriaNavigatorItemThumbnailsDemo implements OnInit {
     alt: 'Description for Image 1',
     title: 'Title 1'
 },
-...`
-    };
+...`,
+  };
 }

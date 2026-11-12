@@ -1,34 +1,38 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-buttonbar-demo',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>showButtonBar</i> is present, today and clear buttons are displayed at the footer.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-calendar [(ngModel)]="date" [showButtonBar]="true" />
-        </div>
-        <app-code [code]="code" selector="calendar-buttonbar-demo" />
-    `,
-    standalone: false
+  selector: "calendar-buttonbar-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>showButtonBar</i> is present, today and clear buttons are
+        displayed at the footer.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-calendar [(ngModel)]="date" [showButtonBar]="true" />
+    </div>
+    <app-code [code]="code" selector="calendar-buttonbar-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ButtonBarDoc {
-    date: Date[] | undefined;
+  date: Date[] | undefined;
 
-    code: Code = {
-        basic: `<p-calendar 
+  code: Code = {
+    basic: `<p-calendar 
     [(ngModel)]="date" 
     [showButtonBar]="true"/>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-calendar 
         [(ngModel)]="date" 
         [showButtonBar]="true"/>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 
@@ -40,6 +44,6 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class CalendarButtonbarDemo {
     date: Date[] | undefined;
-}`
-    };
+}`,
+  };
 }

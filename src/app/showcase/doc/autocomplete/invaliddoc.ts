@@ -1,41 +1,52 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'invalid-doc',
-    template: ` <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions" class="ng-invalid ng-dirty" (completeMethod)="search($event)" />
-        </div>
-        <app-code [code]="code" selector="autocomplete-invalid-demo" />`,
-    standalone: false
+  selector: "invalid-doc",
+  template: ` <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-autoComplete
+        [(ngModel)]="selectedItem"
+        [suggestions]="suggestions"
+        class="ng-invalid ng-dirty"
+        (completeMethod)="search($event)"
+      />
+    </div>
+    <app-code [code]="code" selector="autocomplete-invalid-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    items: any[] | undefined;
+  items: any[] | undefined;
 
-    selectedItem: any;
+  selectedItem: any;
 
-    suggestions: any[] | undefined;
+  suggestions: any[] | undefined;
 
-    search(event: AutoCompleteCompleteEvent) {
-        this.suggestions = [...Array(10).keys()].map((item) => event.query + '-' + item);
-    }
+  search(event: AutoCompleteCompleteEvent) {
+    this.suggestions = [...Array(10).keys()].map(
+      (item) => event.query + "-" + item,
+    );
+  }
 
-    code: Code = {
-        basic: `<p-autoComplete
+  code: Code = {
+    basic: `<p-autoComplete
     class="ng-invalid ng-dirty" 
     [(ngModel)]="selectedItem" 
     [suggestions]="suggestions" 
     (completeMethod)="search($event)" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-autoComplete 
         class="ng-invalid ng-dirty" 
         [(ngModel)]="selectedItem" 
@@ -43,7 +54,7 @@ export class InvalidDoc {
         (completeMethod)="search($event)" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
@@ -68,6 +79,6 @@ export class AutocompleteInvalidDemo {
     search(event: AutoCompleteCompleteEvent) {
         this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
     }
-}`
-    };
+}`,
+  };
 }

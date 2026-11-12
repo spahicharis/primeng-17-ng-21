@@ -1,48 +1,59 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { Code } from "@domain/code";
 
 interface City {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 @Component({
-    selector: 'reactive-forms-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Listbox can also be used with reactive forms. In this case, the <i>formControlName</i> property is used to bind the component to a form control.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <form [formGroup]="formGroup">
-                <p-listbox [options]="cities" formControlName="selectedCity" optionLabel="name" [style]="{ width: '15rem' }" [listStyle]="{ 'max-height': '220px' }" />
-            </form>
-        </div>
-        <app-code [code]="code" selector="listbox-reactive-forms-demo" />
-    `,
-    standalone: false
+  selector: "reactive-forms-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Listbox can also be used with reactive forms. In this case, the
+        <i>formControlName</i> property is used to bind the component to a form
+        control.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <form [formGroup]="formGroup">
+        <p-listbox
+          [options]="cities"
+          formControlName="selectedCity"
+          optionLabel="name"
+          [style]="{ width: '15rem' }"
+          [listStyle]="{ 'max-height': '220px' }"
+        />
+      </form>
+    </div>
+    <app-code [code]="code" selector="listbox-reactive-forms-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ReactiveFormsDoc implements OnInit {
-    cities!: City[];
+  cities!: City[];
 
-    formGroup!: FormGroup;
+  formGroup!: FormGroup;
 
-    ngOnInit() {
-        this.cities = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ];
+  ngOnInit() {
+    this.cities = [
+      { name: "New York", code: "NY" },
+      { name: "Rome", code: "RM" },
+      { name: "London", code: "LDN" },
+      { name: "Istanbul", code: "IST" },
+      { name: "Paris", code: "PRS" },
+    ];
 
-        this.formGroup = new FormGroup({
-            selectedCity: new FormControl<City | null>(null)
-        });
-    }
+    this.formGroup = new FormGroup({
+      selectedCity: new FormControl<City | null>(null),
+    });
+  }
 
-    code: Code = {
-        basic: `<form [formGroup]="formGroup">
+  code: Code = {
+    basic: `<form [formGroup]="formGroup">
     <p-listbox 
         [options]="cities" 
         formControlName="selectedCity" 
@@ -51,7 +62,7 @@ export class ReactiveFormsDoc implements OnInit {
         [listStyle]="{'max-height': '220px'}" />
 </form>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <form [formGroup]="formGroup">
         <p-listbox 
             [options]="cities" 
@@ -62,7 +73,7 @@ export class ReactiveFormsDoc implements OnInit {
     </form>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ListboxModule } from 'primeng/listbox';
 
@@ -95,6 +106,6 @@ export class ListboxReactiveFormsDemo implements OnInit {
             selectedCity: new FormControl<City | null>(null)
         });
     } 
-}`
-    };
+}`,
+  };
 }

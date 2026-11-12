@@ -1,36 +1,46 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'optional-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When the input does not complete the mask definition, it is cleared by default. Use <i>autoClear</i> property to control this behavior. In addition, <i>?</i> is used to mark anything after the question mark optional.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-inputMask mask="(999) 999-9999? x99999" [(ngModel)]="value" placeholder="(999) 999-9999? x99999" />
-        </div>
-        <app-code [code]="code" selector="input-mask-optional-demo" />
-    `,
-    standalone: false
+  selector: "optional-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When the input does not complete the mask definition, it is cleared by
+        default. Use <i>autoClear</i> property to control this behavior. In
+        addition, <i>?</i> is used to mark anything after the question mark
+        optional.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-inputMask
+        mask="(999) 999-9999? x99999"
+        [(ngModel)]="value"
+        placeholder="(999) 999-9999? x99999"
+      />
+    </div>
+    <app-code [code]="code" selector="input-mask-optional-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class OptionalDoc {
-    value: string | undefined;
+  value: string | undefined;
 
-    code: Code = {
-        basic: `<p-inputMask 
+  code: Code = {
+    basic: `<p-inputMask 
     mask="(999) 999-9999? x99999" 
     [(ngModel)]="value" 
     placeholder="(999) 999-9999? x99999" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-inputMask 
         mask="(999) 999-9999? x99999" 
         [(ngModel)]="value" 
         placeholder="(999) 999-9999? x99999" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputMaskModule } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 
@@ -42,6 +52,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputMaskOptionalDemo {
     value: string | undefined;
-}`
-    };
+}`,
+  };
 }

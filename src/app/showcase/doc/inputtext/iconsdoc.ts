@@ -1,39 +1,44 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'icons-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Icons can be placed inside an input element by wrapping both the input and the icon with an element that has either <i>.p-input-icon-left</i> or <i>p-input-icon-right</i> class.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap justify-content-center gap-3">
-            <span class="p-input-icon-left">
-                <i class="pi pi-search"></i>
-                <input type="text" pInputText [(ngModel)]="value" />
-            </span>
+  selector: "icons-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Icons can be placed inside an input element by wrapping both the input
+        and the icon with an element that has either
+        <i>.p-input-icon-left</i> or <i>p-input-icon-right</i> class.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap justify-content-center gap-3">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText [(ngModel)]="value" />
+      </span>
 
-            <span class="p-input-icon-right">
-                <i class="pi pi-spin pi-spinner"></i>
-                <input type="text" pInputText [(ngModel)]="value2" />
-            </span>
-        </div>
-        <app-code [code]="code" selector="input-text-icons-demo" />
-    `,
-    standalone: false
+      <span class="p-input-icon-right">
+        <i class="pi pi-spin pi-spinner"></i>
+        <input type="text" pInputText [(ngModel)]="value2" />
+      </span>
+    </div>
+    <app-code [code]="code" selector="input-text-icons-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class IconsDoc {
-    value: string | undefined;
+  value: string | undefined;
 
-    value2: string | undefined;
+  value2: string | undefined;
 
-    code: Code = {
-        basic: `<span class="p-input-icon-left">
+  code: Code = {
+    basic: `<span class="p-input-icon-left">
     <i class="pi pi-search"></i>
     <input type="text" pInputText [(ngModel)]="value" />
 </span>`,
 
-        html: `
+    html: `
 <div class="card flex flex-wrap justify-content-center gap-3">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
@@ -46,7 +51,7 @@ export class IconsDoc {
     </span>
 </div>`,
 
-        typescript: `
+    typescript: `
 import { Component } from '@angular/core';
 
 @Component({
@@ -57,6 +62,6 @@ export class InputTextIconsDemo {
     value: string | undefined;
     
     value2: string | undefined;
-}`
-    };
+}`,
+  };
 }

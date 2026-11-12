@@ -1,49 +1,56 @@
-import { Component, inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Code } from '@domain/code';
-import { Product } from '@domain/product';
-import { ProductListDemo } from './productlistdemo';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { Code } from "@domain/code";
+import { Product } from "@domain/product";
+import { ProductListDemo } from "./productlistdemo";
 
 @Component({
-    selector: 'close-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Most of the time, requirement is returning a value from the dialog. DialogRef's close method is used for this purpose where the parameter passed will be available at the <i>onClose</i> event at the caller. Here is an example on how to
-                close the dialog from the ProductListDemo by passing a selected product.
-            </p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    providers: [DialogService, MessageService],
-    standalone: false
+  selector: "close-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Most of the time, requirement is returning a value from the dialog.
+        DialogRef's close method is used for this purpose where the parameter
+        passed will be available at the <i>onClose</i> event at the caller. Here
+        is an example on how to close the dialog from the ProductListDemo by
+        passing a selected product.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  providers: [DialogService, MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CloseDoc {
-    dialogService = inject(DialogService);
-    messageService = inject(MessageService);
+  dialogService = inject(DialogService);
+  messageService = inject(MessageService);
 
+  ref: DynamicDialogRef | undefined;
 
-    ref: DynamicDialogRef | undefined;
+  show() {
+    this.ref = this.dialogService.open(ProductListDemo, {
+      header: "Select a Product",
+      width: "70%",
+      contentStyle: { overflow: "auto" },
+      baseZIndex: 10000,
+      maximizable: true,
+    });
 
-    show() {
-        this.ref = this.dialogService.open(ProductListDemo, {
-            header: 'Select a Product',
-            width: '70%',
-            contentStyle: { overflow: 'auto' },
-            baseZIndex: 10000,
-            maximizable: true
+    this.ref.onClose.subscribe((product: Product) => {
+      if (product) {
+        this.messageService.add({
+          severity: "info",
+          summary: "Product Selected",
+          detail: product.name,
         });
+      }
+    });
+  }
 
-        this.ref.onClose.subscribe((product: Product) => {
-            if (product) {
-                this.messageService.add({ severity: 'info', summary: 'Product Selected', detail: product.name });
-            }
-        });
-    }
-
-    code: Code = {
-        typescript: `
+  code: Code = {
+    typescript: `
 import { Component, Input } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -75,6 +82,6 @@ export class DynamicDialogDemo {
             }
         });
     }
-}`
-    };
+}`,
+  };
 }

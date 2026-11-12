@@ -1,28 +1,29 @@
-import { Component } from '@angular/core';
-import { OverviewDoc } from '@doc/colors/overviewdoc';
-import { PaletteDoc } from '@doc/colors/palettedoc';
-import { SurfacesDoc } from '@doc/colors/surfacesdoc';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { OverviewDoc } from "@doc/colors/overviewdoc";
+import { PaletteDoc } from "@doc/colors/palettedoc";
+import { SurfacesDoc } from "@doc/colors/surfacesdoc";
 
 @Component({
-    templateUrl: './colors.component.html',
-    standalone: false
+  templateUrl: "./colors.component.html",
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ColorsDemoComponent {
-    docs = [
-        {
-            id: 'overview',
-            label: 'Overview',
-            component: OverviewDoc
-        },
-        {
-            id: 'surfaces',
-            label: 'Surfaces',
-            component: SurfacesDoc
-        },
-        {
-            id: 'palette',
-            label: 'Palette',
-            component: PaletteDoc
-        }
-    ];
+  docs = [
+    {
+      id: "overview",
+      label: "Overview",
+      component: OverviewDoc,
+    },
+    {
+      id: "surfaces",
+      label: "Surfaces",
+      component: SurfacesDoc,
+    },
+    {
+      id: "palette",
+      label: "Palette",
+      component: PaletteDoc,
+    },
+  ];
 }

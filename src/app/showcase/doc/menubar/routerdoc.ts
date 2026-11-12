@@ -1,90 +1,99 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
+import { Router } from "@angular/router";
 
 @Component({
-    selector: 'router-doc',
-    template: `
-        <app-docsectiontext>
-          <p>Items with navigation are defined with templating to be able to use a routerLink directive, an external link or programmatic navigation.</p>
-        </app-docsectiontext>
-        <div class="card">
-          <p-menubar [model]="items">
-            <ng-template pTemplate="item" let-item>
-              @if (item.route) {
-                <a [routerLink]="item.route" class="p-menuitem-link">
-                  <span [class]="item.icon"></span>
-                  <span class="ml-2">{{ item.label }}</span>
-                </a>
-              } @else {
-                @if (item.url) {
-                  <a [href]="item.url" class="p-menuitem-link">
-                    <span [class]="item.icon"></span>
-                    <span class="ml-2">{{ item.label }}</span>
-                  </a>
-                } @else {
-                  <div class="p-menuitem-link">
-                    <span [class]="item.icon"></span>
-                    <span class="ml-2">{{ item.label }}</span>
-                    <span class="pi pi-fw pi-angle-down ml-2"></span>
-                  </div>
-                }
-              }
-            </ng-template>
-          </p-menubar>
-        </div>
-        <app-code [code]="code" selector="menubar-router-demo" />
-        `,
-    standalone: false
+  selector: "router-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Items with navigation are defined with templating to be able to use a
+        routerLink directive, an external link or programmatic navigation.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-menubar [model]="items">
+        <ng-template pTemplate="item" let-item>
+          @if (item.route) {
+            <a [routerLink]="item.route" class="p-menuitem-link">
+              <span [class]="item.icon"></span>
+              <span class="ml-2">{{ item.label }}</span>
+            </a>
+          } @else {
+            @if (item.url) {
+              <a [href]="item.url" class="p-menuitem-link">
+                <span [class]="item.icon"></span>
+                <span class="ml-2">{{ item.label }}</span>
+              </a>
+            } @else {
+              <div class="p-menuitem-link">
+                <span [class]="item.icon"></span>
+                <span class="ml-2">{{ item.label }}</span>
+                <span class="pi pi-fw pi-angle-down ml-2"></span>
+              </div>
+            }
+          }
+        </ng-template>
+      </p-menubar>
+    </div>
+    <app-code [code]="code" selector="menubar-router-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RouterDoc implements OnInit {
-    private router = inject(Router);
+  private router = inject(Router);
 
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'Router',
-                icon: 'pi pi-palette',
-                items: [
-                    {
-                        label: 'Installation',
-                        route: '/installation'
-                    },
-                    {
-                        label: 'Configuration',
-                        route: '/configuration'
-                    }
-                ]
-            },
-            {
-                label: 'Programmatic',
-                icon: 'pi pi-link',
-                command: () => {
-                    this.router.navigate(['/installation']);
-                }
-            },
-            {
-                label: 'External',
-                icon: 'pi pi-home',
-                items: [
-                    {
-                        label: 'Angular',
-                        url: 'https://angular.io/'
-                    },
-                    {
-                        label: 'Vite.js',
-                        url: 'https://vitejs.dev/'
-                    }
-                ]
-            }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      {
+        label: "Router",
+        icon: "pi pi-palette",
+        items: [
+          {
+            label: "Installation",
+            route: "/installation",
+          },
+          {
+            label: "Configuration",
+            route: "/configuration",
+          },
+        ],
+      },
+      {
+        label: "Programmatic",
+        icon: "pi pi-link",
+        command: () => {
+          this.router.navigate(["/installation"]);
+        },
+      },
+      {
+        label: "External",
+        icon: "pi pi-home",
+        items: [
+          {
+            label: "Angular",
+            url: "https://angular.io/",
+          },
+          {
+            label: "Vite.js",
+            url: "https://vitejs.dev/",
+          },
+        ],
+      },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-menubar [model]="items">
+  code: Code = {
+    basic: `<p-menubar [model]="items">
     <ng-template pTemplate="item" let-item>
         <ng-container *ngIf="item.route; else urlRef">
             <a [routerLink]="item.route" class="p-menuitem-link">
@@ -108,7 +117,7 @@ export class RouterDoc implements OnInit {
     </ng-template>
 </p-menubar>`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <p-menubar [model]="items">
         <ng-template pTemplate="item" let-item>
             <ng-container *ngIf="item.route; else urlRef">
@@ -134,7 +143,7 @@ export class RouterDoc implements OnInit {
     </p-menubar>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { CommonModule } from '@angular/common';
@@ -190,6 +199,6 @@ export class MenubarRouterDemo implements OnInit {
             }
         ];
     }
-}`
-    };
+}`,
+  };
 }

@@ -1,29 +1,30 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'button-rounded-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Rounded buttons have a circular border radius.</p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap gap-3 justify-content-center">
-            <p-button label="Primary" [rounded]="true" />
-            <p-button label="Secondary" [rounded]="true" severity="secondary" />
-            <p-button label="Success" [rounded]="true" severity="success" />
-            <p-button label="Info" [rounded]="true" severity="info" />
-            <p-button label="Warning" [rounded]="true" severity="warning" />
-            <p-button label="Help" [rounded]="true" severity="help" />
-            <p-button label="Danger" [rounded]="true" severity="danger" />
-            <p-button label="Contrast" [rounded]="true" severity="contrast" />
-        </div>
-        <app-code [code]="code" selector="button-rounded-demo" />
-    `,
-    standalone: false
+  selector: "button-rounded-demo",
+  template: `
+    <app-docsectiontext>
+      <p>Rounded buttons have a circular border radius.</p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap gap-3 justify-content-center">
+      <p-button label="Primary" [rounded]="true" />
+      <p-button label="Secondary" [rounded]="true" severity="secondary" />
+      <p-button label="Success" [rounded]="true" severity="success" />
+      <p-button label="Info" [rounded]="true" severity="info" />
+      <p-button label="Warning" [rounded]="true" severity="warning" />
+      <p-button label="Help" [rounded]="true" severity="help" />
+      <p-button label="Danger" [rounded]="true" severity="danger" />
+      <p-button label="Contrast" [rounded]="true" severity="contrast" />
+    </div>
+    <app-code [code]="code" selector="button-rounded-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class RoundedDoc {
-    code: Code = {
-        basic: `<p-button label="Primary" [rounded]="true" />
+  code: Code = {
+    basic: `<p-button label="Primary" [rounded]="true" />
 <p-button label="Secondary" [rounded]="true" severity="secondary" />
 <p-button label="Success" [rounded]="true" severity="success" />
 <p-button label="Info" [rounded]="true" severity="info" />
@@ -32,7 +33,7 @@ export class RoundedDoc {
 <p-button label="Danger" [rounded]="true" severity="danger" />
 <p-button label="Contrast" [rounded]="true" severity="contrast" />`,
 
-        html: `<div class="card flex flex-wrap gap-3 justify-content-center">
+    html: `<div class="card flex flex-wrap gap-3 justify-content-center">
     <p-button label="Primary" [rounded]="true" />
     <p-button label="Secondary" [rounded]="true" severity="secondary" />
     <p-button label="Success" [rounded]="true" severity="success" />
@@ -43,7 +44,7 @@ export class RoundedDoc {
     <p-button label="Contrast" [rounded]="true" severity="contrast" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -52,6 +53,6 @@ import { ButtonModule } from 'primeng/button';
     standalone: true,
     imports: [ButtonModule]
 })
-export class ButtonRoundedDemo { }`
-    };
+export class ButtonRoundedDemo { }`,
+  };
 }

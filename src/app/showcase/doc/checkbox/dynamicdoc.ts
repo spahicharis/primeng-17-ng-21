@@ -1,37 +1,43 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'checkbox-dynamic-demo',
-    template: `
-        <app-docsectiontext>
-          <p>Checkboxes can be generated using a list of values.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-          <div class="flex flex-column gap-2">
-            @for (category of categories; track category) {
-              <div class="field-checkbox">
-                <p-checkbox [label]="category.name" name="group" [value]="category" [(ngModel)]="selectedCategories" />
-              </div>
-            }
+  selector: "checkbox-dynamic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>Checkboxes can be generated using a list of values.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <div class="flex flex-column gap-2">
+        @for (category of categories; track category) {
+          <div class="field-checkbox">
+            <p-checkbox
+              [label]="category.name"
+              name="group"
+              [value]="category"
+              [(ngModel)]="selectedCategories"
+            />
           </div>
-        </div>
-        <app-code [code]="code" selector="checkbox-dynamic-demo" />
-        `,
-    standalone: false
+        }
+      </div>
+    </div>
+    <app-code [code]="code" selector="checkbox-dynamic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DynamicDoc {
-    selectedCategories: any[] = [];
+  selectedCategories: any[] = [];
 
-    categories: any[] = [
-        { name: 'Accounting', key: 'A' },
-        { name: 'Marketing', key: 'M' },
-        { name: 'Production', key: 'P' },
-        { name: 'Research', key: 'R' }
-    ];
+  categories: any[] = [
+    { name: "Accounting", key: "A" },
+    { name: "Marketing", key: "M" },
+    { name: "Production", key: "P" },
+    { name: "Research", key: "R" },
+  ];
 
-    code: Code = {
-        basic: `<div *ngFor="let category of categories" class="field-checkbox">
+  code: Code = {
+    basic: `<div *ngFor="let category of categories" class="field-checkbox">
     <p-checkbox 
         [(ngModel)]="selectedCategories"
         [label]="category.name" 
@@ -39,7 +45,7 @@ export class DynamicDoc {
         [value]="category" />
 </div>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <div class="flex flex-column gap-2">
         <div *ngFor="let category of categories" class="field-checkbox">
             <p-checkbox 
@@ -51,7 +57,7 @@ export class DynamicDoc {
     </div>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 
@@ -70,6 +76,6 @@ export class CheckboxDynamicDemo {
         { name: 'Production', key: 'P' },
         { name: 'Research', key: 'R' }
     ];
-}`
-    };
+}`,
+  };
 }

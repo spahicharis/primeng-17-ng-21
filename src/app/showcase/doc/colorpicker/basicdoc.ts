@@ -1,30 +1,33 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'color-picker-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>ColorPicker is used as a controlled input with <i>ngModel</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-colorPicker [(ngModel)]="color" />
-        </div>
-        <app-code [code]="code" selector="color-picker-basic-demo" />
-    `,
-    standalone: false
+  selector: "color-picker-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        ColorPicker is used as a controlled input with <i>ngModel</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-colorPicker [(ngModel)]="color" />
+    </div>
+    <app-code [code]="code" selector="color-picker-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    color: string | undefined;
+  color: string | undefined;
 
-    code: Code = {
-        basic: `<p-colorPicker [(ngModel)]="color" />`,
+  code: Code = {
+    basic: `<p-colorPicker [(ngModel)]="color" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-colorPicker [(ngModel)]="color" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'primeng/colorpicker';
 
@@ -36,6 +39,6 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 })
 export class ColorPickerBasicDemo {
     color: string | undefined;
-}`
-    };
+}`,
+  };
 }

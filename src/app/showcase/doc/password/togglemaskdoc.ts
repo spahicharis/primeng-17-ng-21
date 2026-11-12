@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'togglemask-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>toggleMask</i> is present, an icon is displayed to show the value as plain text.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-password [(ngModel)]="value" [toggleMask]="true" />
-        </div>
-        <app-code [code]="code" selector="password-toggle-mask-demo" />
-    `,
-    standalone: false
+  selector: "togglemask-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>toggleMask</i> is present, an icon is displayed to show the
+        value as plain text.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-password [(ngModel)]="value" [toggleMask]="true" />
+    </div>
+    <app-code [code]="code" selector="password-toggle-mask-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ToggleMaskDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<p-password [(ngModel)]="value" [toggleMask]="true" />`,
+  code: Code = {
+    basic: `<p-password [(ngModel)]="value" [toggleMask]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-password [(ngModel)]="value" [toggleMask]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +40,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class PasswordToggleMaskDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

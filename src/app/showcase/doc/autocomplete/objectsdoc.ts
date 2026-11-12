@@ -1,63 +1,79 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { CountryService } from '@service/countryservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { CountryService } from "@service/countryservice";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'autocomplete-objects-demo',
-    template: ` <app-docsectiontext>
-            <p>
-                AutoComplete can also work with objects using the <i>optionLabel</i> property that defines the label to display as a suggestion. The value passed to the model would still be the object instance of a suggestion. Here is an example with
-                a Country object that has name and code fields such as <i>&#123;name: "United States", code:"USA"&#125;</i>.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-autoComplete [(ngModel)]="selectedCountry" placeholder="Search" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" optionLabel="name" />
-        </div>
-        <app-code [code]="code" selector="autocomplete-objects-demo" />`,
-    standalone: false
+  selector: "autocomplete-objects-demo",
+  template: ` <app-docsectiontext>
+      <p>
+        AutoComplete can also work with objects using the
+        <i>optionLabel</i> property that defines the label to display as a
+        suggestion. The value passed to the model would still be the object
+        instance of a suggestion. Here is an example with a Country object that
+        has name and code fields such as
+        <i>&#123;name: "United States", code:"USA"&#125;</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-autoComplete
+        [(ngModel)]="selectedCountry"
+        placeholder="Search"
+        [suggestions]="filteredCountries"
+        (completeMethod)="filterCountry($event)"
+        optionLabel="name"
+      />
+    </div>
+    <app-code [code]="code" selector="autocomplete-objects-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ObjectsDoc implements OnInit {
-    private countryService = inject(CountryService);
+  private countryService = inject(CountryService);
 
-    countries: any[] | undefined;
+  countries: any[] | undefined;
 
-    selectedCountry: any;
+  selectedCountry: any;
 
-    filteredCountries: any[] | undefined;
+  filteredCountries: any[] | undefined;
 
-    ngOnInit() {
-        this.countryService.getCountries().then((countries) => {
-            this.countries = countries;
-        });
+  ngOnInit() {
+    this.countryService.getCountries().then((countries) => {
+      this.countries = countries;
+    });
+  }
+
+  filterCountry(event: AutoCompleteCompleteEvent) {
+    let filtered: any[] = [];
+    let query = event.query;
+
+    for (let i = 0; i < (this.countries as any[]).length; i++) {
+      let country = (this.countries as any[])[i];
+      if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(country);
+      }
     }
 
-    filterCountry(event: AutoCompleteCompleteEvent) {
-        let filtered: any[] = [];
-        let query = event.query;
+    this.filteredCountries = filtered;
+  }
 
-        for (let i = 0; i < (this.countries as any[]).length; i++) {
-            let country = (this.countries as any[])[i];
-            if (country.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push(country);
-            }
-        }
-
-        this.filteredCountries = filtered;
-    }
-
-    code: Code = {
-        basic: `<p-autoComplete
+  code: Code = {
+    basic: `<p-autoComplete
     [(ngModel)]="selectedCountry"
     [suggestions]="filteredCountries"
     (completeMethod)="filterCountry($event)"
     optionLabel="name" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-autoComplete
         [(ngModel)]="selectedCountry"
         [suggestions]="filteredCountries"
@@ -65,7 +81,7 @@ export class ObjectsDoc implements OnInit {
         optionLabel="name" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { CountryService } from '@service/countryservice';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule } from '@angular/forms';
@@ -112,14 +128,14 @@ export class AutocompleteObjectsDemo implements OnInit {
         this.filteredCountries = filtered;
     }
 }`,
-        service: ['CountryService'],
+    service: ["CountryService"],
 
-        data: `
+    data: `
 //CountryService
 {
     "name": "Afghanistan",
     "code": "AF"
 }
-...`
-    };
+...`,
+  };
 }

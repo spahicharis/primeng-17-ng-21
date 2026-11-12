@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'download-doc',
-    template: `
-        <app-docsectiontext>
-            <p>PrimeNG is available for download at <a href="https://www.npmjs.com/package/primeng">npm</a>.</p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />
-    `,
-    standalone: false
+  selector: "download-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        PrimeNG is available for download at
+        <a href="https://www.npmjs.com/package/primeng">npm</a>.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DownloadDoc {
-    code: Code = {
-        command: `npm install primeng`
-    };
+  code: Code = {
+    command: `npm install primeng`,
+  };
 }

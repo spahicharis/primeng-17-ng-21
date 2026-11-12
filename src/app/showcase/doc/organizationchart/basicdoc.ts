@@ -1,62 +1,66 @@
-import { Component } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>OrganizationChart requires a collection of <i>TreeNode</i> instances as a <i>value</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center overflow-x-auto">
-            <p-organizationChart [value]="data" />
-        </div>
-        <app-code [code]="code" selector="organization-chart-basic-doc" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        OrganizationChart requires a collection of <i>TreeNode</i> instances as
+        a <i>value</i>.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center overflow-x-auto">
+      <p-organizationChart [value]="data" />
+    </div>
+    <app-code [code]="code" selector="organization-chart-basic-doc" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    data: TreeNode[] = [
+  data: TreeNode[] = [
+    {
+      label: "Argentina",
+      expanded: true,
+      children: [
         {
-            label: 'Argentina',
-            expanded: true,
-            children: [
-                {
-                    label: 'Argentina',
-                    expanded: true,
-                    children: [
-                        {
-                            label: 'Argentina'
-                        },
-                        {
-                            label: 'France'
-                        }
-                    ]
-                },
-                {
-                    label: 'France',
-                    expanded: true,
-                    children: [
-                        {
-                            label: 'France'
-                        },
-                        {
-                            label: 'Morocco'
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
+          label: "Argentina",
+          expanded: true,
+          children: [
+            {
+              label: "Argentina",
+            },
+            {
+              label: "France",
+            },
+          ],
+        },
+        {
+          label: "France",
+          expanded: true,
+          children: [
+            {
+              label: "France",
+            },
+            {
+              label: "Morocco",
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
-    code: Code = {
-        basic: `<p-organizationChart [value]="data" />`,
+  code: Code = {
+    basic: `<p-organizationChart [value]="data" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-organizationChart [value]="data" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 
@@ -99,6 +103,6 @@ export class OrganizationChartBasicDoc {
             ]
         }
     ];
-}`
-    };
+}`,
+  };
 }

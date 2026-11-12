@@ -1,44 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface City {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 @Component({
-    selector: 'floatlabel-doc',
-    template: `
-        <app-docsectiontext>
-            <p>A floating label appears on top of the input field when focused. Visit <a routerLink="/floatlabel">FloatLabel</a> documentation for more information.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-floatLabel>
-                <p-multiSelect inputId="float-label" [options]="cities" [(ngModel)]="selectedCities" optionLabel="name" />
-                <label for="float-label">MultiSelect</label>
-            </p-floatLabel>
-        </div>
-        <app-code [code]="code" selector="multi-select-floatlabel-demo" />
-    `,
-    standalone: false
+  selector: "floatlabel-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        A floating label appears on top of the input field when focused. Visit
+        <a routerLink="/floatlabel">FloatLabel</a> documentation for more
+        information.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-floatLabel>
+        <p-multiSelect
+          inputId="float-label"
+          [options]="cities"
+          [(ngModel)]="selectedCities"
+          optionLabel="name"
+        />
+        <label for="float-label">MultiSelect</label>
+      </p-floatLabel>
+    </div>
+    <app-code [code]="code" selector="multi-select-floatlabel-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FloatLabelDoc implements OnInit {
-    cities!: City[];
+  cities!: City[];
 
-    selectedCities!: City[];
+  selectedCities!: City[];
 
-    ngOnInit() {
-        this.cities = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ];
-    }
+  ngOnInit() {
+    this.cities = [
+      { name: "New York", code: "NY" },
+      { name: "Rome", code: "RM" },
+      { name: "London", code: "LDN" },
+      { name: "Istanbul", code: "IST" },
+      { name: "Paris", code: "PRS" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-floatLabel>
+  code: Code = {
+    basic: `<p-floatLabel>
     <p-multiSelect 
         inputId="float-label" 
         [options]="cities" 
@@ -47,7 +57,7 @@ export class FloatLabelDoc implements OnInit {
     <label for="float-label">MultiSelect</label>
 </p-floatLabel>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-floatLabel>
         <p-multiSelect 
             inputId="float-label" 
@@ -58,7 +68,7 @@ export class FloatLabelDoc implements OnInit {
     </p-floatLabel>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -88,6 +98,6 @@ export class MultiSelectFloatlabelDemo implements OnInit {
             { name: 'Paris', code: 'PRS' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

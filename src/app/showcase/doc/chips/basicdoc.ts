@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'chips-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Chips is used as a controlled input with <i>ngModel</i> property where it should be an array.</p>
-        </app-docsectiontext>
-        <div class="card p-fluid">
-            <p-chips [(ngModel)]="values" />
-        </div>
-        <app-code [code]="code" selector="chips-basic-demo" />
-    `,
-    standalone: false
+  selector: "chips-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Chips is used as a controlled input with <i>ngModel</i> property where
+        it should be an array.
+      </p>
+    </app-docsectiontext>
+    <div class="card p-fluid">
+      <p-chips [(ngModel)]="values" />
+    </div>
+    <app-code [code]="code" selector="chips-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    values: string[] | undefined;
+  values: string[] | undefined;
 
-    code: Code = {
-        basic: `<p-chips [(ngModel)]="values" />`,
+  code: Code = {
+    basic: `<p-chips [(ngModel)]="values" />`,
 
-        html: `<div class="card p-fluid">
+    html: `<div class="card p-fluid">
     <p-chips [(ngModel)]="values" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChipsModule } from 'primeng/chips';
 
@@ -36,6 +40,6 @@ import { ChipsModule } from 'primeng/chips';
 })
 export class ChipsBasicDemo {
     values: string[] | undefined;
-}`
-    };
+}`,
+  };
 }

@@ -1,67 +1,121 @@
-import { Component, inject } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem, MessageService } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'outlined-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Outlined buttons display a border without a background initially.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center flex-wrap gap-3">
-            <p-toast />
-            <p-splitButton label="Primary" [model]="items" (onClick)="save('info')" outlined />
-            <p-splitButton label="Secondary" [model]="items" (onClick)="save('info')" outlined severity="secondary" />
-            <p-splitButton label="Success" [model]="items" (onClick)="save('info')" outlined severity="success" />
-            <p-splitButton label="Info" [model]="items" (onClick)="save('info')" outlined severity="info" />
-            <p-splitButton label="Warning" [model]="items" (onClick)="save('info')" outlined severity="warning" />
-            <p-splitButton label="Help" [model]="items" (onClick)="save('info')" outlined severity="help" />
-            <p-splitButton label="Danger" [model]="items" (onClick)="save('info')" outlined severity="danger" />
-        </div>
-        <app-code [code]="code" selector="split-button-outlined-demo" />
-    `,
-    providers: [MessageService],
-    standalone: false
+  selector: "outlined-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Outlined buttons display a border without a background initially.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center flex-wrap gap-3">
+      <p-toast />
+      <p-splitButton
+        label="Primary"
+        [model]="items"
+        (onClick)="save('info')"
+        outlined
+      />
+      <p-splitButton
+        label="Secondary"
+        [model]="items"
+        (onClick)="save('info')"
+        outlined
+        severity="secondary"
+      />
+      <p-splitButton
+        label="Success"
+        [model]="items"
+        (onClick)="save('info')"
+        outlined
+        severity="success"
+      />
+      <p-splitButton
+        label="Info"
+        [model]="items"
+        (onClick)="save('info')"
+        outlined
+        severity="info"
+      />
+      <p-splitButton
+        label="Warning"
+        [model]="items"
+        (onClick)="save('info')"
+        outlined
+        severity="warning"
+      />
+      <p-splitButton
+        label="Help"
+        [model]="items"
+        (onClick)="save('info')"
+        outlined
+        severity="help"
+      />
+      <p-splitButton
+        label="Danger"
+        [model]="items"
+        (onClick)="save('info')"
+        outlined
+        severity="danger"
+      />
+    </div>
+    <app-code [code]="code" selector="split-button-outlined-demo" />
+  `,
+  providers: [MessageService],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class OutlinedDoc {
-    private messageService = inject(MessageService);
+  private messageService = inject(MessageService);
 
-    items: MenuItem[];
+  items: MenuItem[];
 
-    constructor() {
-        this.items = [
-            {
-                label: 'Update',
-                command: () => {
-                    this.update();
-                }
-            },
-            {
-                label: 'Delete',
-                command: () => {
-                    this.delete();
-                }
-            },
-            { label: 'Angular Website', url: 'http://angular.io' },
-            { separator: true },
-            { label: 'Upload', routerLink: ['/fileupload'] }
-        ];
-    }
+  constructor() {
+    this.items = [
+      {
+        label: "Update",
+        command: () => {
+          this.update();
+        },
+      },
+      {
+        label: "Delete",
+        command: () => {
+          this.delete();
+        },
+      },
+      { label: "Angular Website", url: "http://angular.io" },
+      { separator: true },
+      { label: "Upload", routerLink: ["/fileupload"] },
+    ];
+  }
 
-    save(severity: string) {
-        this.messageService.add({ severity: severity, summary: 'Success', detail: 'Data Saved' });
-    }
+  save(severity: string) {
+    this.messageService.add({
+      severity: severity,
+      summary: "Success",
+      detail: "Data Saved",
+    });
+  }
 
-    update() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
-    }
+  update() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Updated",
+    });
+  }
 
-    delete() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Deleted' });
-    }
+  delete() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Data Deleted",
+    });
+  }
 
-    code: Code = {
-        basic: `<p-splitButton 
+  code: Code = {
+    basic: `<p-splitButton 
     label="Primary" 
     [model]="items" 
     (onClick)="save('info')" 
@@ -103,7 +157,7 @@ export class OutlinedDoc {
     outlined 
     severity="danger" />`,
 
-        html: `<div class="card flex justify-content-center flex-wrap gap-3">
+    html: `<div class="card flex justify-content-center flex-wrap gap-3">
     <p-toast />
     <p-splitButton 
         label="Primary" 
@@ -148,7 +202,7 @@ export class OutlinedDoc {
         severity="danger" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToastModule } from 'primeng/toast';
@@ -194,6 +248,6 @@ export class SplitButtonOutlinedDemo {
     delete() {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Deleted' });
     }
-}`
-    };
+}`,
+  };
 }

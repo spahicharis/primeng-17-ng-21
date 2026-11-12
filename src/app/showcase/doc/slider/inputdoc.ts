@@ -1,39 +1,40 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'input-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Slider is connected to an input field using two-way binding.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <div>
-                <input type="text" pInputText [(ngModel)]="value" class="w-full mb-3" />
-                <p-slider [(ngModel)]="value" class="w-full" />
-            </div>
-        </div>
-        <app-code [code]="code" selector="slider-input-demo" />
-    `,
-    standalone: false
+  selector: "input-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Slider is connected to an input field using two-way binding.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <div>
+        <input type="text" pInputText [(ngModel)]="value" class="w-full mb-3" />
+        <p-slider [(ngModel)]="value" class="w-full" />
+      </div>
+    </div>
+    <app-code [code]="code" selector="slider-input-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InputDoc {
-    value: number = 50;
+  value: number = 50;
 
-    code: Code = {
-        basic: `<div>
+  code: Code = {
+    basic: `<div>
     <input type="text" pInputText [(ngModel)]="value" class="w-full mb-3"/>
     <p-slider [(ngModel)]="value" class="w-full" />
 </div>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <div>
         <input type="text" pInputText [(ngModel)]="value" class="w-full mb-3"/>
         <p-slider [(ngModel)]="value" class="w-full" />
     </div>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SliderModule } from 'primeng/slider';
 import { InputTextModule } from 'primeng/inputtext';
@@ -46,6 +47,6 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class SliderInputDemo {
     value: number = 50;
-}`
-    };
+}`,
+  };
 }

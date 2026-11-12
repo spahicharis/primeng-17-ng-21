@@ -1,38 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Menu requires a collection of menuitems as its <i>model</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-menu [model]="items" />
-        </div>
-        <app-code [code]="code" selector="menu-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Menu requires a collection of menuitems as its <i>model</i>.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-menu [model]="items" />
+    </div>
+    <app-code [code]="code" selector="menu-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc implements OnInit {
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    ngOnInit() {
-        this.items = [
-            { label: 'New', icon: 'pi pi-plus' },
-            { label: 'Search', icon: 'pi pi-search' }
-        ];
-    }
+  ngOnInit() {
+    this.items = [
+      { label: "New", icon: "pi pi-plus" },
+      { label: "Search", icon: "pi pi-search" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-menu [model]="items" />`,
+  code: Code = {
+    basic: `<p-menu [model]="items" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-menu [model]="items" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 
@@ -51,6 +52,6 @@ export class MenuBasicDemo implements OnInit {
             { label: 'Search', icon: 'pi pi-search' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

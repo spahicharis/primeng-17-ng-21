@@ -1,97 +1,107 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
-import { TreeNode } from 'primeng/api';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
+import { TreeNode } from "primeng/api";
 
 @Component({
-    selector: 'lazy-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Lazy loading is useful when dealing with huge datasets, in this example nodes are dynamically loaded on demand using <i>loading</i> property and <i>onNodeExpand</i> method.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-treeSelect
-                class="w-full"
-                containerStyleClass="w-full"
-                [(ngModel)]="selectedNodes"
-                [loading]="loading"
-                (onNodeExpand)="onNodeExpand($event)"
-                [options]="nodes"
-                display="chip"
-                [metaKeySelection]="false"
-                selectionMode="checkbox"
-                placeholder="Select Item"
-                [loading]="loading"
-            />
-        </div>
-        <app-code [code]="code" selector="tree-select-basic-demo" />
-    `,
-    standalone: false
+  selector: "lazy-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Lazy loading is useful when dealing with huge datasets, in this example
+        nodes are dynamically loaded on demand using <i>loading</i> property and
+        <i>onNodeExpand</i> method.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-treeSelect
+        class="w-full"
+        containerStyleClass="w-full"
+        [(ngModel)]="selectedNodes"
+        [loading]="loading"
+        (onNodeExpand)="onNodeExpand($event)"
+        [options]="nodes"
+        display="chip"
+        [metaKeySelection]="false"
+        selectionMode="checkbox"
+        placeholder="Select Item"
+        [loading]="loading"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-select-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class LazyDoc {
-    private cd = inject(ChangeDetectorRef);
+  private cd = inject(ChangeDetectorRef);
 
-    selectedNodes: TreeNode[] = [];
+  selectedNodes: TreeNode[] = [];
 
-    nodes!: TreeNode[];
+  nodes!: TreeNode[];
 
-    loading: boolean = false;
+  loading: boolean = false;
 
-    ngOnInit() {
-        this.loading = true;
+  ngOnInit() {
+    this.loading = true;
 
-        setTimeout(() => {
-            this.nodes = this.initiateNodes();
-            this.loading = false;
-            this.cd.markForCheck();
-        }, 2000);
-    }
+    setTimeout(() => {
+      this.nodes = this.initiateNodes();
+      this.loading = false;
+      this.cd.markForCheck();
+    }, 2000);
+  }
 
-    initiateNodes(): TreeNode[] {
-        return [
-            {
-                key: '0',
-                label: 'Node 0',
-                leaf: false
-            },
-            {
-                key: '1',
-                label: 'Node 1',
-                leaf: false
-            },
-            {
-                key: '2',
-                label: 'Node 2',
-                leaf: false
-            }
-        ];
-    }
+  initiateNodes(): TreeNode[] {
+    return [
+      {
+        key: "0",
+        label: "Node 0",
+        leaf: false,
+      },
+      {
+        key: "1",
+        label: "Node 1",
+        leaf: false,
+      },
+      {
+        key: "2",
+        label: "Node 2",
+        leaf: false,
+      },
+    ];
+  }
 
-    onNodeExpand(event: any) {
-        if (!event.node.children) {
-            this.loading = true;
+  onNodeExpand(event: any) {
+    if (!event.node.children) {
+      this.loading = true;
 
-            setTimeout(() => {
-                let _node = { ...event.node };
-                _node.children = [];
+      setTimeout(() => {
+        let _node = { ...event.node };
+        _node.children = [];
 
-                for (let i = 0; i < 1500; i++) {
-                    _node.children.push({
-                        key: event.node.key + '-' + i,
-                        label: 'Lazy ' + event.node.label + '-' + i
-                    });
-                }
-
-                this.nodes[parseInt(event.node.key, 10)] = _node;
-
-                this.loading = false;
-                this.cd.markForCheck();
-            }, 500);
+        for (let i = 0; i < 1500; i++) {
+          _node.children.push({
+            key: event.node.key + "-" + i,
+            label: "Lazy " + event.node.label + "-" + i,
+          });
         }
-    }
 
-    code: Code = {
-        basic: `<p-treeSelect
+        this.nodes[parseInt(event.node.key, 10)] = _node;
+
+        this.loading = false;
+        this.cd.markForCheck();
+      }, 500);
+    }
+  }
+
+  code: Code = {
+    basic: `<p-treeSelect
     class="w-full"
     containerStyleClass="w-full"
     [(ngModel)]="selectedNodes"
@@ -105,7 +115,7 @@ export class LazyDoc {
     [loading]="loading"
 />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-treeSelect
         class="w-full"
         containerStyleClass="w-full"
@@ -121,7 +131,7 @@ export class LazyDoc {
     />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { NodeService } from '@service/nodeservice';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -195,9 +205,9 @@ export class TreeSelectLazyDemo {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -224,6 +234,6 @@ export class TreeSelectLazyDemo {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

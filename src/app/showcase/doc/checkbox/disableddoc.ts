@@ -1,34 +1,38 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'checkbox-disabled-demo',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-checkbox [disabled]="true" [(ngModel)]="checked" />
-        </div>
-        <app-code [code]="code" selector="checkbox-disabled-demo" />
-    `,
-    standalone: false
+  selector: "checkbox-disabled-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-checkbox [disabled]="true" [(ngModel)]="checked" />
+    </div>
+    <app-code [code]="code" selector="checkbox-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    checked: boolean = false;
+  checked: boolean = false;
 
-    code: Code = {
-        basic: `<p-checkbox 
+  code: Code = {
+    basic: `<p-checkbox 
     [disabled]="true" 
     [(ngModel)]="checked" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-checkbox 
         [disabled]="true" 
         [(ngModel)]="checked" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 
@@ -40,6 +44,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 })
 export class CheckboxDisabledDemo {
     checked: boolean = false;
-}`
-    };
+}`,
+  };
 }

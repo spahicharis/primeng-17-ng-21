@@ -1,30 +1,38 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'default-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Default Demo Content.</p>
-        </app-docsectiontext>
-        <div class="card card-container flex justify-content-center align-items-center">
-            <div pRipple class="card text-primary bg-primary flex select-none justify-content-center align-items-center shadow-2">Default</div>
-        </div>
-        <app-code [code]="code" selector="ripple-default-demo" />
-    `,
-    standalone: false
+  selector: "default-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Default Demo Content.</p>
+    </app-docsectiontext>
+    <div
+      class="card card-container flex justify-content-center align-items-center"
+    >
+      <div
+        pRipple
+        class="card text-primary bg-primary flex select-none justify-content-center align-items-center shadow-2"
+      >
+        Default
+      </div>
+    </div>
+    <app-code [code]="code" selector="ripple-default-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DefaultDoc {
-    code: Code = {
-        basic: `<div pRipple class="card text-primary bg-primary flex select-none justify-content-center align-items-center shadow-2">
+  code: Code = {
+    basic: `<div pRipple class="card text-primary bg-primary flex select-none justify-content-center align-items-center shadow-2">
     Default
 </div>`,
-        html: `<div class="card card-container flex justify-content-center align-items-center">
+    html: `<div class="card card-container flex justify-content-center align-items-center">
     <div pRipple class="card text-primary bg-primary flex select-none justify-content-center align-items-center shadow-2">
         Default
     </div>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { RippleModule } from 'primeng/ripple';
 
 @Component({
@@ -53,7 +61,7 @@ import { RippleModule } from 'primeng/ripple';
 })
 export class RippleDefaultDemo {
 }`,
-        scss: `:host ::ng-deep .card-container {
+    scss: `:host ::ng-deep .card-container {
     .card {
         width: 75px;
         height: 75px;
@@ -68,6 +76,6 @@ export class RippleDefaultDemo {
             margin-right: 0;
         }
     }
-}`
-    };
+}`,
+  };
 }

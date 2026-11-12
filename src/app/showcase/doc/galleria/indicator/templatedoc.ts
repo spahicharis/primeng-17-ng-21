@@ -1,57 +1,73 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { PhotoService } from '@service/photoservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { PhotoService } from "@service/photoservice";
 
 @Component({
-    selector: 'template-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Indicator content can be customized with the <i>indicator</i> template.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-galleria [(value)]="images" [showIndicators]="true" [showThumbnails]="false" [showIndicatorsOnItem]="true" indicatorsPosition="left" [responsiveOptions]="responsiveOptions" [containerStyle]="{ maxWidth: '640px' }">
-                <ng-template pTemplate="item" let-item>
-                    <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
-                </ng-template>
-                <ng-template pTemplate="indicator" let-index>
-                    <span style="color: #e9ecef; cursor: pointer">
-                        {{ index + 1 }}
-                    </span>
-                </ng-template>
-            </p-galleria>
-        </div>
-        <app-code [code]="code" selector="galleria-indicator-template-demo" />
-    `,
-    standalone: false
+  selector: "template-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Indicator content can be customized with the <i>indicator</i> template.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-galleria
+        [(value)]="images"
+        [showIndicators]="true"
+        [showThumbnails]="false"
+        [showIndicatorsOnItem]="true"
+        indicatorsPosition="left"
+        [responsiveOptions]="responsiveOptions"
+        [containerStyle]="{ maxWidth: '640px' }"
+      >
+        <ng-template pTemplate="item" let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
+        </ng-template>
+        <ng-template pTemplate="indicator" let-index>
+          <span style="color: #e9ecef; cursor: pointer">
+            {{ index + 1 }}
+          </span>
+        </ng-template>
+      </p-galleria>
+    </div>
+    <app-code [code]="code" selector="galleria-indicator-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc implements OnInit {
-    private photoService = inject(PhotoService);
+  private photoService = inject(PhotoService);
 
-    images: any[] | undefined;
+  images: any[] | undefined;
 
-    responsiveOptions: any[] = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
+  responsiveOptions: any[] = [
+    {
+      breakpoint: "1024px",
+      numVisible: 5,
+    },
+    {
+      breakpoint: "768px",
+      numVisible: 3,
+    },
+    {
+      breakpoint: "560px",
+      numVisible: 1,
+    },
+  ];
 
-    ngOnInit() {
-        this.photoService.getImages().then((images) => {
-            this.images = images;
-        });
-    }
+  ngOnInit() {
+    this.photoService.getImages().then((images) => {
+      this.images = images;
+    });
+  }
 
-    code: Code = {
-        basic: `<p-galleria [(value)]="images" [showIndicators]="true" [showThumbnails]="false" [showIndicatorsOnItem]="true" indicatorsPosition="left" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '100%', 'margin-top': '2em' }">
+  code: Code = {
+    basic: `<p-galleria [(value)]="images" [showIndicators]="true" [showThumbnails]="false" [showIndicatorsOnItem]="true" indicatorsPosition="left" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '100%', 'margin-top': '2em' }">
     <ng-template pTemplate="item" let-item>
         <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
     </ng-template>
@@ -61,7 +77,7 @@ export class TemplateDoc implements OnInit {
         </span>
     </ng-template>
 </p-galleria>`,
-        html: `
+    html: `
  <div class="card">
     <p-galleria [(value)]="images" [showIndicators]="true" [showThumbnails]="false" [showIndicatorsOnItem]="true" indicatorsPosition="left" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '100%','margin-top': '2em' }">
         <ng-template pTemplate="item" let-item>
@@ -74,7 +90,7 @@ export class TemplateDoc implements OnInit {
         </ng-template>
     </p-galleria>
 </div>`,
-        typescript: `
+    typescript: `
 import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '@service/photoservice';
 
@@ -108,7 +124,7 @@ export class GalleriaIndicatorTemplateDemo implements OnInit {
         });
     }
 }`,
-        data: `
+    data: `
 /* PhotoService */
 {
     itemImageSrc: 'https://primeng.org/images/galleria/galleria1.jpg',
@@ -117,6 +133,6 @@ export class GalleriaIndicatorTemplateDemo implements OnInit {
     title: 'Title 1'
 },
 ...`,
-        service: ['PhotoService']
-    };
+    service: ["PhotoService"],
+  };
 }

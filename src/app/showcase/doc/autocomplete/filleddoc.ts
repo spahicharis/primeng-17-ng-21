@@ -1,41 +1,53 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface AutoCompleteCompleteEvent {
-    originalEvent: Event;
-    query: string;
+  originalEvent: Event;
+  query: string;
 }
 
 @Component({
-    selector: 'filled-doc',
-    template: ` <app-docsectiontext>
-            <p>Specify the <i>variant</i> property as <i>filled</i> to display the component with a higher visual emphasis than the default <i>outlined</i> style.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions" (completeMethod)="search($event)" variant="filled" />
-        </div>
-        <app-code [code]="code" selector="autocomplete-filled-demo" />`,
-    standalone: false
+  selector: "filled-doc",
+  template: ` <app-docsectiontext>
+      <p>
+        Specify the <i>variant</i> property as <i>filled</i> to display the
+        component with a higher visual emphasis than the default
+        <i>outlined</i> style.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-autoComplete
+        [(ngModel)]="selectedItem"
+        [suggestions]="suggestions"
+        (completeMethod)="search($event)"
+        variant="filled"
+      />
+    </div>
+    <app-code [code]="code" selector="autocomplete-filled-demo" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilledDoc {
-    items: any[] | undefined;
+  items: any[] | undefined;
 
-    selectedItem: any;
+  selectedItem: any;
 
-    suggestions: any[] | undefined;
+  suggestions: any[] | undefined;
 
-    search(event: AutoCompleteCompleteEvent) {
-        this.suggestions = [...Array(10).keys()].map((item) => event.query + '-' + item);
-    }
+  search(event: AutoCompleteCompleteEvent) {
+    this.suggestions = [...Array(10).keys()].map(
+      (item) => event.query + "-" + item,
+    );
+  }
 
-    code: Code = {
-        basic: `<p-autoComplete
+  code: Code = {
+    basic: `<p-autoComplete
     [(ngModel)]="selectedItem"
     [suggestions]="suggestions"
     (completeMethod)="search($event)"
     variant="filled" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-autoComplete
         [(ngModel)]="selectedItem"
         [suggestions]="suggestions"
@@ -43,7 +55,7 @@ export class FilledDoc {
         variant="filled" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
@@ -68,6 +80,6 @@ export class AutocompleteFilledDemo {
     search(event: AutoCompleteCompleteEvent) {
         this.suggestions = [...Array(10).keys()].map(item => event.query + '-' + item);
     }
-}`
-    };
+}`,
+  };
 }

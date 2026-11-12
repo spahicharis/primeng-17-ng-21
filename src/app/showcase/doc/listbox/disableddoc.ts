@@ -1,41 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface City {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 @Component({
-    selector: 'disabled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-listbox [options]="cities" [(ngModel)]="selectedCity" optionLabel="name" [disabled]="true" [style]="{ width: '15rem' }" [listStyle]="{ 'max-height': '220px' }" />
-        </div>
-        <app-code [code]="code" selector="listbox-disabled-demo" />
-    `,
-    standalone: false
+  selector: "disabled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-listbox
+        [options]="cities"
+        [(ngModel)]="selectedCity"
+        optionLabel="name"
+        [disabled]="true"
+        [style]="{ width: '15rem' }"
+        [listStyle]="{ 'max-height': '220px' }"
+      />
+    </div>
+    <app-code [code]="code" selector="listbox-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc implements OnInit {
-    cities!: City[];
+  cities!: City[];
 
-    selectedCity!: City;
+  selectedCity!: City;
 
-    ngOnInit() {
-        this.cities = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ];
-    }
+  ngOnInit() {
+    this.cities = [
+      { name: "New York", code: "NY" },
+      { name: "Rome", code: "RM" },
+      { name: "London", code: "LDN" },
+      { name: "Istanbul", code: "IST" },
+      { name: "Paris", code: "PRS" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-listbox 
+  code: Code = {
+    basic: `<p-listbox 
     [options]="cities" 
     [(ngModel)]="selectedCity" 
     optionLabel="name" 
@@ -43,7 +54,7 @@ export class DisabledDoc implements OnInit {
     [style]="{ width: '15rem' }" 
     [listStyle]="{'max-height': '220px'}" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-listbox 
         [options]="cities" 
         [(ngModel)]="selectedCity" 
@@ -53,7 +64,7 @@ export class DisabledDoc implements OnInit {
         [listStyle]="{'max-height': '220px'}" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ListboxModule } from 'primeng/listbox';
 
@@ -82,6 +93,6 @@ export class ListboxDisabledDemo implements OnInit {
             { name: 'Paris', code: 'PRS' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

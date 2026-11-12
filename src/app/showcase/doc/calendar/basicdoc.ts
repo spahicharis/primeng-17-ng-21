@@ -1,30 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'calendar-basic-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Two-way value binding is defined using the standard <i>ngModel</i> directive referencing to a <i>Date</i> property.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-calendar [(ngModel)]="date" />
-        </div>
-        <app-code [code]="code" selector="calendar-basic-demo" />
-    `,
-    standalone: false
+  selector: "calendar-basic-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Two-way value binding is defined using the standard
+        <i>ngModel</i> directive referencing to a <i>Date</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-calendar [(ngModel)]="date" />
+    </div>
+    <app-code [code]="code" selector="calendar-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    date: Date | undefined;
+  date: Date | undefined;
 
-    code: Code = {
-        basic: `<p-calendar [(ngModel)]="date" />`,
+  code: Code = {
+    basic: `<p-calendar [(ngModel)]="date" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-calendar [(ngModel)]="date" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +40,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class CalendarBasicDemo {
     date: Date | undefined;
-}`
-    };
+}`,
+  };
 }

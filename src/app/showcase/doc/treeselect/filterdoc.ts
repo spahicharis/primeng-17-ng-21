@@ -1,37 +1,52 @@
-import { Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'filter-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Filtering is enabled by adding the <i>filter</i> property, by default label property of a node is used to compare against the value in the text field, in order to customize which field(s) should be used during search define
-                <i>filterBy</i> property. In addition <i>filterMode</i> specifies the filtering strategy. In <i>lenient</i> mode when the query matches a node, children of the node are not searched further as all descendants of the node are included.
-                On the other hand, in <i>strict</i> mode when the query matches a node, filtering continues on all descendants.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-treeSelect class="md:w-20rem w-full" containerStyleClass="w-full" [(ngModel)]="selectedNodes" [options]="nodes" placeholder="Select Item" [filter]="true" [filterInputAutoFocus]="true" />
-        </div>
-        <app-code [code]="code" selector="tree-select-filter-demo" />
-    `,
-    standalone: false
+  selector: "filter-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Filtering is enabled by adding the <i>filter</i> property, by default
+        label property of a node is used to compare against the value in the
+        text field, in order to customize which field(s) should be used during
+        search define <i>filterBy</i> property. In addition
+        <i>filterMode</i> specifies the filtering strategy. In
+        <i>lenient</i> mode when the query matches a node, children of the node
+        are not searched further as all descendants of the node are included. On
+        the other hand, in <i>strict</i> mode when the query matches a node,
+        filtering continues on all descendants.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-treeSelect
+        class="md:w-20rem w-full"
+        containerStyleClass="w-full"
+        [(ngModel)]="selectedNodes"
+        [options]="nodes"
+        placeholder="Select Item"
+        [filter]="true"
+        [filterInputAutoFocus]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-select-filter-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilterDoc {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    nodes!: any[];
+  nodes!: any[];
 
-    selectedNodes: any;
+  selectedNodes: any;
 
-    constructor() {
-        this.nodeService.getFiles().then((files) => (this.nodes = files));
-    }
+  constructor() {
+    this.nodeService.getFiles().then((files) => (this.nodes = files));
+  }
 
-    code: Code = {
-        basic: `<p-treeSelect 
+  code: Code = {
+    basic: `<p-treeSelect 
     class="md:w-20rem w-full" 
     containerStyleClass="w-full" 
     [(ngModel)]="selectedNodes" 
@@ -40,7 +55,7 @@ export class FilterDoc {
     [filter]="true" 
     [filterInputAutoFocus]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-treeSelect 
         class="md:w-20rem w-full" 
         containerStyleClass="w-full" 
@@ -51,7 +66,7 @@ export class FilterDoc {
         [filterInputAutoFocus]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { NodeService } from '@service/nodeservice';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -73,9 +88,9 @@ export class TreeSelectFilterDemo {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -102,6 +117,6 @@ export class TreeSelectFilterDemo {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

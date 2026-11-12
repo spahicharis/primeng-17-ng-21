@@ -1,27 +1,33 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'custom-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Tooltip can use either a <i>string</i> or a <i>TemplateRef</i>.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-button [pTooltip]="tooltipContent" severity="secondary" tooltipPosition="bottom" label="Button" />
-            <ng-template #tooltipContent>
-                <div class="flex align-items-center">
-                    <span> <b>PrimeNG</b> rocks! </span>
-                </div>
-            </ng-template>
+  selector: "custom-doc",
+  template: `
+    <app-docsectiontext>
+      <p>Tooltip can use either a <i>string</i> or a <i>TemplateRef</i>.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-button
+        [pTooltip]="tooltipContent"
+        severity="secondary"
+        tooltipPosition="bottom"
+        label="Button"
+      />
+      <ng-template #tooltipContent>
+        <div class="flex align-items-center">
+          <span> <b>PrimeNG</b> rocks! </span>
         </div>
-        <app-code [code]="code" selector="tooltip-custom-demo" />
-    `,
-    standalone: false
+      </ng-template>
+    </div>
+    <app-code [code]="code" selector="tooltip-custom-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class CustomDoc {
-    code: Code = {
-        basic: `<p-button 
+  code: Code = {
+    basic: `<p-button 
     [pTooltip]="tooltipContent" 
     severity="secondary" 
     tooltipPosition="bottom" 
@@ -32,7 +38,7 @@ export class CustomDoc {
     </div>
 </ng-template>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-button 
         [pTooltip]="tooltipContent"
         severity="secondary" 
@@ -44,7 +50,7 @@ export class CustomDoc {
                 </div>
             </ng-template>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 
@@ -56,6 +62,6 @@ import { ButtonModule } from 'primeng/button';
 })
 export class TooltipCustomDemo {
   
-}`
-    };
+}`,
+  };
 }

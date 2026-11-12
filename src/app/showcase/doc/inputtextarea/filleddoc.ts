@@ -1,24 +1,35 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'filled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Specify the <i>variant</i> property as <i>filled</i> to display the component with a higher visual emphasis than the default <i>outlined</i> style.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <textarea [variant]="'filled'" rows="5" cols="30" pInputTextarea [(ngModel)]="value"></textarea>
-        </div>
-        <app-code [code]="code" selector="input-textarea-filled-demo" />
-    `,
-    standalone: false
+  selector: "filled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Specify the <i>variant</i> property as <i>filled</i> to display the
+        component with a higher visual emphasis than the default
+        <i>outlined</i> style.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <textarea
+        [variant]="'filled'"
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [(ngModel)]="value"
+      ></textarea>
+    </div>
+    <app-code [code]="code" selector="input-textarea-filled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilledDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<textarea 
+  code: Code = {
+    basic: `<textarea 
     variant="filled"
     rows="5"
     cols="30" 
@@ -26,7 +37,7 @@ export class FilledDoc {
     [(ngModel)]="value">
 </textarea>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <textarea 
         variant="filled"
         rows="5"
@@ -36,7 +47,7 @@ export class FilledDoc {
     </textarea>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule } from '@angular/forms';
 
@@ -49,6 +60,6 @@ import { FormsModule } from '@angular/forms';
 
 export class InputTextareaFilledDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

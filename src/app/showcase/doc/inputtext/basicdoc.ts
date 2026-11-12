@@ -1,30 +1,33 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'basic-doc',
-    template: `
-        <app-docsectiontext>
-            <p>InputText is used as a controlled input with <i>ngModel</i> properties.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <input type="text" pInputText [(ngModel)]="value" />
-        </div>
-        <app-code [code]="code" selector="input-text-basic-demo" />
-    `,
-    standalone: false
+  selector: "basic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        InputText is used as a controlled input with <i>ngModel</i> properties.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <input type="text" pInputText [(ngModel)]="value" />
+    </div>
+    <app-code [code]="code" selector="input-text-basic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class BasicDoc {
-    value: string;
+  value: string;
 
-    code: Code = {
-        basic: `<input type="text" pInputText [(ngModel)]="value" />`,
+  code: Code = {
+    basic: `<input type="text" pInputText [(ngModel)]="value" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <input type="text" pInputText [(ngModel)]="value" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 
@@ -36,6 +39,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputTextBasicDemo {
     value: string;
-}`
-    };
+}`,
+  };
 }

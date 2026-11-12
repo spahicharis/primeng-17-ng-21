@@ -1,79 +1,100 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { PhotoService } from '@service/photoservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
+import { PhotoService } from "@service/photoservice";
 
 @Component({
-    selector: 'galleria-controlled-demo',
-    template: `
-        <app-docsectiontext>
-            <p>Galleria can be controlled programmatically using the <i>activeIndex</i> property.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <div class="py-2">
-                <p-button type="button" icon="pi pi-minus" (onClick)="prev()" severity="secondary" styleClass="mr-2" />
-                <p-button type="button" icon="pi pi-plus" (onClick)="next()" />
-            </div>
-            <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '640px' }" [numVisible]="5" [(activeIndex)]="activeIndex">
-                <ng-template pTemplate="item" let-item>
-                    <img [src]="item.itemImageSrc" style="width: 100%;" />
-                </ng-template>
-                <ng-template pTemplate="thumbnail" let-item>
-                    <div class="grid grid-nogutter justify-content-center">
-                        <img [src]="item.thumbnailImageSrc" />
-                    </div>
-                </ng-template>
-            </p-galleria>
-        </div>
-        <app-code [code]="code" selector="galleria-controlled-demo" />
-    `,
-    standalone: false
+  selector: "galleria-controlled-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Galleria can be controlled programmatically using the
+        <i>activeIndex</i> property.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div class="py-2">
+        <p-button
+          type="button"
+          icon="pi pi-minus"
+          (onClick)="prev()"
+          severity="secondary"
+          styleClass="mr-2"
+        />
+        <p-button type="button" icon="pi pi-plus" (onClick)="next()" />
+      </div>
+      <p-galleria
+        [(value)]="images"
+        [responsiveOptions]="responsiveOptions"
+        [containerStyle]="{ 'max-width': '640px' }"
+        [numVisible]="5"
+        [(activeIndex)]="activeIndex"
+      >
+        <ng-template pTemplate="item" let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%;" />
+        </ng-template>
+        <ng-template pTemplate="thumbnail" let-item>
+          <div class="grid grid-nogutter justify-content-center">
+            <img [src]="item.thumbnailImageSrc" />
+          </div>
+        </ng-template>
+      </p-galleria>
+    </div>
+    <app-code [code]="code" selector="galleria-controlled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ControlledDoc implements OnInit {
-    private photoService = inject(PhotoService);
+  private photoService = inject(PhotoService);
 
-    images: any[] | undefined;
+  images: any[] | undefined;
 
-    get activeIndex(): number {
-        return this._activeIndex;
+  get activeIndex(): number {
+    return this._activeIndex;
+  }
+
+  set activeIndex(newValue) {
+    if (this.images && 0 <= newValue && newValue <= this.images.length - 1) {
+      this._activeIndex = newValue;
     }
+  }
 
-    set activeIndex(newValue) {
-        if (this.images && 0 <= newValue && newValue <= this.images.length - 1) {
-            this._activeIndex = newValue;
-        }
-    }
+  _activeIndex: number = 2;
 
-    _activeIndex: number = 2;
+  responsiveOptions: any[] = [
+    {
+      breakpoint: "1024px",
+      numVisible: 5,
+    },
+    {
+      breakpoint: "768px",
+      numVisible: 3,
+    },
+    {
+      breakpoint: "560px",
+      numVisible: 1,
+    },
+  ];
 
-    responsiveOptions: any[] = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
+  ngOnInit() {
+    this.photoService.getImages().then((images) => (this.images = images));
+  }
 
-    ngOnInit() {
-        this.photoService.getImages().then((images) => (this.images = images));
-    }
+  next() {
+    this.activeIndex++;
+  }
 
-    next() {
-        this.activeIndex++;
-    }
+  prev() {
+    this.activeIndex--;
+  }
 
-    prev() {
-        this.activeIndex--;
-    }
-
-    code: Code = {
-        basic: `<div class="py-2">
+  code: Code = {
+    basic: `<div class="py-2">
     <p-button 
         type="button" 
         icon="pi pi-minus" 
@@ -100,7 +121,7 @@ export class ControlledDoc implements OnInit {
             </div>
         </ng-template>
 </p-galleria>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <div class="py-2">
         <p-button 
             type="button" 
@@ -129,7 +150,7 @@ export class ControlledDoc implements OnInit {
             </ng-template>
     </p-galleria>
 </div>`,
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { PhotoService } from '@service/photoservice';
 import { GalleriaModule } from 'primeng/galleria';
 import { ButtonModule } from 'primeng/button';
@@ -185,7 +206,7 @@ export class GalleriaControlledDemo implements OnInit {
         this.activeIndex--;
     }
 }`,
-        data: `
+    data: `
 /* PhotoService */
 {
     itemImageSrc: 'https://primeng.org/images/galleria/galleria1.jpg',
@@ -194,6 +215,6 @@ export class GalleriaControlledDemo implements OnInit {
     title: 'Title 1'
 },
 ...`,
-        service: ['PhotoService']
-    };
+    service: ["PhotoService"],
+  };
 }

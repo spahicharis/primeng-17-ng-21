@@ -1,46 +1,61 @@
-import { Component, inject } from '@angular/core';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'multiple-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                More than one node is selectable by setting <i>selectionMode</i> to <i>multiple</i>. By default in multiple selection mode, metaKey press (e.g. <i>⌘</i>) is necessary to add to existing selections however this can be configured with
-                disabling the <i>metaKeySelection</i> property. Note that in touch enabled devices, TreeSelect always ignores metaKey.
-            </p>
-            <p>In multiple selection mode, value binding should be a key-value pair where key is the node key and value is a boolean to indicate selection.</p>
-        </app-docsectiontext>
-        <app-code [code]="exampleCode" [hideToggleCode]="true" />
-        <div class="card flex justify-content-center">
-            <p-treeSelect class="w-full md:w-20rem" containerStyleClass="w-full" [(ngModel)]="selectedNodes" [options]="nodes" [metaKeySelection]="false" selectionMode="multiple" placeholder="Select Item" />
-        </div>
-        <app-code [code]="code" selector="tree-select-multiple-demo" />
-    `,
-    standalone: false
+  selector: "multiple-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        More than one node is selectable by setting <i>selectionMode</i> to
+        <i>multiple</i>. By default in multiple selection mode, metaKey press
+        (e.g. <i>⌘</i>) is necessary to add to existing selections however this
+        can be configured with disabling the <i>metaKeySelection</i> property.
+        Note that in touch enabled devices, TreeSelect always ignores metaKey.
+      </p>
+      <p>
+        In multiple selection mode, value binding should be a key-value pair
+        where key is the node key and value is a boolean to indicate selection.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="exampleCode" [hideToggleCode]="true" />
+    <div class="card flex justify-content-center">
+      <p-treeSelect
+        class="w-full md:w-20rem"
+        containerStyleClass="w-full"
+        [(ngModel)]="selectedNodes"
+        [options]="nodes"
+        [metaKeySelection]="false"
+        selectionMode="multiple"
+        placeholder="Select Item"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-select-multiple-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class MultipleDoc {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    nodes!: any[];
+  nodes!: any[];
 
-    selectedNodes: any;
+  selectedNodes: any;
 
-    constructor() {
-        this.nodeService.getFiles().then((files) => (this.nodes = files));
-    }
+  constructor() {
+    this.nodeService.getFiles().then((files) => (this.nodes = files));
+  }
 
-    exampleCode: Code = {
-        typescript: `
+  exampleCode: Code = {
+    typescript: `
 {
     '0-0': true,
     '0-1-0': true
-}`
-    };
+}`,
+  };
 
-    code: Code = {
-        basic: `<p-treeSelect 
+  code: Code = {
+    basic: `<p-treeSelect 
     class="w-full md:w-20rem" 
     containerStyleClass="w-full" 
     [(ngModel)]="selectedNodes" 
@@ -49,7 +64,7 @@ export class MultipleDoc {
     selectionMode="multiple"
     placeholder="Select Item" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-treeSelect 
         class="w-full md:w-20rem" 
         containerStyleClass="w-full" 
@@ -60,7 +75,7 @@ export class MultipleDoc {
         placeholder="Select Item" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { NodeService } from '@service/nodeservice';
 import { FormsModule } from '@angular/forms';
 import { TreeSelectModule } from 'primeng/treeselect';
@@ -82,9 +97,9 @@ export class TreeSelectMultipleDemo {
     }
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -111,6 +126,6 @@ export class TreeSelectMultipleDemo {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

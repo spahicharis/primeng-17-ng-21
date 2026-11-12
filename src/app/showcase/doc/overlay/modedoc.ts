@@ -1,20 +1,28 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { Code } from '@domain/code';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'mode-doc',
-    template: ` <app-docsectiontext>
-            <p>
-                It has two valid values; <i>overlay</i> and <i>modal</i>. In overlay mode, a container element is opened like overlaypanel or dropdown's panel. In modal mode, the container element behaves like popup. This behaviour is similar to a
-                dialog component.
-            </p>
-        </app-docsectiontext>
-        <app-code [code]="code" [hideToggleCode]="true" />`,
-    standalone: false
+  selector: "mode-doc",
+  template: ` <app-docsectiontext>
+      <p>
+        It has two valid values; <i>overlay</i> and <i>modal</i>. In overlay
+        mode, a container element is opened like overlaypanel or dropdown's
+        panel. In modal mode, the container element behaves like popup. This
+        behaviour is similar to a dialog component.
+      </p>
+    </app-docsectiontext>
+    <app-code [code]="code" [hideToggleCode]="true" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ModeDoc {
-    code: Code = {
-        typescript: `
+  code: Code = {
+    typescript: `
 import { PrimeNGConfig, OverlayOptions } from 'primeng/api';
 
 @Component({
@@ -30,11 +38,11 @@ export class AppComponent implements OnInit {
             mode: 'modal'
         };
     } 
-}`
-    };
+}`,
+  };
 
-    code2: Code = {
-        basic: `import { PrimeNGConfig, OverlayOptions, ResponsiveOverlayDirectionType } from 'primeng/api';
+  code2: Code = {
+    basic: `import { PrimeNGConfig, OverlayOptions, ResponsiveOverlayDirectionType } from 'primeng/api';
 
 const responsiveOptions: ResponsiveOverlayOptions = {
     // style?: any;                                     // Style of component in given breakpoint or media query
@@ -49,6 +57,6 @@ const responsiveOptions: ResponsiveOverlayOptions = {
 
 this.primengConfig.overlayOptions: OverlayOptions = {
     responsive: responsiveOptions
-};`
-    };
+};`,
+  };
 }

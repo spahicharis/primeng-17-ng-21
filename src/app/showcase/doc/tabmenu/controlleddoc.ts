@@ -1,46 +1,72 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { MenuItem } from "primeng/api";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'controlled-doc',
-    template: `
-        <app-docsectiontext>
-            <p>For controlled mode, use <i>activeItem</i> property along with <i>activeItemChange</i> event are needed to manage the active item.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <div class="flex mb-2 gap-2 justify-content-end">
-                <p-button (onClick)="activeItem = items[0]" [rounded]="true" label="1" styleClass="w-2rem h-2rem p-0" [outlined]="activeItem !== items[0]" />
-                <p-button (onClick)="activeItem = items[1]" [rounded]="true" label="2" styleClass="w-2rem h-2rem p-0" [outlined]="activeItem !== items[1]" />
-                <p-button (onClick)="activeItem = items[2]" [rounded]="true" label="3" styleClass="w-2rem h-2rem p-0" [outlined]="activeItem !== items[2]" />
-            </div>
-            <p-tabMenu [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)" />
-        </div>
-        <app-code [code]="code" selector="tab-menu-controlled-demo" />
-    `,
-    standalone: false
+  selector: "controlled-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        For controlled mode, use <i>activeItem</i> property along with
+        <i>activeItemChange</i> event are needed to manage the active item.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <div class="flex mb-2 gap-2 justify-content-end">
+        <p-button
+          (onClick)="activeItem = items[0]"
+          [rounded]="true"
+          label="1"
+          styleClass="w-2rem h-2rem p-0"
+          [outlined]="activeItem !== items[0]"
+        />
+        <p-button
+          (onClick)="activeItem = items[1]"
+          [rounded]="true"
+          label="2"
+          styleClass="w-2rem h-2rem p-0"
+          [outlined]="activeItem !== items[1]"
+        />
+        <p-button
+          (onClick)="activeItem = items[2]"
+          [rounded]="true"
+          label="3"
+          styleClass="w-2rem h-2rem p-0"
+          [outlined]="activeItem !== items[2]"
+        />
+      </div>
+      <p-tabMenu
+        [model]="items"
+        [activeItem]="activeItem"
+        (activeItemChange)="onActiveItemChange($event)"
+      />
+    </div>
+    <app-code [code]="code" selector="tab-menu-controlled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class ControlledDoc implements OnInit {
-    items: MenuItem[] | undefined;
+  items: MenuItem[] | undefined;
 
-    activeItem: MenuItem | undefined;
+  activeItem: MenuItem | undefined;
 
-    ngOnInit() {
-        this.items = [
-            { label: 'Dashboard', icon: 'pi pi-home' },
-            { label: 'Transactions', icon: 'pi pi-chart-line' },
-            { label: 'Products', icon: 'pi pi-list' }
-        ];
+  ngOnInit() {
+    this.items = [
+      { label: "Dashboard", icon: "pi pi-home" },
+      { label: "Transactions", icon: "pi pi-chart-line" },
+      { label: "Products", icon: "pi pi-list" },
+    ];
 
-        this.activeItem = this.items[0];
-    }
+    this.activeItem = this.items[0];
+  }
 
-    onActiveItemChange(event: MenuItem) {
-        this.activeItem = event;
-    }
+  onActiveItemChange(event: MenuItem) {
+    this.activeItem = event;
+  }
 
-    code: Code = {
-        basic: `<div class="flex mb-2 gap-2 justify-content-end">
+  code: Code = {
+    basic: `<div class="flex mb-2 gap-2 justify-content-end">
     <p-button 
         (onClick)="activeItem = items[0]" 
         [rounded]="true" 
@@ -65,7 +91,7 @@ export class ControlledDoc implements OnInit {
     [activeItem]="activeItem" 
     (activeItemChange)="onActiveItemChange($event)" />`,
 
-        html: `<div class="card">
+    html: `<div class="card">
     <div class="flex mb-2 gap-2 justify-content-end">
         <p-button 
             (onClick)="activeItem = items[0]" 
@@ -91,7 +117,7 @@ export class ControlledDoc implements OnInit {
         (activeItemChange)="onActiveItemChange($event)" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ButtonModule } from 'primeng/button';
@@ -122,7 +148,7 @@ export class TabMenuControlledDemo implements OnInit {
     }
 }`,
 
-        module: `
+    module: `
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -135,6 +161,6 @@ import { TabMenuDemo } from './tabmenudemo';
     imports: [CommonModule, TabMenuModule, ButtonModule, RippleModule],
     declarations: [TabMenuDemo]
 })
-export class TabMenuDemoModule {}`
-    };
+export class TabMenuDemoModule {}`,
+  };
 }

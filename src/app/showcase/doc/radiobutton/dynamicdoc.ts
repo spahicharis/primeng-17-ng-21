@@ -1,42 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'dynamic-doc',
-    template: `
-        <app-docsectiontext>
-          <p>RadioButtons can be generated using a list of values.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-          <div class="flex flex-column gap-3">
-            @for (category of categories; track category) {
-              <div class="field-checkbox">
-                <p-radioButton [inputId]="category.key" name="category" [value]="category" [(ngModel)]="selectedCategory" />
-                <label [for]="category.key" class="ml-2">{{ category.name }}</label>
-              </div>
-            }
+  selector: "dynamic-doc",
+  template: `
+    <app-docsectiontext>
+      <p>RadioButtons can be generated using a list of values.</p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <div class="flex flex-column gap-3">
+        @for (category of categories; track category) {
+          <div class="field-checkbox">
+            <p-radioButton
+              [inputId]="category.key"
+              name="category"
+              [value]="category"
+              [(ngModel)]="selectedCategory"
+            />
+            <label [for]="category.key" class="ml-2">{{ category.name }}</label>
           </div>
-        </div>
-        <app-code [code]="code" selector="radio-button-dynamic-demo" />
-        `,
-    standalone: false
+        }
+      </div>
+    </div>
+    <app-code [code]="code" selector="radio-button-dynamic-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DynamicDoc implements OnInit {
-    selectedCategory: any = null;
+  selectedCategory: any = null;
 
-    categories: any[] = [
-        { name: 'Accounting', key: 'A' },
-        { name: 'Marketing', key: 'M' },
-        { name: 'Production', key: 'P' },
-        { name: 'Research', key: 'R' }
-    ];
+  categories: any[] = [
+    { name: "Accounting", key: "A" },
+    { name: "Marketing", key: "M" },
+    { name: "Production", key: "P" },
+    { name: "Research", key: "R" },
+  ];
 
-    ngOnInit() {
-        this.selectedCategory = this.categories[1];
-    }
+  ngOnInit() {
+    this.selectedCategory = this.categories[1];
+  }
 
-    code: Code = {
-        basic: `<div class="flex flex-column gap-3">
+  code: Code = {
+    basic: `<div class="flex flex-column gap-3">
     <div *ngFor="let category of categories" class="field-checkbox">
         <p-radioButton 
             [inputId]="category.key"
@@ -49,7 +55,7 @@ export class DynamicDoc implements OnInit {
     </div>
 </div>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <div class="flex flex-column gap-3">
         <div *ngFor="let category of categories" class="field-checkbox">
             <p-radioButton 
@@ -64,7 +70,7 @@ export class DynamicDoc implements OnInit {
     </div>
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule } from '@angular/forms';
 
@@ -87,6 +93,6 @@ export class RadioButtonDynamicDemo implements OnInit{
     ngOnInit() {
         this.selectedCategory = this.categories[1];
     }
-}`
-    };
+}`,
+  };
 }

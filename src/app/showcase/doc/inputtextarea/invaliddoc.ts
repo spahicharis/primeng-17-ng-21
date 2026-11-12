@@ -1,24 +1,34 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'invalid-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Invalid state style is added using the <i>ng-invalid</i> and <i>ng-dirty</i> class to indicate a failed validation.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="value" class="ng-invalid ng-dirty"></textarea>
-        </div>
-        <app-code [code]="code" selector="input-textarea-invalid-demo" />
-    `,
-    standalone: false
+  selector: "invalid-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Invalid state style is added using the <i>ng-invalid</i> and
+        <i>ng-dirty</i> class to indicate a failed validation.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <textarea
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [(ngModel)]="value"
+        class="ng-invalid ng-dirty"
+      ></textarea>
+    </div>
+    <app-code [code]="code" selector="input-textarea-invalid-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class InvalidDoc {
-    value!: string;
+  value!: string;
 
-    code: Code = {
-        basic: `<textarea 
+  code: Code = {
+    basic: `<textarea 
     rows="5" 
     cols="30" 
     pInputTextarea 
@@ -26,7 +36,7 @@ export class InvalidDoc {
     class="ng-invalid ng-dirty">
 </textarea>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <textarea 
         rows="5" 
         cols="30" 
@@ -36,7 +46,7 @@ export class InvalidDoc {
     </textarea>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule } from '@angular/forms';
 
@@ -48,6 +58,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputTextareaInvalidDemo {
     value!: string;
-}`
-    };
+}`,
+  };
 }

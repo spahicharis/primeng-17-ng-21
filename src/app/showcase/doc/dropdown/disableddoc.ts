@@ -1,48 +1,58 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 interface City {
-    name: string;
-    code: string;
+  name: string;
+  code: string;
 }
 
 @Component({
-    selector: 'dropdown-disabled-demo',
-    template: `
-        <app-docsectiontext>
-            <p>When <i>disabled</i> is present, the element cannot be edited and focused.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [disabled]="true" />
-        </div>
-        <app-code [code]="code" selector="dropdown-disabled-demo" />
-    `,
-    standalone: false
+  selector: "dropdown-disabled-demo",
+  template: `
+    <app-docsectiontext>
+      <p>
+        When <i>disabled</i> is present, the element cannot be edited and
+        focused.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-dropdown
+        [options]="cities"
+        [(ngModel)]="selectedCity"
+        placeholder="Select a City"
+        optionLabel="name"
+        [disabled]="true"
+      />
+    </div>
+    <app-code [code]="code" selector="dropdown-disabled-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class DisabledDoc {
-    cities: City[] | undefined;
+  cities: City[] | undefined;
 
-    selectedCity: City | undefined;
+  selectedCity: City | undefined;
 
-    ngOnInit() {
-        this.cities = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ];
-    }
+  ngOnInit() {
+    this.cities = [
+      { name: "New York", code: "NY" },
+      { name: "Rome", code: "RM" },
+      { name: "London", code: "LDN" },
+      { name: "Istanbul", code: "IST" },
+      { name: "Paris", code: "PRS" },
+    ];
+  }
 
-    code: Code = {
-        basic: `<p-dropdown 
+  code: Code = {
+    basic: `<p-dropdown 
     [options]="cities" 
     [(ngModel)]="selectedCity" 
     placeholder="Select a City" 
     optionLabel="name" 
     [disabled]="true" />`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-dropdown 
         [options]="cities" 
         [(ngModel)]="selectedCity" 
@@ -51,7 +61,7 @@ export class DisabledDoc {
         [disabled]="true" />
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 
@@ -80,6 +90,6 @@ export class DropdownDisabledDemo {
             { name: 'Paris', code: 'PRS' }
         ];
     }
-}`
-    };
+}`,
+  };
 }

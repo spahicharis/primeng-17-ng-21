@@ -1,37 +1,60 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { TreeNode } from 'primeng/api';
-import { Code } from '@domain/code';
-import { NodeService } from '@service/nodeservice';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { TreeNode } from "primeng/api";
+import { Code } from "@domain/code";
+import { NodeService } from "@service/nodeservice";
 
 @Component({
-    selector: 'filter-doc',
-    template: `
-        <app-docsectiontext>
-            <p>
-                Filtering is enabled by adding the <i>filter</i> property, by default label property of a node is used to compare against the value in the text field, in order to customize which field(s) should be used during search define
-                <i>filterBy</i> property. In addition <i>filterMode</i> specifies the filtering strategy. In <i>lenient</i> mode when the query matches a node, children of the node are not searched further as all descendants of the node are included.
-                On the other hand, in <i>strict</i> mode when the query matches a node, filtering continues on all descendants.
-            </p>
-        </app-docsectiontext>
-        <div class="card flex flex-wrap justify-content-center gap-5">
-            <p-tree [value]="files" class="w-full md:w-30rem" [filter]="true" filterPlaceholder="Lenient Filter" />
-            <p-tree [value]="files" class="w-full md:w-30rem" [filter]="true" filterMode="strict" filterPlaceholder="Strict Filter" />
-        </div>
-        <app-code [code]="code" selector="tree-filter-demo" />
-    `,
-    standalone: false
+  selector: "filter-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Filtering is enabled by adding the <i>filter</i> property, by default
+        label property of a node is used to compare against the value in the
+        text field, in order to customize which field(s) should be used during
+        search define <i>filterBy</i> property. In addition
+        <i>filterMode</i> specifies the filtering strategy. In
+        <i>lenient</i> mode when the query matches a node, children of the node
+        are not searched further as all descendants of the node are included. On
+        the other hand, in <i>strict</i> mode when the query matches a node,
+        filtering continues on all descendants.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex flex-wrap justify-content-center gap-5">
+      <p-tree
+        [value]="files"
+        class="w-full md:w-30rem"
+        [filter]="true"
+        filterPlaceholder="Lenient Filter"
+      />
+      <p-tree
+        [value]="files"
+        class="w-full md:w-30rem"
+        [filter]="true"
+        filterMode="strict"
+        filterPlaceholder="Strict Filter"
+      />
+    </div>
+    <app-code [code]="code" selector="tree-filter-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class FilterDoc implements OnInit {
-    private nodeService = inject(NodeService);
+  private nodeService = inject(NodeService);
 
-    files!: TreeNode[];
+  files!: TreeNode[];
 
-    ngOnInit() {
-        this.nodeService.getFiles().then((data) => (this.files = data));
-    }
+  ngOnInit() {
+    this.nodeService.getFiles().then((data) => (this.files = data));
+  }
 
-    code: Code = {
-        basic: `<p-tree 
+  code: Code = {
+    basic: `<p-tree 
     [value]="files" 
     class="w-full md:w-30rem" 
     [filter]="true" 
@@ -43,7 +66,7 @@ export class FilterDoc implements OnInit {
     filterMode="strict" 
     filterPlaceholder="Strict Filter" />`,
 
-        html: `<div class="card flex flex-wrap justify-content-center gap-5">
+    html: `<div class="card flex flex-wrap justify-content-center gap-5">
     <p-tree 
         [value]="files" 
         class="w-full md:w-30rem" 
@@ -57,7 +80,7 @@ export class FilterDoc implements OnInit {
         filterPlaceholder="Strict Filter" />
 </div>`,
 
-        typescript: `import { Component, OnInit } from '@angular/core';
+    typescript: `import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { NodeService } from '@service/nodeservice';
 import { TreeModule } from 'primeng/tree';
@@ -79,9 +102,9 @@ export class TreeFilterDemo implements OnInit {
     } 
 }`,
 
-        service: ['NodeService'],
+    service: ["NodeService"],
 
-        data: `
+    data: `
     /* NodeService */
 {
     key: '0',
@@ -108,6 +131,6 @@ export class TreeFilterDemo implements OnInit {
         }
     ]
 },
-...`
-    };
+...`,
+  };
 }

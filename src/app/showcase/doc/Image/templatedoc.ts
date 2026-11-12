@@ -1,26 +1,35 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'template-doc',
-    template: `
-        <app-docsectiontext>
-            <p>An eye icon is displayed by default when the image is hovered in preview mode. Use the <i>indicator</i> template for custom content.</p>
-        </app-docsectiontext>
-        <div class="card flex justify-content-center">
-            <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" [preview]="true" alt="Image" width="250">
-                <ng-template pTemplate="indicator">
-                    <i class="pi pi-check"></i>
-                </ng-template>
-            </p-image>
-        </div>
-        <app-code [code]="code" selector="image-template-demo" />
-    `,
-    standalone: false
+  selector: "template-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        An eye icon is displayed by default when the image is hovered in preview
+        mode. Use the <i>indicator</i> template for custom content.
+      </p>
+    </app-docsectiontext>
+    <div class="card flex justify-content-center">
+      <p-image
+        src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
+        [preview]="true"
+        alt="Image"
+        width="250"
+      >
+        <ng-template pTemplate="indicator">
+          <i class="pi pi-check"></i>
+        </ng-template>
+      </p-image>
+    </div>
+    <app-code [code]="code" selector="image-template-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class TemplateDoc {
-    code: Code = {
-        basic: `<p-image 
+  code: Code = {
+    basic: `<p-image 
     src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" 
     [preview]="true" 
     alt="Image" 
@@ -30,7 +39,7 @@ export class TemplateDoc {
         </ng-template>
 </p-image>`,
 
-        html: `<div class="card flex justify-content-center">
+    html: `<div class="card flex justify-content-center">
     <p-image 
         src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" 
         [preview]="true" 
@@ -42,7 +51,7 @@ export class TemplateDoc {
     </p-image>
 </div>`,
 
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { ImageModule } from 'primeng/image';
 
 @Component({
@@ -51,6 +60,6 @@ import { ImageModule } from 'primeng/image';
     standalone: true,
     imports: [ImageModule]
 })
-export class ImageTemplateDemo {}`
-    };
+export class ImageTemplateDemo {}`,
+  };
 }

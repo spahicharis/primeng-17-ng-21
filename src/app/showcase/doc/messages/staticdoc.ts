@@ -1,33 +1,41 @@
-import { Component } from '@angular/core';
-import { Code } from '@domain/code';
+import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Code } from "@domain/code";
 
 @Component({
-    selector: 'static-doc',
-    template: `
-        <app-docsectiontext>
-            <p>Alternative way to provide the content for the messages is templating. In this case value property and message service is ignored and only static is displayed.</p>
-        </app-docsectiontext>
-        <div class="card">
-            <p-messages severity="info">
-                <ng-template pTemplate>
-                    <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" width="32" />
-                    <div class="ml-2">Always bet on Prime.</div>
-                </ng-template>
-            </p-messages>
-        </div>
-        <app-code [code]="code" selector="messages-static-demo" />
-    `,
-    standalone: false
+  selector: "static-doc",
+  template: `
+    <app-docsectiontext>
+      <p>
+        Alternative way to provide the content for the messages is templating.
+        In this case value property and message service is ignored and only
+        static is displayed.
+      </p>
+    </app-docsectiontext>
+    <div class="card">
+      <p-messages severity="info">
+        <ng-template pTemplate>
+          <img
+            src="https://primefaces.org/cdn/primeng/images/primeng.svg"
+            width="32"
+          />
+          <div class="ml-2">Always bet on Prime.</div>
+        </ng-template>
+      </p-messages>
+    </div>
+    <app-code [code]="code" selector="messages-static-demo" />
+  `,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class StaticDoc {
-    code: Code = {
-        basic: `<p-messages severity="info">
+  code: Code = {
+    basic: `<p-messages severity="info">
     <ng-template pTemplate>
         <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" width="32" />
         <div class="ml-2">Always bet on Prime.</div>
     </ng-template>
 </p-messages>`,
-        html: `<div class="card">
+    html: `<div class="card">
     <p-messages severity="info">
         <ng-template pTemplate>
             <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" width="32" />
@@ -35,7 +43,7 @@ export class StaticDoc {
         </ng-template>
     </p-messages>
 </div>`,
-        typescript: `import { Component } from '@angular/core';
+    typescript: `import { Component } from '@angular/core';
 import { MessagesModule } from 'primeng/messages';
 
 @Component({
@@ -44,6 +52,6 @@ import { MessagesModule } from 'primeng/messages';
     standalone: true,
     imports: [MessagesModule]
 })
-export class MessagesStaticDemo { }`
-    };
+export class MessagesStaticDemo { }`,
+  };
 }
